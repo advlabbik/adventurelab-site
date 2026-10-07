@@ -116,3 +116,11 @@ test('il video dell’hero ha un bottone pausa con etichetta', () => {
 test('email senza correttore ortografico', () => {
   assert.match(read('index.html'), /<input[^>]*name="email"[^>]*spellcheck="false"/);
 });
+
+test('[hidden] vince sul display dei componenti (form e bottone devono sparire davvero)', async () => {
+  const { readdirSync } = await import('node:fs');
+  const html = read('index.html');
+  const cssFiles = readdirSync(new URL('../../dist/_astro/', import.meta.url)).filter((f) => f.endsWith('.css'));
+  const css = html + cssFiles.map((f) => read(`_astro/${f}`)).join('\n');
+  assert.match(css, /\[hidden\]\s*\{\s*display:\s*none\s*!important/);
+});

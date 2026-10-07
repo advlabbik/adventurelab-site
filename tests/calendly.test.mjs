@@ -7,7 +7,8 @@ test('precompila nome, email e ente codificati', () => {
   assert.equal(u.searchParams.get('name'), 'Àlice D’Amico');
   assert.equal(u.searchParams.get('email'), 'a+b@visit.it');
   assert.equal(u.searchParams.get('a1'), 'Visit & Co');
-  assert.equal(u.searchParams.get('hide_gdpr_banner'), '1');
+  // Il banner cookie di Calendly resta: il sito non ha un suo meccanismo di consenso.
+  assert.equal(u.searchParams.has('hide_gdpr_banner'), false);
 });
 
 test('conserva i parametri già presenti nell’URL base', () => {

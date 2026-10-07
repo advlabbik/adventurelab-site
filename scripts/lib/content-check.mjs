@@ -30,3 +30,11 @@ export function findTodos(obj, path = '') {
   }
   return out;
 }
+
+/**
+ * Valori di site.config senza i quali la conversione non funziona: senza endpoint
+ * nessun contatto arriva a Brevo, senza Calendly nessuna call si prenota.
+ */
+export function missingSiteConfig(site) {
+  return ['leadEndpoint', 'calendlyUrl'].filter((k) => !String(site[k] ?? '').trim());
+}

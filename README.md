@@ -17,4 +17,5 @@ Spec e piano in `docs/superpowers/`; contenuti e media del vecchio sito in `docs
 
 ## Stato
 - `BREVO_LIST_ID = "0"` nel worker finché lista e attributi `ADVLAB_*` non esistono su Brevo: il worker risponde `brevo_list_not_configured` e il sito apre comunque Calendly.
-- Turnstile: il widget condiviso non copre `localhost` né `workers.dev` (errore 110200 in console, atteso). Sull'anteprima il worker va con `TURNSTILE_REQUIRED = "false"`; al passaggio DNS si riporta a `"true"`.
+- Turnstile: il widget condiviso non copre `localhost` né `workers.dev` (errore 110200 in console, atteso). Per lo sviluppo e l'anteprima c'è un worker separato, `adventurelab-lead-preview` (`--env preview` in `workers/lead/wrangler.toml`): Turnstile spento, lista "0", mai da collegare a una lista vera. Il worker di produzione ha sempre Turnstile acceso.
+- `pnpm build:prod` fallisce anche se in `site.config.ts` mancano `leadEndpoint` o `calendlyUrl`.

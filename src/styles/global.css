@@ -1,5 +1,7 @@
 @import './tokens.css';
 *, *::before, *::after { box-sizing: border-box; }
+/* L'attributo hidden deve vincere sul display dei componenti (.btn, .contact__form, …). */
+[hidden] { display: none !important; }
 html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 body { margin: 0; font-family: var(--font); color: var(--c-text); background: var(--c-bg); line-height: 1.55; }

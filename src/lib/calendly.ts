@@ -9,7 +9,6 @@ export function calendlyUrl(base: string, d: { name: string; email: string; org:
   if (d.name) u.searchParams.set('name', d.name);
   if (d.email) u.searchParams.set('email', d.email);
   if (d.org) u.searchParams.set('a1', d.org);
-  u.searchParams.set('hide_gdpr_banner', '1');
   // Gli stessi parametri che mette il widget ufficiale: senza, Calendly rende la
   // pagina intera con header e banner dei cookie invece dell'embed.
   if (host) {

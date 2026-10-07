@@ -6,7 +6,8 @@
  */
 import { it } from '../src/content/it.ts';
 import { en } from '../src/content/en.ts';
-import { diffKeys, findTodos } from './lib/content-check.mjs';
+import { site } from '../site.config.ts';
+import { diffKeys, findTodos, missingSiteConfig } from './lib/content-check.mjs';
 
 let failed = false;
 
@@ -22,6 +23,12 @@ if (process.env.STRICT_CONTENT === '1' && todos.length) {
   failed = true;
 } else if (todos.length) {
   console.warn(`[content] ${todos.length} segnaposto TODO (ammessi fuori produzione).`);
+}
+
+const missing = missingSiteConfig(site);
+if (process.env.STRICT_CONTENT === '1' && missing.length) {
+  console.error(`[content] site.config.ts: valori vuoti in produzione: ${missing.join(', ')}`);
+  failed = true;
 }
 
 process.exit(failed ? 1 : 0);

@@ -6,16 +6,20 @@ compatibility_date = "2026-10-01"
 # usare e in modo non interattivo si ferma.
 account_id = "fe10f419d554dfcaca3986a6e7056944"
 
+# Log delle invocazioni conservati da Cloudflare (Workers Logs): senza, i
+# console.log/console.error si vedono solo con `wrangler tail` dal vivo.
+[observability]
+enabled = true
+
 [vars]
-# Host da cui il form gira davvero. L'URL workers.dev del sito si aggiunge al primo deploy del sito.
-ALLOWED_ORIGINS = "https://adventurelab.cc,https://www.adventurelab.cc,http://localhost:4321"
+# Solo i domini veri: localhost e l'anteprima workers.dev stanno in [env.preview].
+ALLOWED_ORIGINS = "https://adventurelab.cc,https://www.adventurelab.cc"
 
 # Lista Brevo di destinazione. "0" = segnaposto voluto: il worker rifiuta ogni invio
 # con brevo_list_not_configured finché la lista non esiste (spec §5).
 BREVO_LIST_ID = "0"
 
-# Fail-closed. Sull'URL workers.dev il widget Turnstile non si rende (dominio non
-# registrato): in collaudo lì si usa la coppia di chiavi di test di Turnstile.
+# Fail-closed. Spento solo in [env.preview], che è un worker separato.
 TURNSTILE_REQUIRED = "true"
 
 # Segreti (mai qui): BREVO_API_KEY, TURNSTILE_SECRET — con `wrangler secret put`.
@@ -25,5 +29,28 @@ name = "RATE_LIMITER"
 namespace_id = "1101"
 
   [ratelimits.simple]
+  limit = 5
+  period = 60
+
+# Anteprima e sviluppo locale: worker SEPARATO (adventurelab-lead-preview), con
+# Turnstile spento perché il widget non si rende su localhost né su workers.dev.
+# Non va mai collegato a una lista vera: con Turnstile spento chiunque potrebbe
+# iscrivere email a caso, riempiendo una lista vera di indirizzi falsi.
+#   npx wrangler dev --config wrangler.toml --env preview
+#   npx wrangler deploy --config wrangler.toml --env preview
+# I binding non si ereditano dall'ambiente principale: il rate limit va ridichiarato.
+[env.preview]
+name = "adventurelab-lead-preview"
+
+[env.preview.vars]
+ALLOWED_ORIGINS = "http://localhost:4321"
+BREVO_LIST_ID = "0"
+TURNSTILE_REQUIRED = "false"
+
+[[env.preview.ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1102"
+
+  [env.preview.ratelimits.simple]
   limit = 5
   period = 60

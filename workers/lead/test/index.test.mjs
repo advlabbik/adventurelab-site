@@ -134,3 +134,19 @@ test('Brevo 401 (es. IP non autorizzato) → 502 brevo_error', async () => {
   assert.equal(res.status, 502);
   assert.equal((await res.json()).error, 'brevo_error');
 });
+
+test('ogni rifiuto lascia una riga di log col codice e senza email', async () => {
+  const lines = [];
+  const orig = console.log;
+  console.log = (l) => lines.push(String(l));
+  try {
+    globalThis.fetch = async () => Response.json({ success: false });
+    await worker.fetch(req(good), env());
+    await worker.fetch(req(good), env({ RATE_LIMITER: { limit: async () => ({ success: false }) } }));
+  } finally {
+    console.log = orig;
+  }
+  const events = lines.map((l) => JSON.parse(l));
+  assert.deepEqual(events.map((e) => [e.ev, e.code]), [['lead_rejected', 'turnstile_failed'], ['lead_rejected', 'rate_limited']]);
+  assert.ok(lines.every((l) => !l.includes('visit.it')));
+});

@@ -1,0 +1,31 @@
+{
+  "name": "adventurelab-site",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "packageManager": "pnpm@10.28.1",
+  "scripts": {
+    "dev": "astro dev",
+    "check:content": "node scripts/check-content.mjs",
+    "build": "pnpm check:content && astro build",
+    "build:prod": "PUBLIC_SITE_ENV=production STRICT_CONTENT=1 pnpm build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "check:worker": "tsc --noEmit -p workers/lead/tsconfig.json",
+    "test": "node --test tests/ workers/lead/test/",
+    "test:build": "node --test tests/build-output.test.mjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.6"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "sharp": "^0.35.5",
+    "typescript": "^6.0.3",
+    "wrangler": "^4.148.0"
+  }
+}

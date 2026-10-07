@@ -1,0 +1,178 @@
+<style>
+  .wf{display:grid;grid-template-columns:minmax(0,1fr) 260px;gap:0 22px;font:13px/1.4 system-ui}
+  .pg{border:1.5px solid currentColor;border-radius:8px;overflow:hidden;opacity:.95}
+  .sec{border-bottom:1px dashed rgba(127,127,127,.5);padding:18px 20px;position:relative}
+  .sec:last-child{border-bottom:0}
+  .num{position:absolute;top:6px;left:6px;font:600 10px system-ui;background:#0a7cff;color:#fff;border-radius:10px;padding:1px 6px}
+  .num.s{background:#e98a00}
+  .nt{padding:18px 0 0;font-size:12px;opacity:.85;border-bottom:1px dashed transparent}
+  .nt h4{margin:0 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.04em;opacity:.7}
+  .nt .todo{display:block;margin-top:6px;color:#c0392b;font-weight:600}
+  .box{border:1.2px solid rgba(127,127,127,.7);border-radius:5px;padding:8px;text-align:center;font-size:12px}
+  .img{background:repeating-linear-gradient(45deg,rgba(127,127,127,.12) 0 8px,rgba(127,127,127,.22) 8px 16px);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:11px;opacity:.9}
+  .g{display:grid;gap:10px}
+  .btn{display:inline-block;border:1.5px solid currentColor;border-radius:20px;padding:5px 14px;font-size:12px;margin:4px 6px 0 0}
+  .btn.p{background:#0a7cff;border-color:#0a7cff;color:#fff}
+  .ln{height:7px;border-radius:4px;background:rgba(127,127,127,.35);margin:5px 0}
+  .h{font-weight:700;font-size:15px;margin:0 0 6px}
+  .small{font-size:11px;opacity:.7}
+  .row{display:flex;gap:10px;align-items:center}
+</style>
+
+<h2>Wireframe one-pager — v2</h2>
+<p class="subtitle">Cambiato rispetto alla v1: servizi segnaposto (4), contatti = mini-form + Calendly (10), bottone in alto "Prenota una call". Struttura e gerarchia, non grafica. A destra, per ogni sezione: a cosa serve e quale contenuto bisogna produrre. I numeri blu sono il percorso territori, quelli arancio il percorso brand.</p>
+
+<div class="wf">
+<div class="pg">
+
+  <!-- NAV -->
+  <div class="sec" style="padding:10px 20px">
+    <div class="row" style="justify-content:space-between">
+      <strong>AdventureLab</strong>
+      <span class="small">Territori · Casi · Brand · Eventi · Chi siamo</span>
+      <span><span class="small">IT / EN</span> <span class="btn p">Prenota una call</span></span>
+    </div>
+  </div>
+
+  <!-- 1 HERO -->
+  <div class="sec" style="padding:0">
+    <div class="img" style="height:230px;border-radius:0;flex-direction:column;gap:8px">
+      <span class="num" style="position:absolute;top:6px;left:6px">1</span>
+      <div style="font-size:22px;font-weight:800;opacity:1">Portiamo ciclisti nel tuo territorio.</div>
+      <div style="font-size:13px">Eventi, itinerari e promozione per destinazioni che vogliono crescere col turismo in bici.</div>
+      <div><span class="btn p">Prenota una call</span><span class="btn">Guarda i casi</span></div>
+      <div class="small">[ video in loop: partenze, paesi attraversati, strade ]</div>
+    </div>
+  </div>
+
+  <!-- 2 NUMERI -->
+  <div class="sec">
+    <span class="num">2</span>
+    <div class="g" style="grid-template-columns:repeat(5,1fr)">
+      <div class="box"><b>14</b><br><span class="small">anni</span></div>
+      <div class="box"><b>19</b><br><span class="small">paesi</span></div>
+      <div class="box"><b>xx.xxx</b><br><span class="small">partecipanti/anno</span></div>
+      <div class="box"><b>xx.xxx</b><br><span class="small">pernottamenti</span></div>
+      <div class="box"><b>x,x M€</b><br><span class="small">indotto stimato</span></div>
+    </div>
+  </div>
+
+  <!-- 3 LOGHI -->
+  <div class="sec">
+    <span class="num">3</span>
+    <div class="small" style="text-align:center;margin-bottom:8px">Hanno lavorato con noi</div>
+    <div class="g" style="grid-template-columns:repeat(7,1fr)">
+      <div class="img" style="height:28px">logo</div><div class="img" style="height:28px">logo</div><div class="img" style="height:28px">logo</div><div class="img" style="height:28px">logo</div><div class="img" style="height:28px">logo</div><div class="img" style="height:28px">logo</div><div class="img" style="height:28px">logo</div>
+    </div>
+  </div>
+
+  <!-- 4 SERVIZI TERRITORI -->
+  <div class="sec">
+    <span class="num">4</span>
+    <p class="h">Cosa facciamo per un territorio</p>
+    <div class="g" style="grid-template-columns:repeat(4,1fr)">
+      <div class="box" style="text-align:left;border-style:dashed"><b>[Servizio 1]</b><div class="ln"></div><div class="ln" style="width:70%"></div><span class="small">icona · titolo · 2 righe</span></div>
+      <div class="box" style="text-align:left;border-style:dashed"><b>[Servizio 2]</b><div class="ln"></div><div class="ln" style="width:70%"></div><span class="small">icona · titolo · 2 righe</span></div>
+      <div class="box" style="text-align:left;border-style:dashed"><b>[Servizio 3]</b><div class="ln"></div><div class="ln" style="width:70%"></div><span class="small">icona · titolo · 2 righe</span></div>
+      <div class="box" style="text-align:left;border-style:dashed"><b>[Servizio 4]</b><div class="ln"></div><div class="ln" style="width:70%"></div><span class="small">icona · titolo · 2 righe</span></div>
+    </div>
+    <div class="small" style="margin-top:6px">griglia da 3 a 6 card: il numero si adatta a quanti servizi decidete
+    </div>
+  </div>
+
+  <!-- 5 COME LAVORIAMO -->
+  <div class="sec">
+    <span class="num">5</span>
+    <p class="h">Come lavoriamo</p>
+    <div class="row" style="justify-content:space-between">
+      <div class="box" style="flex:1">① Sopralluogo<br><span class="small">e analisi</span></div><span>→</span>
+      <div class="box" style="flex:1">② Percorso<br><span class="small">e format</span></div><span>→</span>
+      <div class="box" style="flex:1">③ Evento<br><span class="small">e promozione</span></div><span>→</span>
+      <div class="box" style="flex:1">④ Report<br><span class="small">numeri e ricadute</span></div>
+    </div>
+  </div>
+
+  <!-- 6 CASI -->
+  <div class="sec">
+    <span class="num">6</span>
+    <p class="h">Casi</p>
+    <div class="g" style="grid-template-columns:repeat(3,1fr)">
+      <div><div class="img" style="height:80px">foto territorio</div><b>Slovenia · TGE</b><div class="small">cosa abbiamo fatto · 3 numeri risultato</div></div>
+      <div><div class="img" style="height:80px">foto territorio</div><b>Toscana · Tuscany Trail</b><div class="small">cosa abbiamo fatto · 3 numeri risultato</div></div>
+      <div><div class="img" style="height:80px">foto territorio</div><b>Trentino · Trentino Gravel</b><div class="small">cosa abbiamo fatto · 3 numeri risultato</div></div>
+    </div>
+    <div class="small" style="margin-top:6px">cliccando, la scheda si apre qui sulla pagina (niente pagine separate)</div>
+  </div>
+
+  <!-- 7 BRAND -->
+  <div class="sec">
+    <span class="num s">7</span>
+    <p class="h">Per i brand e gli sponsor</p>
+    <div class="g" style="grid-template-columns:1fr 1fr">
+      <div><b>Chi raggiungi</b><div class="ln"></div><div class="ln" style="width:80%"></div><div class="ln" style="width:60%"></div><span class="small">profilo community: età, paesi, bici, spesa</span></div>
+      <div><b>Formati</b><div class="ln"></div><div class="ln" style="width:80%"></div><span class="small">presenza evento · contenuti · prodotto nel pacco gara</span><br><span class="btn">Scarica il media kit</span></div>
+    </div>
+  </div>
+
+  <!-- 8 EVENTI -->
+  <div class="sec">
+    <span class="num">8</span>
+    <p class="h">I nostri eventi</p>
+    <div class="g" style="grid-template-columns:repeat(6,1fr)">
+      <div class="box">Tuscany Trail</div><div class="box">The Grand Escape</div><div class="box">NorthCape4000</div><div class="box">Unpaved Roads</div><div class="box">Trentino Gravel</div><div class="box">Cycling in Tuscany</div>
+    </div>
+    <div class="small" style="margin-top:6px">logo + una riga + 1 numero + link al sito dell'evento</div>
+  </div>
+
+  <!-- 9 CHI SIAMO -->
+  <div class="sec">
+    <span class="num">9</span>
+    <div class="g" style="grid-template-columns:1fr 1fr">
+      <div><p class="h">Chi siamo</p><div class="ln"></div><div class="ln"></div><div class="ln" style="width:70%"></div><span class="small">dal 2012 · no race · Prato · team</span></div>
+      <div class="img" style="height:90px">foto team</div>
+    </div>
+  </div>
+
+  <!-- 10 CONTATTI -->
+  <div class="sec">
+    <span class="num">10</span>
+    <p class="h">Prenota una call di 30 minuti</p>
+    <div class="g" style="grid-template-columns:1fr 24px 1fr;align-items:center">
+      <div class="g" style="gap:6px">
+        <div class="small"><b>Passo 1</b></div>
+        <div class="box" style="text-align:left">Nome</div>
+        <div class="box" style="text-align:left">Email</div>
+        <div class="box" style="text-align:left">Ente / azienda</div>
+        <div class="box" style="text-align:left">Sono: ○ territorio ○ brand/sponsor ○ altro</div>
+        <div class="box" style="text-align:left;font-size:11px">☐ consenso privacy · ☐ voglio ricevere aggiornamenti</div>
+        <div class="small">[ captcha Turnstile, invisibile ]</div>
+        <span class="btn p" style="width:max-content">Scegli il giorno →</span>
+      </div>
+      <div style="text-align:center">→</div>
+      <div>
+        <div class="small"><b>Passo 2</b> (si apre al posto del form)</div>
+        <div class="img" style="height:170px;flex-direction:column">Calendly incorporato<br><span class="small">nome ed email già compilati</span></div>
+        <div class="small" style="margin-top:6px">oppure scrivici a info@adventurelab.cc</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="sec small">AdventureLab srl · Via Giulio Braga 98, Prato · P.IVA 02410590976 · LinkedIn · Privacy</div>
+</div>
+
+<!-- NOTE -->
+<div>
+  <div class="nt" style="padding-top:8px"><h4>Nav</h4>Le voci portano alle sezioni della pagina. Un solo bottone, quello che porta al contatto.</div>
+  <div class="nt" style="padding-top:60px"><h4>1 · Hero</h4>In 5 secondi deve dire cosa facciamo e per chi. La frase è un segnaposto. Riusiamo il video di oggi o ne montiamo uno nuovo.<span class="todo">Da fare: claim definitivo</span></div>
+  <div class="nt" style="padding-top:70px"><h4>2 · Numeri</h4>Un ente pubblico compra dati: pernottamenti e indotto valgono più dei like.<span class="todo">Da fare: numeri 2025 aggiornati</span></div>
+  <div class="nt" style="padding-top:26px"><h4>3 · Loghi</h4>Abbiamo già i 14 loghi.</div>
+  <div class="nt" style="padding-top:36px"><h4>4 · Servizi</h4>Segnaposto finché l'offerta non è definita. Il layout regge da 3 a 6 servizi.<span class="todo">Da decidere più avanti: l'offerta</span></div>
+  <div class="nt" style="padding-top:40px"><h4>5 · Metodo</h4>Toglie il dubbio "e poi come funziona?" e mette il report come prova.</div>
+  <div class="nt" style="padding-top:40px"><h4>6 · Casi</h4>La sezione che convince. I tre esempi sono ipotesi.<span class="todo">Da decidere: quali casi e con quali numeri</span></div>
+  <div class="nt" style="padding-top:62px"><h4>7 · Brand</h4>Percorso secondario. Il media kit in PDF scaricabile si può fare anche dopo.</div>
+  <div class="nt" style="padding-top:40px"><h4>8 · Eventi</h4>Qui gli eventi servono da prova di credibilità, non da vetrina. Rimandano ai loro siti.</div>
+  <div class="nt" style="padding-top:38px"><h4>9 · Chi siamo</h4>Breve. La filosofia no race resta, ma in due righe.</div>
+  <div class="nt" style="padding-top:90px"><h4>10 · Contatti</h4>All'invio del form il contatto entra in Brevo con il tipo (territorio o brand) e parte il nurturing. Poi si apre il Calendly. Chi non prenota resta comunque nel nurturing.<span class="todo">Da decidere: account Calendly e chi fa le call</span></div>
+</div>
+</div>

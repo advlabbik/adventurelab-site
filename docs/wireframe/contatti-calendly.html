@@ -1,0 +1,46 @@
+<style>
+  .fl{font:12px/1.4 system-ui;padding:14px}
+  .st{border:1.3px solid rgba(127,127,127,.75);border-radius:6px;padding:8px 10px;margin:0 0 4px}
+  .st.k{border-color:#0a7cff;background:rgba(0,120,255,.1)}
+  .st.c{border-color:#7d4cdb;background:rgba(125,76,219,.1)}
+  .ar{text-align:center;opacity:.6;margin:2px 0}
+  .tag{display:inline-block;font-size:10px;border-radius:8px;padding:1px 6px;background:rgba(127,127,127,.2);margin-left:4px}
+  .miss{color:#c0392b;font-weight:600}
+</style>
+
+<h2>Sezione 10 · come raccogliamo il contatto?</h2>
+<p class="subtitle">In entrambi i casi c'è il Calendly. Cambia cosa succede a chi arriva fino alla sezione ma la call non la prenota: è proprio la persona che il nurturing via email dovrebbe recuperare.</p>
+
+<div class="cards">
+  <div class="card" data-choice="a-solo-calendly" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="fl">
+      <div class="st c">Calendly incorporato nella pagina<br><span style="opacity:.7">sceglie lo slot → nome, email, ente</span></div>
+      <div class="ar">↓ solo chi prenota</div>
+      <div class="st">Webhook Calendly → Brevo<span class="tag">Calendly a pagamento</span></div>
+      <div class="ar">↓</div>
+      <div class="st">Nurturing email</div>
+      <div class="ar" style="margin-top:10px">chi guarda gli slot e se ne va</div>
+      <div class="st miss">→ perso, nessun contatto</div>
+    </div></div>
+    <div class="card-body">
+      <h3>A · Solo Calendly</h3>
+      <p>Il più diretto, un passaggio in meno. Ma il nurturing arriva solo a chi ha già prenotato, cioè a chi ne ha meno bisogno. Per mandare i contatti a Brevo servono i webhook di Calendly, che esistono solo nei piani a pagamento, più un collegamento in mezzo.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b-form-poi-calendly" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="fl">
+      <div class="st k">Mini-form: nome · email · ente · sono un <i>territorio / brand / altro</i></div>
+      <div class="ar">↓ invio → contatto subito in Brevo (lista + attributo TIPO)</div>
+      <div class="st c">Si apre il Calendly già compilato<br><span style="opacity:.7">nome ed email già inseriti, sceglie solo lo slot</span></div>
+      <div class="ar">↓</div>
+      <div class="st">prenota → call<span class="tag">nurturing post-call</span></div>
+      <div class="ar" style="margin-top:10px">chi compila ma non prenota</div>
+      <div class="st">→ è in Brevo, il nurturing parte lo stesso</div>
+    </div></div>
+    <div class="card-body">
+      <h3>B · Mini-form, poi Calendly <em>(consigliata)</em></h3>
+      <p>Tre campi, poi il Calendly si apre con i dati già dentro. Il contatto finisce su Brevo prima ancora della prenotazione, separato tra territorio e brand, e il nurturing recupera chi non ha prenotato. Il form passa da un piccolo endpoint nostro su Cloudflare, protetto dal captcha Turnstile già usato per i form Brevo, che scrive su Brevo. È lo schema dei nuovi form del TT 2027: niente n8n in mezzo e basta il Calendly gratuito.</p>
+    </div>
+  </div>
+</div>

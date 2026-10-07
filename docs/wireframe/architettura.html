@@ -1,0 +1,80 @@
+<style>
+  .sm{font:12px/1.3 system-ui;display:flex;flex-direction:column;align-items:center;gap:8px;padding:14px 6px}
+  .sm .row{display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+  .sm .n{border:1.5px solid currentColor;border-radius:6px;padding:5px 8px;opacity:.85;white-space:nowrap}
+  .sm .n.k{background:rgba(0,120,255,.15);border-color:#0a7cff;font-weight:600;opacity:1}
+  .sm .n.s{background:rgba(255,150,0,.13);border-color:#e98a00;opacity:1}
+  .sm .n.d{border-style:dashed;opacity:.6}
+  .sm .anc{display:flex;flex-direction:column;gap:3px;width:78%}
+  .sm .anc div{border:1px solid currentColor;border-radius:4px;padding:3px 6px;opacity:.7;font-size:11px}
+  .sm .anc div.k{background:rgba(0,120,255,.15);border-color:#0a7cff;opacity:1}
+  .sm .anc div.s{background:rgba(255,150,0,.13);border-color:#e98a00;opacity:1}
+  .leg{font-size:12px;opacity:.75;margin-top:4px}
+  .leg b{display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px 0 10px;vertical-align:-1px}
+</style>
+
+<h2>Come organizziamo il sito?</h2>
+<p class="subtitle">Prima della home decidiamo la struttura. Focus: <strong>territori</strong> (blu), poi <strong>sponsor e marchi bici</strong> (arancio). Clicca quella che ti convince.</p>
+<p class="leg"><b style="background:#0a7cff"></b>percorso territori <b style="background:#e98a00"></b>percorso sponsor/marchi <b style="border:1px dashed #888"></b>opzionale, si può fare dopo</p>
+
+<div class="cards">
+  <div class="card" data-choice="a-onepager" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="sm">
+      <div class="n">Home (una pagina lunga)</div>
+      <div class="anc">
+        <div>Hero + numeri</div>
+        <div class="k">Per i territori: cosa facciamo</div>
+        <div class="k">Casi (3-4 schede)</div>
+        <div class="s">Per i brand</div>
+        <div>Eventi</div>
+        <div>Chi siamo</div>
+        <div>Contatti</div>
+      </div>
+      <div class="row"><div class="n d">Privacy</div></div>
+    </div></div>
+    <div class="card-body">
+      <h3>A · One-pager rifatto</h3>
+      <p>Come oggi, ma riordinato e con le sezioni giuste. Si fa in fretta e servono pochi contenuti. Però territori e brand si leggono la stessa pagina, i casi non hanno una pagina loro (niente SEO e niente link da mandare) e il sito non può crescere.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="b-percorsi" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="sm">
+      <div class="n">Home</div>
+      <div class="row">
+        <div class="n k">Per i territori</div>
+        <div class="n s">Per i brand</div>
+        <div class="n">Eventi</div>
+        <div class="n">Chi siamo</div>
+        <div class="n">Contatti</div>
+      </div>
+      <div class="row">
+        <div class="n k">Casi studio ×N</div>
+        <div class="n">Scheda evento ×N</div>
+      </div>
+      <div class="row"><div class="n d">Media kit (PDF)</div><div class="n d">Privacy</div></div>
+    </div></div>
+    <div class="card-body">
+      <h3>B · Home + due percorsi <em>(consigliata)</em></h3>
+      <p>La home smista il visitatore. "Per i territori" è la pagina principale: servizi, metodo, numeri e casi. "Per i brand" spiega il pubblico e i formati di sponsorizzazione. Ogni caso studio ha la sua pagina, da linkare in una mail o in una proposta. Si parte con pochi casi e se ne aggiungono col tempo.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="c-eventi" onclick="toggleSelect(this)">
+    <div class="card-image"><div class="sm">
+      <div class="n">Home = portfolio eventi</div>
+      <div class="row">
+        <div class="n">Tuscany Trail</div><div class="n">TGE</div><div class="n">NC4000</div><div class="n">UR</div><div class="n">…</div>
+      </div>
+      <div class="anc">
+        <div class="k">ogni evento: numeri, pubblico, territorio attraversato</div>
+        <div class="s">ogni evento: formati sponsor</div>
+      </div>
+      <div class="row"><div class="n k">Porta un evento da te</div><div class="n">Chi siamo</div><div class="n">Contatti</div></div>
+    </div></div>
+    <div class="card-body">
+      <h3>C · Il sito ruota attorno agli eventi</h3>
+      <p>Ogni evento ha una scheda B2B con i suoi numeri e da lì si va al contatto. Funziona bene per gli sponsor, che comprano un evento preciso. Ma il territorio vuole sapere cosa possiamo fare per lui, non quali eventi abbiamo già: è la stessa debolezza del sito attuale.</p>
+    </div>
+  </div>
+</div>

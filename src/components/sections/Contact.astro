@@ -1,0 +1,123 @@
+---
+import type { Lang, SiteContent } from '../../content';
+import { site } from '../../../site.config';
+interface Props { lang: Lang; c: SiteContent }
+const { lang, c } = Astro.props;
+const f = c.contact.fields;
+const p = lang === 'it' ? '' : '/en';
+---
+<section id="contatti" class="section section--alt">
+  <div class="container contact">
+    <h2>{c.contact.title}</h2>
+    <p class="muted">{c.contact.intro}</p>
+
+    <form class="contact__form" data-endpoint={site.leadEndpoint} data-calendly={site.calendlyUrl} data-lang={lang} novalidate>
+      <label>{f.name}<input name="name" autocomplete="name" required maxlength="120" /></label>
+      <label>{f.email}<input name="email" type="email" autocomplete="email" required maxlength="254" /></label>
+      <label>{f.org}<input name="org" autocomplete="organization" maxlength="160" /></label>
+      <fieldset>
+        <legend>{f.type}</legend>
+        <label><input type="radio" name="type" value="territorio" checked /> {f.typeTerritory}</label>
+        <label><input type="radio" name="type" value="brand" /> {f.typeBrand}</label>
+        <label><input type="radio" name="type" value="altro" /> {f.typeOther}</label>
+      </fieldset>
+      <label class="check"><input type="checkbox" name="consent" required /> <a href={`${p}/privacy/`}>{c.contact.privacy}</a></label>
+      <label class="check"><input type="checkbox" name="optin" /> {c.contact.optin}</label>
+      <!-- trappola per i bot: invisibile e fuori dal tab -->
+      <label class="sr-only" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+      {site.turnstileSiteKey && <div class="cf-turnstile" data-sitekey={site.turnstileSiteKey} data-appearance="interaction-only"></div>}
+      <p class="contact__error" role="alert" hidden></p>
+      <button class="btn btn--primary" type="submit" data-label={c.contact.submit} data-sending={c.contact.sending}>{c.contact.submit}</button>
+    </form>
+
+    <p class="contact__thanks" role="status" hidden>{c.contact.thanks}</p>
+
+    <div class="contact__calendly" hidden>
+      <h3>{c.contact.calendlyTitle}</h3>
+      <iframe title={c.contact.calendlyTitle} loading="lazy"></iframe>
+    </div>
+
+    <p class="contact__mail">{c.contact.fallback} <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></p>
+    <noscript><p>{c.contact.fallback} <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></p></noscript>
+
+    <script type="application/json" class="contact__errors" set:html={JSON.stringify(c.contact.errors)} />
+  </div>
+</section>
+<style>
+  .contact { max-width: 720px; }
+  .contact__form { display: grid; gap: 1rem; }
+  .contact__form label { display: grid; gap: .3rem; font-weight: 600; }
+  .contact__form input:not([type=radio]):not([type=checkbox]) { font: inherit; padding: .7rem .8rem; border: 1px solid var(--c-line); border-radius: 8px; }
+  .contact__form fieldset { border: 0; padding: 0; display: flex; gap: 1.25rem; flex-wrap: wrap; }
+  .contact__form legend { font-weight: 600; margin-bottom: .3rem; }
+  .contact__form fieldset label, .check { display: flex !important; gap: .5rem; align-items: center; font-weight: 400 !important; }
+  .contact__error { color: #b42318; margin: 0; }
+  .contact__calendly iframe { width: 100%; height: 720px; border: 0; }
+</style>
+<script>
+  import { submitLead } from '../../lib/submit-lead';
+  import { calendlyUrl } from '../../lib/calendly';
+
+  declare global { interface Window { turnstile?: { reset: (el?: Element) => void } } }
+
+  const form = document.querySelector<HTMLFormElement>('.contact__form');
+  if (form) {
+    // Turnstile: lo script si carica una volta sola, solo se il widget c'è.
+    if (form.querySelector('.cf-turnstile')) {
+      const s = document.createElement('script');
+      s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
+      s.async = true; s.defer = true;
+      document.head.append(s);
+    }
+    const root = form.closest('section')!;
+    const errorsMap = JSON.parse(root.querySelector('.contact__errors')!.textContent!);
+    const errorEl = form.querySelector<HTMLElement>('.contact__error')!;
+    const btn = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
+    const calendly = root.querySelector<HTMLElement>('.contact__calendly')!;
+
+    const showError = (msg: string) => { errorEl.textContent = msg; errorEl.hidden = false; };
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (btn.disabled) return; // doppio clic: un solo invio
+      errorEl.hidden = true;
+      const d = new FormData(form);
+      const email = String(d.get('email') ?? '').trim();
+      if (!form.querySelector<HTMLInputElement>('[name=email]')!.checkValidity()) return showError(errorsMap.invalid_email);
+      if (!d.get('consent')) return showError(errorsMap.consent_required);
+
+      btn.disabled = true; btn.textContent = btn.dataset.sending!;
+      const data = { name: String(d.get('name') ?? '').trim(), email, org: String(d.get('org') ?? '').trim() };
+      const res = await submitLead(form.dataset.endpoint!, {
+        ...data,
+        type: d.get('type'),
+        consent: true,
+        optin: d.get('optin') === 'on',
+        lang: form.dataset.lang,
+        website: d.get('website') ?? '',
+        turnstileToken: d.get('cf-turnstile-response') ?? '',
+      });
+
+      // Errori correggibili dall'utente: resta sul form. Il token Turnstile è
+      // già consumato, quindi va rigenerato prima del prossimo invio.
+      if (!res.ok && (res.error === 'invalid_email' || res.error === 'consent_required')) {
+        const w = form.querySelector('.cf-turnstile'); if (w) window.turnstile?.reset(w);
+        btn.disabled = false; btn.textContent = btn.dataset.label!;
+        return showError(errorsMap[res.error]);
+      }
+
+      // Tutto il resto (ok, worker giù, timeout, Brevo in errore): si va avanti a Calendly.
+      const url = calendlyUrl(form.dataset.calendly!, data, location.host);
+      if (!res.ok) { console.warn('[lead]', res.error); showError(errorsMap.generic); }
+      form.hidden = res.ok; // in caso di errore il messaggio resta visibile sopra Calendly
+      if (url) {
+        calendly.querySelector('iframe')!.src = url;
+        calendly.hidden = false;
+        calendly.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      }
+      // Calendly non configurato e invio riuscito: senza questo il form sparirebbe nel nulla.
+      else if (res.ok) root.querySelector<HTMLElement>('.contact__thanks')!.hidden = false;
+      if (!res.ok) { btn.hidden = true; }
+    });
+  }
+</script>

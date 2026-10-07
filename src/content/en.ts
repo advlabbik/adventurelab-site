@@ -92,6 +92,7 @@ export const en: SiteContent = {
       generic: 'Something went wrong: you can still pick a day below.',
     },
     fallback: 'If you prefer, write to us at',
+    thanks: 'Thank you, we will get back to you shortly.',
     calendlyTitle: 'Pick a day and time',
   },
   footer: { tagline: 'Bike tourism across Europe.', privacy: 'Privacy', cookie: 'Cookies', rights: 'All rights reserved' },

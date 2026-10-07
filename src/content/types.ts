@@ -27,6 +27,7 @@ export interface SiteContent {
     sending: string;
     errors: { invalid_email: string; consent_required: string; generic: string };
     fallback: string;
+    thanks: string;
     calendlyTitle: string;
   };
   footer: { tagline: string; privacy: string; cookie: string; rights: string };

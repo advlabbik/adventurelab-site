@@ -93,6 +93,7 @@ export const it: SiteContent = {
       generic: 'Qualcosa non è andato: puoi comunque scegliere il giorno qui sotto.',
     },
     fallback: 'Se preferisci, scrivici a',
+    thanks: 'Grazie, ti ricontattiamo a breve.',
     calendlyTitle: 'Scegli giorno e ora',
   },
   footer: { tagline: 'Turismo in bicicletta in tutta Europa.', privacy: 'Privacy', cookie: 'Cookie', rights: 'Tutti i diritti riservati' },

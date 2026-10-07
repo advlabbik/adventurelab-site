@@ -62,7 +62,6 @@ test('il video pesa meno di 3 MB', async () => {
 test('tutte le ancore della nav esistono', () => {
   const html = read('index.html');
   for (const id of ['territori', 'casi', 'brand', 'eventi', 'chi-siamo', 'contatti']) {
-    if (id === 'contatti') continue; // arriva nel Task 7
     assert.match(html, new RegExp(`id="${id}"`), id);
   }
 });
@@ -88,4 +87,20 @@ test('sfondo scuro solo dietro i loghi bianchi (TGE), chiaro dietro gli altri', 
   const block = read('index.html').split('id="eventi"')[1].split('</section>')[0];
   const dark = [...block.matchAll(/class="event__logo event__logo--dark[^"]*"[^>]*>\s*<img[^>]*alt="([^"]+)"/g)].map((m) => m[1]);
   assert.deepEqual(dark, ['The Grand Escape']);
+});
+
+test('form contatti: campi obbligatori, honeypot nascosto, lingua giusta', () => {
+  for (const [file, lang] of [['index.html', 'it'], ['en/index.html', 'en']]) {
+    const block = read(file).split('id="contatti"')[1].split('</section>')[0];
+    for (const n of ['name', 'email', 'org', 'type', 'consent', 'optin', 'website']) assert.match(block, new RegExp(`name="${n}"`), `${file}: ${n}`);
+    assert.match(block, /type="email"[^>]*required|required[^>]*type="email"/);
+    assert.match(block, new RegExp(`data-lang="${lang}"`));
+    assert.match(block, /mailto:info@adventurelab\.cc/);
+    assert.match(block, /<noscript>/);
+  }
+});
+
+test('contatti: messaggio di ringraziamento pronto e nascosto (serve se Calendly non è configurato)', () => {
+  const block = read('index.html').split('id="contatti"')[1].split('</section>')[0];
+  assert.match(block, /class="contact__thanks"[^>]*hidden/);
 });

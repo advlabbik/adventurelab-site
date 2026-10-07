@@ -11,6 +11,7 @@ import Cases from './sections/Cases.astro';
 import Brands from './sections/Brands.astro';
 import Events from './sections/Events.astro';
 import About from './sections/About.astro';
+import Contact from './sections/Contact.astro';
 import { getContent, type Lang } from '../content';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -28,6 +29,7 @@ const c = getContent(lang);
     <Brands lang={lang} c={c} />
     <Events c={c} />
     <About c={c} />
+    <Contact lang={lang} c={c} />
   </main>
   <Footer lang={lang} c={c} />
 </Base>

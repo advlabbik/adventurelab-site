@@ -33,4 +33,5 @@ export interface SiteContent {
   footer: { tagline: string; privacy: string; cookie: string; rights: string };
   legal: { privacyTitle: string; privacyBody: string[]; cookieTitle: string; cookieBody: string[] };
   langSwitch: { label: string };
+  a11y: { skip: string; pause: string; play: string };
 }

@@ -104,3 +104,15 @@ test('contatti: messaggio di ringraziamento pronto e nascosto (serve se Calendly
   const block = read('index.html').split('id="contatti"')[1].split('</section>')[0];
   assert.match(block, /class="contact__thanks"[^>]*hidden/);
 });
+
+test('link "salta al contenuto" verso #main in entrambe le lingue', () => {
+  for (const f of ['index.html', 'en/index.html']) assert.match(read(f), /<a[^>]*href="#main"[^>]*class="skip"/, f);
+});
+
+test('il video dell’hero ha un bottone pausa con etichetta', () => {
+  assert.match(read('index.html'), /<button[^>]*class="hero__pause"[^>]*aria-label="[^"]+"/);
+});
+
+test('email senza correttore ortografico', () => {
+  assert.match(read('index.html'), /<input[^>]*name="email"[^>]*spellcheck="false"/);
+});

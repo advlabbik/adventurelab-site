@@ -13,7 +13,7 @@ const p = lang === 'it' ? '' : '/en';
 
     <form class="contact__form" data-endpoint={site.leadEndpoint} data-calendly={site.calendlyUrl} data-lang={lang} novalidate>
       <label>{f.name}<input name="name" autocomplete="name" required maxlength="120" /></label>
-      <label>{f.email}<input name="email" type="email" autocomplete="email" required maxlength="254" /></label>
+      <label>{f.email}<input name="email" type="email" autocomplete="email" spellcheck="false" required maxlength="254" /></label>
       <label>{f.org}<input name="org" autocomplete="organization" maxlength="160" /></label>
       <fieldset>
         <legend>{f.type}</legend>

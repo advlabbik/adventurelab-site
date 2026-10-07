@@ -8,6 +8,7 @@ const { c } = Astro.props;
     <source src="/video/hero.mp4" type="video/mp4" />
   </video>
   <div class="hero__shade"></div>
+  <button class="hero__pause" type="button" aria-label={c.a11y.pause} data-pause={c.a11y.pause} data-play={c.a11y.play}>❚❚</button>
   <div class="container hero__in">
     <h1>{c.hero.title}</h1>
     <p>{c.hero.subtitle}</p>
@@ -21,6 +22,7 @@ const { c } = Astro.props;
   .hero { position: relative; min-height: min(88vh, 760px); display: grid; align-items: end; color: #fff; overflow: hidden; }
   .hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .hero__shade { position: absolute; inset: 0; background: linear-gradient(to top, rgb(0 0 0 / .65), rgb(0 0 0 / .1) 60%); }
+  .hero__pause { position: absolute; right: 1rem; bottom: 1rem; z-index: 2; width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 1px solid rgb(255 255 255 / .6); background: rgb(0 0 0 / .35); color: #fff; cursor: pointer; font-size: .8rem; }
   .hero__in { position: relative; padding-block: 4rem; }
   .hero h1 { font-size: var(--fs-1); line-height: 1.05; margin: 0 0 1rem; max-width: 18ch; }
   .hero p { max-width: 52ch; font-size: 1.15rem; }
@@ -28,7 +30,16 @@ const { c } = Astro.props;
 </style>
 <script>
   // Chi chiede meno movimento vede solo il poster.
-  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.querySelectorAll<HTMLVideoElement>('.hero__video').forEach((v) => { v.pause(); v.removeAttribute('autoplay'); });
-  }
+  const video = document.querySelector<HTMLVideoElement>('.hero__video');
+  const btn = document.querySelector<HTMLButtonElement>('.hero__pause');
+  const sync = () => {
+    if (!video || !btn) return;
+    btn.setAttribute('aria-label', video.paused ? btn.dataset.play! : btn.dataset.pause!);
+    btn.textContent = video.paused ? '▶' : '❚❚';
+  };
+  if (video && matchMedia('(prefers-reduced-motion: reduce)').matches) { video.pause(); video.removeAttribute('autoplay'); }
+  btn?.addEventListener('click', () => { if (!video) return; video.paused ? video.play() : video.pause(); });
+  video?.addEventListener('play', sync);
+  video?.addEventListener('pause', sync);
+  sync();
 </script>

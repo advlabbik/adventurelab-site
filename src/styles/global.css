@@ -12,6 +12,12 @@ a { color: inherit; }
 .section h2 { font-size: var(--fs-2); margin: 0 0 1.5rem; line-height: 1.15; }
 .grid { display: grid; gap: 1.25rem; }
 .btn { display: inline-block; padding: .8rem 1.4rem; border-radius: 999px; border: 2px solid currentColor; text-decoration: none; font-weight: 600; cursor: pointer; background: none; font: inherit; }
+.btn { transition: background-color .15s, color .15s, border-color .15s; }
+.btn:hover { background: var(--c-text); border-color: var(--c-text); color: var(--c-bg); }
+.btn--primary:hover { background: color-mix(in srgb, var(--c-accent) 85%, black); border-color: color-mix(in srgb, var(--c-accent) 85%, black); color: var(--c-accent-text); }
+h1, h2, h3 { text-wrap: balance; }
+.skip { position: absolute; left: 1rem; top: -100px; z-index: 20; background: var(--c-text); color: var(--c-bg); padding: .6rem 1rem; border-radius: 6px; }
+.skip:focus { top: 1rem; }
 .btn--primary { background: var(--c-accent); border-color: var(--c-accent); color: var(--c-accent-text); }
 .btn[disabled] { opacity: .6; cursor: progress; }
 .muted { color: var(--c-muted); }

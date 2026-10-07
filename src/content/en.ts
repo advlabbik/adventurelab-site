@@ -103,4 +103,5 @@ export const en: SiteContent = {
     cookieBody: ['TODO: cookie policy text provided by the company'],
   },
   langSwitch: { label: 'Italiano' },
+  a11y: { skip: 'Skip to content', pause: 'Pause the video', play: 'Play the video' },
 };

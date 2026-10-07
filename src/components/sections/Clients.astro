@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { SiteContent } from '../../content';
+import SectionHead from '../SectionHead.astro';
 interface Props { c: SiteContent }
 const { c } = Astro.props;
 const files = import.meta.glob<{ default: ImageMetadata }>('../../assets/clients/*.jpg', { eager: true });
@@ -17,15 +18,17 @@ const logos = Object.entries(files).map(([path, mod]) => {
 ---
 <section id="clienti" class="section clients">
   <div class="container">
-    <h2 class="clients__title">{c.clients.title}</h2>
-    <ul class="grid clients__grid">
+    <SectionHead n={1} label={c.sheets.clients} title={c.clients.title} />
+    <ul class="clients__grid">
       {logos.map((l) => <li><Image src={l.src} alt={l.alt} width={160} /></li>)}
     </ul>
   </div>
 </section>
 <style>
-  .clients { padding-block: 3rem; }
-  .clients__title { font-size: 1rem !important; text-align: center; color: var(--c-muted); font-weight: 500; }
-  .clients__grid { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); list-style: none; padding: 0; align-items: center; }
-  .clients img { margin-inline: auto; max-height: 56px; width: auto; filter: grayscale(1); opacity: .8; }
+  /* 14 loghi: 7 colonne = due righe piene; 2 su telefono. */
+  .clients__grid { display: grid; grid-template-columns: repeat(2, 1fr); list-style: none; padding: 0; margin: 0; border-top: var(--rule-hair) solid var(--ink); border-left: var(--rule-hair) solid var(--ink); }
+  .clients__grid li { display: grid; place-items: center; min-height: 96px; padding: var(--space-4); border-right: var(--rule-hair) solid var(--ink); border-bottom: var(--rule-hair) solid var(--ink); background: var(--paper-raised); }
+  @media (min-width: 640px) { .clients__grid { grid-template-columns: repeat(7, 1fr); } }
+  @media (min-width: 640px) and (max-width: 1000px) { .clients__grid li { padding: var(--space-2); min-height: 72px; } }
+  .clients img { max-height: 48px; width: auto; filter: grayscale(1); mix-blend-mode: multiply; }
 </style>

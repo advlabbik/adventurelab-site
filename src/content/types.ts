@@ -3,7 +3,8 @@ export type Lang = 'it' | 'en';
 export interface SiteContent {
   meta: { title: string; description: string };
   nav: { territories: string; cases: string; brands: string; events: string; about: string; cta: string };
-  hero: { title: string; subtitle: string; ctaPrimary: string; ctaSecondary: string };
+  hero: { title: string; place: string; subtitle: string; ctaPrimary: string; ctaSecondary: string; frameCaption: string };
+  sheets: { clients: string; territories: string; process: string; cases: string; brands: string; events: string; about: string; contact: string };
   numbers: { label: string; items: { value: string; label: string }[] };
   clients: { title: string };
   services: { title: string; intro: string; items: { title: string; text: string }[] };

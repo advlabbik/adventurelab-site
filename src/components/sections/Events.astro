@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { SiteContent } from '../../content';
+import SectionHead from '../SectionHead.astro';
 import tt from '../../assets/events/tuscany-trail.png';
 import tge from '../../assets/events/the-grand-escape.png';
 import ur from '../../assets/events/unpaved-roads.png';
@@ -13,25 +14,30 @@ const whiteLogos = new Set(['The Grand Escape']);
 ---
 <section id="eventi" class="section">
   <div class="container">
-    <h2>{c.events.title}</h2>
-    <ul class="grid events">
+    <SectionHead n={6} label={c.sheets.events} title={c.events.title} />
+    <ul class="events">
       {c.events.items.map((e) => (
         <li class="event">
           <div class:list={['event__logo', { 'event__logo--dark': whiteLogos.has(e.name) }]}>
-            {logos[e.name] ? <Image src={logos[e.name]} alt={e.name} height={56} /> : <strong>{e.name}</strong>}
+            {logos[e.name] ? <Image src={logos[e.name]} alt={e.name} height={52} /> : <span class="h3">{e.name}</span>}
           </div>
-          <p>{e.line}</p>
-          <p class="muted">{e.stat}</p>
-          <a href={e.url} rel="noopener" target="_blank">{e.url.replace(/^https:\/\/|\/.*$/g, '')} ↗</a>
+          <p class="event__line">{e.line}</p>
+          <p class="label">{e.stat}</p>
+          <a href={e.url} rel="noopener" target="_blank" class="event__link">{e.url.replace(/^https:\/\/|\/.*$/g, '')} ↗</a>
         </li>
       ))}
     </ul>
   </div>
 </section>
 <style>
-  .events { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); list-style: none; padding: 0; }
-  .event { border: 1px solid var(--c-line); border-radius: var(--radius); padding: 1.25rem; }
-  .event__logo { background: var(--c-surface); border-radius: 6px; height: 88px; display: grid; place-items: center; padding: .75rem; }
-  .event__logo--dark { background: #16181a; color: #fff; }
-  .event__logo img { max-height: 56px; width: auto; }
+  /* 6 eventi: 3 colonne = due righe piene. */
+  .events { display: grid; grid-template-columns: 1fr; list-style: none; padding: 0; margin: 0; border-top: var(--rule-hair) solid var(--ink); border-left: var(--rule-hair) solid var(--ink); }
+  @media (min-width: 640px) { .events { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .events { grid-template-columns: repeat(3, 1fr); } }
+  .event { padding: var(--space-5); border-right: var(--rule-hair) solid var(--ink); border-bottom: var(--rule-hair) solid var(--ink); display: grid; gap: var(--space-3); align-content: start; }
+  .event > p { margin: 0; }
+  .event__logo { background: var(--paper-sunk); height: 92px; display: grid; place-items: center; padding: var(--space-3); }
+  .event__logo--dark { background: var(--ink); color: var(--paper-on-ink); }
+  .event__logo img { max-height: 52px; width: auto; }
+  .event__link { font-family: var(--font-mono); font-size: 12px; color: var(--idro); }
 </style>

@@ -1,16 +1,28 @@
+/* AdventureLab Design System "Foglio IGM" — https://claude.ai/artifact/Rs4wM1WwYdqAwTYEcMVU66
+   Copia dei token: se cambi un valore qui, cambialo anche nel design system. */
 :root {
-  --c-bg: #ffffff;
-  --c-surface: #f4f4f2;
-  --c-text: #16181a;
-  --c-muted: #5b6168;
-  --c-line: #dcdcd8;
-  --c-accent: #0a5cff;
-  --c-accent-text: #ffffff;
-  --font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --fs-1: clamp(2rem, 4.5vw, 3.4rem);
-  --fs-2: clamp(1.5rem, 3vw, 2.2rem);
-  --fs-3: 1.15rem;
-  --space: clamp(3.5rem, 8vw, 6.5rem);
-  --radius: 10px;
-  --max: 1160px;
+  --paper: #F1F2EE;
+  --paper-raised: #FAFAF7;
+  --paper-sunk: #E4E6E0;
+  --ink: #16191C;
+  --ink-muted: #4E5450;
+  --rock: #8A8F87;
+  --rule-soft: #C9CCC5;
+  --segnavia: #C8201E;
+  --on-segnavia: #FFFFFF;
+  --idro: #2C5F8A;
+  --paper-on-ink: #F1F2EE;
+  --muted-on-ink: #A9AEA7;
+  --idro-on-ink: #8DB4D9;
+  --segnavia-on-ink: #F0685E;
+
+  --font-display: 'Archivo Variable', 'Arial Black', Arial, sans-serif;
+  --font-serif: Spectral, Georgia, 'Times New Roman', serif;
+  --font-mono: 'Martian Mono Variable', ui-monospace, Menlo, monospace;
+
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px;
+  --space-5: 24px; --space-6: 40px; --space-7: 72px; --space-8: 112px;
+  --radius-none: 0; --radius-round: 50%;
+  --rule-hair: 1px; --rule-strong: 2px; --rule-segnavia: 8px;
+  --measure: 65ch; --container: 1240px; --tick-length: 10px;
 }

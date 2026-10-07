@@ -7,11 +7,14 @@ export const en: SiteContent = {
   },
   nav: { territories: 'Destinations', cases: 'Cases', brands: 'Brands', events: 'Events', about: 'About', cta: 'Book a call' },
   hero: {
-    title: 'TODO: We bring cyclists to your destination.',
+    title: 'TODO: We bring cyclists to your destination',
+    place: 'TODO: and we bring them back',
     subtitle: 'TODO: Events, routes and promotion for destinations that want to grow with bike tourism.',
     ctaPrimary: 'Book a call',
     ctaSecondary: 'See the cases',
+    frameCaption: 'TODO: filming location · Tuscany Trail',
   },
+  sheets: { clients: 'Clients', territories: 'Destinations', process: 'Method', cases: 'Cases', brands: 'Brands', events: 'Events', about: 'About', contact: 'Contact' },
   numbers: {
     label: 'TODO: 2025 data',
     items: [

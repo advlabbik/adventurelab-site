@@ -124,3 +124,35 @@ test('[hidden] vince sul display dei componenti (form e bottone devono sparire d
   const css = html + cssFiles.map((f) => read(`_astro/${f}`)).join('\n');
   assert.match(css, /\[hidden\]\s*\{\s*display:\s*none\s*!important/);
 });
+
+// --- Design system "Foglio IGM" ---
+const allCss = async () => {
+  const { readdirSync } = await import('node:fs');
+  return readdirSync(new URL('../../dist/_astro/', import.meta.url)).filter((f) => f.endsWith('.css')).map((f) => read(`_astro/${f}`)).join('\n');
+};
+
+test('font ospitati in proprio: niente Google Fonts, @font-face dei tre font', async () => {
+  const css = await allCss();
+  assert.doesNotMatch(read('index.html'), /fonts\.googleapis\.com/);
+  for (const f of ['Archivo Variable', 'Spectral', 'Martian Mono Variable']) assert.match(css, new RegExp(`font-family:\\s*['"]?${f}`), f);
+});
+
+test('in barra il logo vero, non testo', () => {
+  assert.match(read('index.html'), /<a[^>]*class="nav__logo"[^>]*>\s*<img[^>]*alt="AdventureLab"/);
+});
+
+test('titolo dell’hero con la riga del luogo in corsivo', () => {
+  assert.match(read('index.html'), /<h1[^>]*>[\s\S]*?<span class="place[^"]*"[^>]*>[\s\S]*?<\/h1>/);
+});
+
+test('esattamente due barre del segnavia', () => {
+  assert.equal((read('index.html').match(/class="segnavia"/g) ?? []).length, 2);
+});
+
+test('ogni titolo di sezione ha sopra l’eyebrow "Foglio"', () => {
+  const html = read('index.html');
+  const h2s = (html.match(/<h2[\s>]/g) ?? []).length;
+  const eyebrows = (html.match(/class="eyebrow"[^>]*>\s*Foglio (?!00)\d{2}/g) ?? []).length;
+  assert.ok(h2s >= 7);
+  assert.equal(eyebrows, h2s);
+});

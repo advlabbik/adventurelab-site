@@ -1,35 +1,59 @@
 ---
 import type { SiteContent } from '../../content';
+import { site } from '../../../site.config';
 interface Props { c: SiteContent }
 const { c } = Astro.props;
 ---
 <section class="hero">
-  <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="/video/hero-poster.jpg" aria-hidden="true">
-    <source src="/video/hero.mp4" type="video/mp4" />
-  </video>
-  <div class="hero__shade"></div>
-  <button class="hero__pause" type="button" aria-label={c.a11y.pause} data-pause={c.a11y.pause} data-play={c.a11y.play}>❚❚</button>
-  <div class="container hero__in">
-    <h1>{c.hero.title}</h1>
-    <p>{c.hero.subtitle}</p>
-    <p class="hero__cta">
-      <a href="#contatti" class="btn btn--primary">{c.hero.ctaPrimary}</a>
-      <a href="#casi" class="btn">{c.hero.ctaSecondary}</a>
-    </p>
+  <div class="container hero__grid">
+    <div class="hero__text">
+      <!-- Curve di livello procedurali: da sostituire con quelle del terreno reale (design system, Contours). -->
+      <svg class="hero__contours" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs><filter id="hero-warp"><feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" /><feDisplacementMap in="SourceGraphic" scale="70" /></filter></defs>
+        <g filter="url(#hero-warp)">
+          {[[30, 22], [62, 45], [96, 70], [132, 97], [170, 126], [210, 157], [252, 190], [296, 224]].map(([rx, ry]) => <ellipse cx="300" cy="120" rx={rx} ry={ry} />)}
+        </g>
+      </svg>
+      <p class="eyebrow">Foglio 00 · AdventureLab · {site.company.coords}</p>
+      <h1>{c.hero.title} <span class="place">{c.hero.place}</span></h1>
+      <p class="hero__sub">{c.hero.subtitle}</p>
+      <p class="hero__cta">
+        <a href="#contatti" class="btn btn--primary">{c.hero.ctaPrimary} →</a>
+        <a href="#casi" class="btn btn--ghost">{c.hero.ctaSecondary}</a>
+      </p>
+    </div>
+    <figure class="hero__frame">
+      <div class="hero__media">
+        <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="/video/hero-poster.jpg" aria-hidden="true">
+          <source src="/video/hero.mp4" type="video/mp4" />
+        </video>
+        <button class="hero__pause" type="button" aria-label={c.a11y.pause} data-pause={c.a11y.pause} data-play={c.a11y.play}>❚❚</button>
+      </div>
+      <figcaption class="label">{c.hero.frameCaption}</figcaption>
+    </figure>
   </div>
 </section>
 <style>
-  .hero { position: relative; min-height: min(88vh, 760px); display: grid; align-items: end; color: #fff; overflow: hidden; }
-  .hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-  .hero__shade { position: absolute; inset: 0; background: linear-gradient(to top, rgb(0 0 0 / .65), rgb(0 0 0 / .1) 60%); }
-  .hero__pause { position: absolute; right: 1rem; bottom: 1rem; z-index: 2; width: 2.5rem; height: 2.5rem; border-radius: 50%; border: 1px solid rgb(255 255 255 / .6); background: rgb(0 0 0 / .35); color: #fff; cursor: pointer; font-size: .8rem; }
-  .hero__in { position: relative; padding-block: 4rem; }
-  .hero h1 { font-size: var(--fs-1); line-height: 1.05; margin: 0 0 1rem; max-width: 18ch; }
-  .hero p { max-width: 52ch; font-size: 1.15rem; }
-  .hero__cta { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .hero { padding-block: var(--space-6) var(--space-7); overflow: hidden; }
+  .hero__grid { display: grid; gap: var(--space-6); grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; }
+  .hero__text { position: relative; isolation: isolate; padding-block: var(--space-5); }
+  .hero__contours { position: absolute; inset: -80px -40px; width: calc(100% + 80px); height: calc(100% + 160px); z-index: -1; pointer-events: none; }
+  .hero__contours g { fill: none; stroke: var(--rock); stroke-width: .8; opacity: .55; }
+  .hero h1 { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(36px, 5.4vw, 64px); line-height: .94; letter-spacing: -.01em; margin: 0 0 var(--space-5); }
+  .hero h1 .place { display: block; font-size: .9em; line-height: 1.02; margin-top: .1em; }
+  .hero__sub { font-size: 20px; line-height: 1.5; max-width: 46ch; margin: 0 0 var(--space-5); }
+  .hero__cta { display: flex; gap: var(--space-3); flex-wrap: wrap; margin: 0; }
+  .hero__frame { margin: 0; padding: var(--space-4); border: var(--rule-hair) solid var(--ink); background: var(--paper-raised); }
+  .hero__media { position: relative; border: var(--rule-hair) solid var(--ink); aspect-ratio: 4 / 5; overflow: hidden; }
+  .hero__video { width: 100%; height: 100%; object-fit: cover; }
+  .hero__frame figcaption { margin-top: var(--space-3); }
+  .hero__pause { position: absolute; right: var(--space-3); bottom: var(--space-3); width: 36px; height: 36px; border: var(--rule-hair) solid var(--paper-on-ink); border-radius: var(--radius-none); background: rgb(22 25 28 / .55); color: var(--paper-on-ink); cursor: pointer; font-size: 11px; }
+  @media (max-width: 860px) {
+    .hero__grid { grid-template-columns: 1fr; }
+    .hero__media { aspect-ratio: 16 / 10; }
+  }
 </style>
 <script>
-  // Chi chiede meno movimento vede solo il poster.
   const video = document.querySelector<HTMLVideoElement>('.hero__video');
   const btn = document.querySelector<HTMLButtonElement>('.hero__pause');
   const sync = () => {

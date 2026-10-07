@@ -1,15 +1,16 @@
 ---
 import type { Lang, SiteContent } from '../../content';
 import { site } from '../../../site.config';
+import SectionHead from '../SectionHead.astro';
 interface Props { lang: Lang; c: SiteContent }
 const { lang, c } = Astro.props;
 const f = c.contact.fields;
 const p = lang === 'it' ? '' : '/en';
 ---
-<section id="contatti" class="section section--alt">
+<section id="contatti" class="section">
   <div class="container contact">
-    <h2>{c.contact.title}</h2>
-    <p class="muted">{c.contact.intro}</p>
+    <SectionHead n={8} label={c.sheets.contact} title={c.contact.title} />
+    <p class="contact__intro">{c.contact.intro}</p>
 
     <form class="contact__form" data-endpoint={site.leadEndpoint} data-calendly={site.calendlyUrl} data-lang={lang} novalidate>
       <label>{f.name}<input name="name" autocomplete="name" required maxlength="120" /></label>
@@ -44,15 +45,25 @@ const p = lang === 'it' ? '' : '/en';
   </div>
 </section>
 <style>
-  .contact { max-width: 720px; }
-  .contact__form { display: grid; gap: 1rem; }
-  .contact__form label { display: grid; gap: .3rem; font-weight: 600; }
-  .contact__form input:not([type=radio]):not([type=checkbox]) { font: inherit; padding: .7rem .8rem; border: 1px solid var(--c-line); border-radius: 8px; }
-  .contact__form fieldset { border: 0; padding: 0; display: flex; gap: 1.25rem; flex-wrap: wrap; }
-  .contact__form legend { font-weight: 600; margin-bottom: .3rem; }
-  .contact__form fieldset label, .check { display: flex !important; gap: .5rem; align-items: center; font-weight: 400 !important; }
-  .contact__error { color: #b42318; margin: 0; }
+  /* Allineata a sinistra come le altre sezioni: si restringe il contenuto, non il contenitore. */
+  .contact > * { max-width: 760px; }
+  .contact__intro { font-size: 20px; line-height: 1.5; margin: calc(-1 * var(--space-4)) 0 var(--space-6); max-width: 46ch; }
+  .contact__form { display: grid; gap: var(--space-4); padding: var(--space-5); border: var(--rule-hair) solid var(--ink); background: var(--paper-raised); }
+  .contact__form label, .contact__form legend { display: grid; gap: var(--space-2); font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); }
+  .contact__form input:not([type=radio]):not([type=checkbox]) { font: 17px/1.4 var(--font-serif); color: var(--ink); padding: var(--space-3); border: var(--rule-hair) solid var(--ink); border-radius: var(--radius-none); background: var(--paper); }
+  .contact__form input:not([type=radio]):not([type=checkbox]):focus-visible { outline: var(--rule-strong) solid var(--idro); outline-offset: 0; }
+  .contact__form input[type=radio], .contact__form input[type=checkbox] { accent-color: var(--ink); width: 16px; height: 16px; margin: 0; }
+  .contact__form fieldset { border: 0; padding: 0; margin: 0; display: flex; gap: var(--space-5); flex-wrap: wrap; }
+  .contact__form legend { margin-bottom: var(--space-2); }
+  .contact__form fieldset label, .check { display: flex !important; gap: var(--space-2); align-items: center; font: 16px/1.4 var(--font-serif) !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--ink) !important; }
+  .contact__form .btn { justify-self: start; }
+  .contact__error { color: var(--segnavia); font-family: var(--font-mono); font-size: 12px; margin: 0; }
+  .contact__thanks { font-family: var(--font-serif); font-style: italic; font-size: 22px; color: var(--idro); }
+  .contact__calendly { border: var(--rule-hair) solid var(--ink); background: var(--paper-raised); padding: var(--space-4); }
+  .contact__calendly h3 { font-family: var(--font-display); font-weight: 800; font-stretch: 112%; text-transform: uppercase; font-size: 20px; margin: 0 0 var(--space-3); }
   .contact__calendly iframe { width: 100%; height: 720px; border: 0; }
+  .contact__mail { font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); margin-top: var(--space-4); }
+  .contact__mail a { color: var(--idro); }
 </style>
 <script>
   import { sendLeadWithToken } from '../../lib/submit-lead';

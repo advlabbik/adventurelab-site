@@ -1,25 +1,38 @@
 ---
+import { Image } from 'astro:assets';
 import type { Lang, SiteContent } from '../content';
 import { site } from '../../site.config';
+import logo from '../assets/logos/adventurelab-paper.png';
 interface Props { lang: Lang; c: SiteContent }
 const { lang, c } = Astro.props;
 const p = lang === 'it' ? '' : '/en';
 const co = site.company;
 ---
-<footer class="footer">
+<footer class="footer section--ink">
   <div class="container footer__in">
-    <p><strong>{co.name}</strong> — {c.footer.tagline}</p>
-    <p class="muted">{co.address} · P. IVA {co.vat} · REA {co.rea} · Capitale sociale {co.capital}</p>
-    <p>
-      <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> ·
-      <a href={co.linkedin} rel="noopener">LinkedIn</a> ·
-      <a href={`${p}/privacy/`}>{c.footer.privacy}</a> ·
-      <a href={`${p}/cookie/`}>{c.footer.cookie}</a>
-    </p>
-    <p class="muted">© {new Date().getFullYear()} AdventureLab — {c.footer.rights}</p>
+    <div>
+      <Image src={logo} alt="AdventureLab" height={20} densities={[1, 2]} />
+      <p class="footer__tag">{c.footer.tagline}</p>
+    </div>
+    <div class="footer__data">
+      <p>{co.name} · {co.address}</p>
+      <p>P. IVA {co.vat} · REA {co.rea} · Capitale sociale {co.capital}</p>
+      <p>
+        <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> ·
+        <a href={co.linkedin} rel="noopener">LinkedIn</a> ·
+        <a href={`${p}/privacy/`}>{c.footer.privacy}</a> ·
+        <a href={`${p}/cookie/`}>{c.footer.cookie}</a>
+      </p>
+      <p>© {new Date().getFullYear()} AdventureLab — {c.footer.rights}</p>
+    </div>
   </div>
 </footer>
 <style>
-  .footer { border-top: 1px solid var(--c-line); padding-block: 2.5rem; font-size: .9rem; }
-  .footer p { margin: .35rem 0; }
+  .footer { padding-block: var(--space-6); }
+  .footer__in { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); align-items: start; }
+  .footer img { height: 20px; width: auto; }
+  .footer__tag { font-family: var(--font-serif); font-style: italic; color: var(--idro-on-ink); margin: var(--space-3) 0 0; }
+  .footer__data { font-family: var(--font-mono); font-size: 11px; line-height: 1.7; letter-spacing: .02em; color: var(--muted-on-ink); }
+  .footer__data p { margin: 0; }
+  .footer__data a { color: var(--paper-on-ink); }
 </style>

@@ -1,26 +1,55 @@
+@import '@fontsource-variable/archivo/wdth.css';
+@import '@fontsource/spectral/400.css';
+@import '@fontsource/spectral/400-italic.css';
+@import '@fontsource/spectral/600.css';
+@import '@fontsource-variable/martian-mono/index.css';
 @import './tokens.css';
+
 *, *::before, *::after { box-sizing: border-box; }
 /* L'attributo hidden deve vincere sul display dei componenti (.btn, .contact__form, …). */
 [hidden] { display: none !important; }
 html { scroll-behavior: smooth; scroll-padding-top: 72px; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body { margin: 0; font-family: var(--font); color: var(--c-text); background: var(--c-bg); line-height: 1.55; }
+body { margin: 0; font-family: var(--font-serif); font-size: 17px; line-height: 1.6; color: var(--ink); background: var(--paper); }
 img, video { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
-:focus-visible { outline: 3px solid var(--c-accent); outline-offset: 3px; }
-.container { width: min(100% - 2rem, var(--max)); margin-inline: auto; }
-.section { padding-block: var(--space); }
-.section--alt { background: var(--c-surface); }
-.section h2 { font-size: var(--fs-2); margin: 0 0 1.5rem; line-height: 1.15; }
-.grid { display: grid; gap: 1.25rem; }
-.btn { display: inline-block; padding: .8rem 1.4rem; border-radius: 999px; border: 2px solid currentColor; text-decoration: none; font-weight: 600; cursor: pointer; background: none; font: inherit; }
-.btn { transition: background-color .15s, color .15s, border-color .15s; }
-.btn:hover { background: var(--c-text); border-color: var(--c-text); color: var(--c-bg); }
-.btn--primary:hover { background: color-mix(in srgb, var(--c-accent) 85%, black); border-color: color-mix(in srgb, var(--c-accent) 85%, black); color: var(--c-accent-text); }
+:focus-visible { outline: var(--rule-strong) solid var(--idro); outline-offset: 3px; }
+.section--ink :focus-visible { outline-color: var(--idro-on-ink); }
+
+.container { width: min(100% - 2 * var(--space-4), var(--container)); margin-inline: auto; }
+@media (min-width: 720px) { .container { width: min(100% - 2 * var(--space-5), var(--container)); } }
+.section { padding-block: var(--space-7); border-top: var(--rule-hair) solid var(--ink); }
+@media (min-width: 900px) { .section { padding-block: var(--space-8); } }
+.section--alt { background: var(--paper-sunk); }
+.section--ink { background: var(--ink); color: var(--paper-on-ink); }
+.section--ink .muted { color: var(--muted-on-ink); }
+
+/* Testata di sezione: eyebrow "Foglio NN · Tema" + titolo largo in maiuscolo */
+.eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .08em; line-height: 1.4; text-transform: uppercase; color: var(--idro); margin: 0 0 var(--space-3); }
+.section--ink .eyebrow { color: var(--idro-on-ink); }
 h1, h2, h3 { text-wrap: balance; }
-.skip { position: absolute; left: 1rem; top: -100px; z-index: 20; background: var(--c-text); color: var(--c-bg); padding: .6rem 1rem; border-radius: 6px; }
-.skip:focus { top: 1rem; }
-.btn--primary { background: var(--c-accent); border-color: var(--c-accent); color: var(--c-accent-text); }
-.btn[disabled] { opacity: .6; cursor: progress; }
-.muted { color: var(--c-muted); }
+.section h2 { font-family: var(--font-display); font-weight: 900; font-stretch: 118%; text-transform: uppercase; font-size: clamp(28px, 4vw, 40px); line-height: 1; margin: 0 0 var(--space-6); max-width: 22ch; }
+.section > h1 { font-family: var(--font-display); font-weight: 900; font-stretch: 118%; text-transform: uppercase; font-size: clamp(28px, 4vw, 40px); line-height: 1; margin: 0 0 var(--space-6); }
+.section > p { max-width: var(--measure); }
+.h3 { font-family: var(--font-display); font-weight: 800; font-stretch: 112%; text-transform: uppercase; font-size: 20px; line-height: 1.1; margin: 0; }
+.place { font-family: var(--font-serif); font-style: italic; font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--idro); }
+.section--ink .place { color: var(--idro-on-ink); }
+.muted { color: var(--ink-muted); }
+.label { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); }
+.grid { display: grid; gap: var(--space-5); }
+
+/* Bottoni: quadrati, mono maiuscolo. --primary = segnavia, l'unico che porta al contatto. */
+.btn { display: inline-flex; align-items: center; gap: var(--space-2); padding: var(--space-3) var(--space-4); border: var(--rule-hair) solid var(--ink); border-radius: var(--radius-none); background: var(--ink); color: var(--paper-on-ink); font-family: var(--font-mono); font-size: 12px; font-weight: 600; letter-spacing: .06em; line-height: 1; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: background-color .15s, color .15s, border-color .15s; }
+.btn:hover { background: var(--paper); color: var(--ink); }
+.btn--primary { background: var(--segnavia); border-color: var(--segnavia); color: var(--on-segnavia); }
+.btn--primary:hover { background: var(--ink); border-color: var(--ink); color: var(--paper-on-ink); }
+.btn--ghost { background: transparent; color: inherit; border-color: currentColor; }
+.btn--ghost:hover { background: var(--ink); color: var(--paper-on-ink); border-color: var(--ink); }
+.btn[disabled] { opacity: .55; cursor: progress; }
+
+/* Barra del segnavia: rosso, bianco, rosso. Al massimo due per pagina. */
+.segnavia { display: block; height: calc(var(--rule-segnavia) + 2 * var(--rule-hair)); margin: 0; border: 0; border-block: var(--rule-hair) solid var(--ink); background: linear-gradient(90deg, var(--segnavia) 0 33.333%, var(--on-segnavia) 33.333% 66.666%, var(--segnavia) 66.666%); }
+
+.skip { position: absolute; left: var(--space-4); top: -100px; z-index: 20; background: var(--ink); color: var(--paper-on-ink); padding: var(--space-3) var(--space-4); font-family: var(--font-mono); font-size: 12px; }
+.skip:focus { top: var(--space-4); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }

@@ -24,5 +24,7 @@ export const site = {
     rea: '532864',
     capital: '10.000 € i.v.',
     linkedin: 'https://www.linkedin.com/company/adventurelabco/',
+    /** Sede di Prato, per l'eyebrow dell'hero (design system: coordinate sempre vere). */
+    coords: '43°53′N 11°06′E',
   },
 } as const;

@@ -1,0 +1,7 @@
+---
+/** Testata di sezione del design system: eyebrow "Foglio NN · Tema" e titolo largo. */
+interface Props { n: number; label: string; title: string }
+const { n, label, title } = Astro.props;
+---
+<p class="eyebrow">Foglio {String(n).padStart(2, '0')} · {label}</p>
+<h2>{title}</h2>

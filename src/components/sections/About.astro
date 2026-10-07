@@ -1,17 +1,23 @@
 ---
 import { Image } from 'astro:assets';
 import type { SiteContent } from '../../content';
+import SectionHead from '../SectionHead.astro';
 import photo from '../../assets/photos/about.jpg';
 interface Props { c: SiteContent }
 const { c } = Astro.props;
 ---
 <section id="chi-siamo" class="section section--alt">
-  <div class="container grid about">
-    <div><h2>{c.about.title}</h2>{c.about.body.map((p) => <p>{p}</p>)}</div>
-    <Image src={photo} alt="" widths={[500, 900]} sizes="(max-width: 800px) 100vw, 50vw" />
+  <div class="container about">
+    <div>
+      <SectionHead n={7} label={c.sheets.about} title={c.about.title} />
+      {c.about.body.map((p) => <p class="about__p">{p}</p>)}
+    </div>
+    <figure class="about__frame"><Image src={photo} alt="" widths={[500, 900]} sizes="(max-width: 800px) 100vw, 45vw" /></figure>
   </div>
 </section>
 <style>
-  .about { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: center; }
-  .about img { border-radius: var(--radius); }
+  .about { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); align-items: center; }
+  .about__p { font-size: 19px; max-width: 46ch; }
+  .about__frame { margin: 0; padding: var(--space-4); border: var(--rule-hair) solid var(--ink); background: var(--paper-raised); }
+  .about__frame img { border: var(--rule-hair) solid var(--ink); width: 100%; }
 </style>

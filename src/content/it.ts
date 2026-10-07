@@ -8,11 +8,14 @@ export const it: SiteContent = {
   },
   nav: { territories: 'Territori', cases: 'Casi', brands: 'Brand', events: 'Eventi', about: 'Chi siamo', cta: 'Prenota una call' },
   hero: {
-    title: 'TODO: Portiamo ciclisti nel tuo territorio.',
+    title: 'TODO: Portiamo ciclisti nel tuo territorio',
+    place: 'TODO: e li facciamo tornare',
     subtitle: 'TODO: Eventi, itinerari e promozione per destinazioni che vogliono crescere con il turismo in bicicletta.',
     ctaPrimary: 'Prenota una call',
     ctaSecondary: 'Guarda i casi',
+    frameCaption: 'TODO: luogo della ripresa · Tuscany Trail',
   },
+  sheets: { clients: 'Clienti', territories: 'Territori', process: 'Metodo', cases: 'Casi', brands: 'Brand', events: 'Eventi', about: 'Chi siamo', contact: 'Contatti' },
   numbers: {
     label: 'TODO: dati 2025',
     items: [

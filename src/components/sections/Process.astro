@@ -1,19 +1,23 @@
 ---
 import type { SiteContent } from '../../content';
+import SectionHead from '../SectionHead.astro';
 interface Props { c: SiteContent }
 const { c } = Astro.props;
 ---
 <section class="section section--alt">
   <div class="container">
-    <h2>{c.process.title}</h2>
-    <ol class="grid process">
-      {c.process.steps.map((s) => <li><h3>{s.title}</h3><p class="muted">{s.text}</p></li>)}
+    <SectionHead n={3} label={c.sheets.process} title={c.process.title} />
+    <ol class="process">
+      {c.process.steps.map((s, i) => (
+        <li><span class="process__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><h3 class="h3">{s.title}</h3><p class="muted">{s.text}</p></li>
+      ))}
     </ol>
   </div>
 </section>
 <style>
-  .process { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); padding: 0; list-style: none; counter-reset: step; }
-  .process li { counter-increment: step; border-top: 3px solid var(--c-accent); padding-top: 1rem; }
-  .process h3::before { content: counter(step) ' · '; color: var(--c-accent); }
-  .process h3 { font-size: var(--fs-3); margin: 0 0 .4rem; }
+  /* Il metodo è una sequenza vera: i numeri dicono l'ordine. */
+  .process { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); list-style: none; padding: 0; margin: 0; gap: 0; border-left: var(--rule-hair) solid var(--ink); }
+  .process li { padding: 0 var(--space-5) var(--space-5); border-right: var(--rule-hair) solid var(--ink); display: grid; gap: var(--space-3); align-content: start; }
+  .process__n { font-family: var(--font-display); font-weight: 900; font-stretch: 112%; font-size: 44px; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .process p { margin: 0; }
 </style>

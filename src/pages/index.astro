@@ -1,12 +1,4 @@
 ---
-import Base from '../layouts/Base.astro';
-import Nav from '../components/Nav.astro';
-import Footer from '../components/Footer.astro';
-import { getContent } from '../content';
-const c = getContent('it');
+import OnePager from '../components/OnePager.astro';
 ---
-<Base lang="it" title={c.meta.title} description={c.meta.description} path="/">
-  <Nav lang="it" c={c} />
-  <main id="main"><h1 class="container">{c.hero.title}</h1></main>
-  <Footer lang="it" c={c} />
-</Base>
+<OnePager lang="it" />

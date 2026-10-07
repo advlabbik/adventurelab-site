@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from './Nav.astro';
+import Footer from './Footer.astro';
+import Hero from './sections/Hero.astro';
+import Numbers from './sections/Numbers.astro';
+import Clients from './sections/Clients.astro';
+import { getContent, type Lang } from '../content';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = getContent(lang);
+---
+<Base lang={lang} title={c.meta.title} description={c.meta.description} path="/">
+  <Nav lang={lang} c={c} />
+  <main id="main">
+    <Hero c={c} />
+    <Numbers c={c} />
+    <Clients c={c} />
+  </main>
+  <Footer lang={lang} c={c} />
+</Base>

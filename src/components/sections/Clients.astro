@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets';
+import type { SiteContent } from '../../content';
+interface Props { c: SiteContent }
+const { c } = Astro.props;
+const files = import.meta.glob<{ default: ImageMetadata }>('../../assets/clients/*.jpg', { eager: true });
+const names: Record<string, string> = {
+  norway: 'Visit Norway', 'parague-city-tourism': 'Prague City Tourism', lausanne: 'Lausanne Tourisme',
+  'visit-gallivare-2': 'Visit Gällivare', 'muenchen-tourismus-brand-design': 'München Tourismus', 'visit-berlin': 'visitBerlin',
+  'Visit-Rovaniemi': 'Visit Rovaniemi', 'Marchio-Regione-Toscana': 'Regione Toscana', helsinki: 'Helsinki',
+  bastogne: 'Bastogne', 'visit-tallinn': 'Visit Tallinn', LiveRiga: 'Live Riga', 'visit-oslo': 'Visit Oslo', bormio: 'Bormio',
+};
+const logos = Object.entries(files).map(([path, mod]) => {
+  const key = path.split('/').pop()!.replace('.jpg', '');
+  return { src: mod.default, alt: names[key] ?? key };
+});
+---
+<section id="clienti" class="section clients">
+  <div class="container">
+    <h2 class="clients__title">{c.clients.title}</h2>
+    <ul class="grid clients__grid">
+      {logos.map((l) => <li><Image src={l.src} alt={l.alt} width={160} /></li>)}
+    </ul>
+  </div>
+</section>
+<style>
+  .clients { padding-block: 3rem; }
+  .clients__title { font-size: 1rem !important; text-align: center; color: var(--c-muted); font-weight: 500; }
+  .clients__grid { grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); list-style: none; padding: 0; align-items: center; }
+  .clients img { margin-inline: auto; max-height: 56px; width: auto; filter: grayscale(1); opacity: .8; }
+</style>

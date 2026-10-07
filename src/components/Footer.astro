@@ -1,0 +1,25 @@
+---
+import type { Lang, SiteContent } from '../content';
+import { site } from '../../site.config';
+interface Props { lang: Lang; c: SiteContent }
+const { lang, c } = Astro.props;
+const p = lang === 'it' ? '' : '/en';
+const co = site.company;
+---
+<footer class="footer">
+  <div class="container footer__in">
+    <p><strong>{co.name}</strong> — {c.footer.tagline}</p>
+    <p class="muted">{co.address} · P. IVA {co.vat} · REA {co.rea} · Capitale sociale {co.capital}</p>
+    <p>
+      <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> ·
+      <a href={co.linkedin} rel="noopener">LinkedIn</a> ·
+      <a href={`${p}/privacy/`}>{c.footer.privacy}</a> ·
+      <a href={`${p}/cookie/`}>{c.footer.cookie}</a>
+    </p>
+    <p class="muted">© {new Date().getFullYear()} AdventureLab — {c.footer.rights}</p>
+  </div>
+</footer>
+<style>
+  .footer { border-top: 1px solid var(--c-line); padding-block: 2.5rem; font-size: .9rem; }
+  .footer p { margin: .35rem 0; }
+</style>

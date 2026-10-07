@@ -1,0 +1,16 @@
+:root {
+  --c-bg: #ffffff;
+  --c-surface: #f4f4f2;
+  --c-text: #16181a;
+  --c-muted: #5b6168;
+  --c-line: #dcdcd8;
+  --c-accent: #0a5cff;
+  --c-accent-text: #ffffff;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fs-1: clamp(2rem, 4.5vw, 3.4rem);
+  --fs-2: clamp(1.5rem, 3vw, 2.2rem);
+  --fs-3: 1.15rem;
+  --space: clamp(3.5rem, 8vw, 6.5rem);
+  --radius: 10px;
+  --max: 1160px;
+}

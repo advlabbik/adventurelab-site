@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { getContent } from '../content';
+const c = getContent('it');
+---
+<Base lang="it" title={`${c.legal.privacyTitle} — AdventureLab`} description={c.meta.description} path="/privacy/">
+  <Nav lang="it" c={c} path="/privacy/" />
+  <main id="main" class="container section">
+    <h1>{c.legal.privacyTitle}</h1>
+    {c.legal.privacyBody.map((p) => <p>{p}</p>)}
+  </main>
+  <Footer lang="it" c={c} />
+</Base>

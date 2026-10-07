@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+import type { Lang } from '../content';
+import { site } from '../../site.config';
+
+interface Props { lang: Lang; title: string; description: string; path: string }
+const { lang, title, description, path } = Astro.props;
+
+const origin = Astro.site!.origin;
+const urlFor = (l: Lang) => `${origin}${l === 'it' ? '' : '/en'}${path}`;
+const indexable = import.meta.env.PUBLIC_SITE_ENV === 'production';
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {!indexable && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={urlFor(lang)} />
+    <link rel="alternate" hreflang="it" href={urlFor('it')} />
+    <link rel="alternate" hreflang="en" href={urlFor('en')} />
+    <link rel="alternate" hreflang="x-default" href={urlFor('it')} />
+    <link rel="icon" href="/favicon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={urlFor(lang)} />
+    <meta property="og:image" content={`${origin}/og.jpg`} />
+    <meta property="og:locale" content={lang === 'it' ? 'it_IT' : 'en_GB'} />
+    {site.cfAnalyticsToken && (
+      <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: site.cfAnalyticsToken })}></script>
+    )}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

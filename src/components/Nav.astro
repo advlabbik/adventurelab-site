@@ -1,0 +1,32 @@
+---
+import type { Lang, SiteContent } from '../content';
+interface Props { lang: Lang; c: SiteContent; path?: string }
+const { lang, c, path = '/' } = Astro.props;
+const other = lang === 'it' ? `/en${path}` : path;
+const links = [
+  ['#territori', c.nav.territories], ['#casi', c.nav.cases], ['#brand', c.nav.brands],
+  ['#eventi', c.nav.events], ['#chi-siamo', c.nav.about],
+];
+const home = lang === 'it' ? '/' : '/en/';
+---
+<header class="nav">
+  <div class="container nav__in">
+    <a href={home} class="nav__logo">AdventureLab</a>
+    <nav aria-label="Principale">
+      <ul class="nav__links">
+        {links.map(([href, label]) => <li><a href={`${home}${href}`}>{label}</a></li>)}
+      </ul>
+    </nav>
+    <a href={other} hreflang={lang === 'it' ? 'en' : 'it'} class="nav__lang">{c.langSwitch.label}</a>
+    <a href={`${home}#contatti`} class="btn btn--primary nav__cta">{c.nav.cta}</a>
+  </div>
+</header>
+<style>
+  .nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--c-bg) 92%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--c-line); }
+  .nav__in { display: flex; align-items: center; gap: 1.25rem; min-height: 64px; }
+  .nav__logo { font-weight: 800; text-decoration: none; margin-right: auto; }
+  .nav__links { display: flex; gap: 1.1rem; list-style: none; margin: 0; padding: 0; }
+  .nav__links a, .nav__lang { text-decoration: none; font-size: .95rem; }
+  .nav__cta { padding: .55rem 1.1rem; }
+  @media (max-width: 860px) { .nav__links { display: none; } }
+</style>

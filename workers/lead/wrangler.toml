@@ -1,0 +1,29 @@
+name = "adventurelab-lead"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# Account aziendale Adventure Lab: senza questa riga wrangler chiede quale account
+# usare e in modo non interattivo si ferma.
+account_id = "fe10f419d554dfcaca3986a6e7056944"
+
+[vars]
+# Host da cui il form gira davvero. L'URL workers.dev del sito si aggiunge al primo deploy del sito.
+ALLOWED_ORIGINS = "https://adventurelab.cc,https://www.adventurelab.cc,http://localhost:4321"
+
+# Lista Brevo di destinazione. "0" = segnaposto voluto: il worker rifiuta ogni invio
+# con brevo_list_not_configured finché la lista non esiste (spec §5).
+BREVO_LIST_ID = "0"
+
+# Fail-closed. Sull'URL workers.dev il widget Turnstile non si rende (dominio non
+# registrato): in collaudo lì si usa la coppia di chiavi di test di Turnstile.
+TURNSTILE_REQUIRED = "true"
+
+# Segreti (mai qui): BREVO_API_KEY, TURNSTILE_SECRET — con `wrangler secret put`.
+
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1101"
+
+  [ratelimits.simple]
+  limit = 5
+  period = 60

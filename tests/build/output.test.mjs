@@ -2,11 +2,11 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 
-const read = (p) => readFileSync(new URL(`../dist/${p}`, import.meta.url), 'utf8');
+const read = (p) => readFileSync(new URL(`../../dist/${p}`, import.meta.url), 'utf8');
 
 test('esistono home IT e EN', () => {
-  assert.ok(existsSync(new URL('../dist/index.html', import.meta.url)));
-  assert.ok(existsSync(new URL('../dist/en/index.html', import.meta.url)));
+  assert.ok(existsSync(new URL('../../dist/index.html', import.meta.url)));
+  assert.ok(existsSync(new URL('../../dist/en/index.html', import.meta.url)));
 });
 
 test('la home IT dichiara lang="it", la EN lang="en"', () => {
@@ -30,7 +30,7 @@ test('noindex fuori produzione, assente in produzione', () => {
 
 test('pagine legali e 404 esistono in entrambe le lingue', () => {
   for (const p of ['privacy/index.html', 'cookie/index.html', 'en/privacy/index.html', 'en/cookie/index.html', '404.html']) {
-    assert.ok(existsSync(new URL(`../dist/${p}`, import.meta.url)), p);
+    assert.ok(existsSync(new URL(`../../dist/${p}`, import.meta.url)), p);
   }
 });
 
@@ -56,7 +56,7 @@ test('14 loghi clienti con alt non vuoto', () => {
 
 test('il video pesa meno di 3 MB', async () => {
   const { statSync } = await import('node:fs');
-  assert.ok(statSync(new URL('../dist/video/hero.mp4', import.meta.url)).size < 3 * 1024 * 1024);
+  assert.ok(statSync(new URL('../../dist/video/hero.mp4', import.meta.url)).size < 3 * 1024 * 1024);
 });
 
 test('tutte le ancore della nav esistono', () => {

@@ -1,0 +1,20 @@
+{
+  // Progetto separato apposta: il worker vive fuori dal tsconfig del sito (che lo
+  // esclude) perché ha un runtime diverso (WebWorker, non DOM/Astro) e non è
+  // annotato — noImplicitAny/useUnknownInCatchVariables spenti perché altrimenti
+  // ogni parametro e ogni `catch` andrebbero tipizzati a mano. Quello che resta
+  // acceso (checkJs) intercetta comunque riferimenti a variabili inesistenti,
+  // cioè esattamente il tipo di errore che un refactor rompe in silenzio.
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "noImplicitAny": false,
+    "useUnknownInCatchVariables": false,
+    "target": "ES2022",
+    "lib": ["ES2023", "WebWorker"],
+    "skipLibCheck": true,
+    "moduleDetection": "force"
+  },
+  "include": ["src/**/*.js"]
+}

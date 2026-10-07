@@ -1,0 +1,24 @@
+---
+import { existsSync } from 'node:fs';
+import type { Lang, SiteContent } from '../../content';
+interface Props { lang: Lang; c: SiteContent }
+const { lang, c } = Astro.props;
+const kit = lang === 'it' ? 'media-kit.pdf' : 'media-kit-en.pdf';
+const hasKit = existsSync(new URL(`../../../public/${kit}`, import.meta.url));
+---
+<section id="brand" class="section section--alt">
+  <div class="container">
+    <h2>{c.brands.title}</h2>
+    <div class="grid brands">
+      <div><h3>{c.brands.audienceTitle}</h3><p>{c.brands.audience}</p></div>
+      <div>
+        <h3>{c.brands.formatsTitle}</h3><p>{c.brands.formats}</p>
+        {hasKit && <a class="btn" href={`/${kit}`} download>{c.brands.mediaKit}</a>}
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .brands { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .brands h3 { font-size: var(--fs-3); }
+</style>

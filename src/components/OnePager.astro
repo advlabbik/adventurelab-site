@@ -5,6 +5,12 @@ import Footer from './Footer.astro';
 import Hero from './sections/Hero.astro';
 import Numbers from './sections/Numbers.astro';
 import Clients from './sections/Clients.astro';
+import Services from './sections/Services.astro';
+import Process from './sections/Process.astro';
+import Cases from './sections/Cases.astro';
+import Brands from './sections/Brands.astro';
+import Events from './sections/Events.astro';
+import About from './sections/About.astro';
 import { getContent, type Lang } from '../content';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
@@ -16,6 +22,12 @@ const c = getContent(lang);
     <Hero c={c} />
     <Numbers c={c} />
     <Clients c={c} />
+    <Services c={c} />
+    <Process c={c} />
+    <Cases c={c} />
+    <Brands lang={lang} c={c} />
+    <Events c={c} />
+    <About c={c} />
   </main>
   <Footer lang={lang} c={c} />
 </Base>

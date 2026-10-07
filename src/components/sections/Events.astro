@@ -1,0 +1,37 @@
+---
+import { Image } from 'astro:assets';
+import type { SiteContent } from '../../content';
+import tt from '../../assets/events/tuscany-trail.png';
+import tge from '../../assets/events/the-grand-escape.png';
+import ur from '../../assets/events/unpaved-roads.png';
+import nc from '../../assets/events/northcape4000.png';
+interface Props { c: SiteContent }
+const { c } = Astro.props;
+const logos: Record<string, ImageMetadata> = { 'Tuscany Trail': tt, 'The Grand Escape': tge, 'Unpaved Roads': ur, NorthCape4000: nc };
+// Il logo TGE è bianco: è l'unico che vuole lo sfondo scuro.
+const whiteLogos = new Set(['The Grand Escape']);
+---
+<section id="eventi" class="section">
+  <div class="container">
+    <h2>{c.events.title}</h2>
+    <ul class="grid events">
+      {c.events.items.map((e) => (
+        <li class="event">
+          <div class:list={['event__logo', { 'event__logo--dark': whiteLogos.has(e.name) }]}>
+            {logos[e.name] ? <Image src={logos[e.name]} alt={e.name} height={56} /> : <strong>{e.name}</strong>}
+          </div>
+          <p>{e.line}</p>
+          <p class="muted">{e.stat}</p>
+          <a href={e.url} rel="noopener" target="_blank">{e.url.replace(/^https:\/\/|\/.*$/g, '')} ↗</a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .events { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); list-style: none; padding: 0; }
+  .event { border: 1px solid var(--c-line); border-radius: var(--radius); padding: 1.25rem; }
+  .event__logo { background: var(--c-surface); border-radius: 6px; height: 88px; display: grid; place-items: center; padding: .75rem; }
+  .event__logo--dark { background: #16181a; color: #fff; }
+  .event__logo img { max-height: 56px; width: auto; }
+</style>

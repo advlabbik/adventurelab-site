@@ -1,0 +1,17 @@
+---
+import { Image } from 'astro:assets';
+import type { SiteContent } from '../../content';
+import photo from '../../assets/photos/about.jpg';
+interface Props { c: SiteContent }
+const { c } = Astro.props;
+---
+<section id="chi-siamo" class="section section--alt">
+  <div class="container grid about">
+    <div><h2>{c.about.title}</h2>{c.about.body.map((p) => <p>{p}</p>)}</div>
+    <Image src={photo} alt="" widths={[500, 900]} sizes="(max-width: 800px) 100vw, 50vw" />
+  </div>
+</section>
+<style>
+  .about { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: center; }
+  .about img { border-radius: var(--radius); }
+</style>

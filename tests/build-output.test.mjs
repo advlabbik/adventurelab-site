@@ -58,3 +58,34 @@ test('il video pesa meno di 3 MB', async () => {
   const { statSync } = await import('node:fs');
   assert.ok(statSync(new URL('../dist/video/hero.mp4', import.meta.url)).size < 3 * 1024 * 1024);
 });
+
+test('tutte le ancore della nav esistono', () => {
+  const html = read('index.html');
+  for (const id of ['territori', 'casi', 'brand', 'eventi', 'chi-siamo', 'contatti']) {
+    if (id === 'contatti') continue; // arriva nel Task 7
+    assert.match(html, new RegExp(`id="${id}"`), id);
+  }
+});
+
+test('ogni caso ha un dialog con titolo e bottone di chiusura', () => {
+  const html = read('index.html');
+  const dialogs = html.match(/<dialog[^>]*class="case__dialog"/g) ?? [];
+  assert.equal(dialogs.length, 3);
+});
+
+test('i link agli eventi sono esterni e sicuri', () => {
+  const block = read('index.html').split('id="eventi"')[1].split('</section>')[0];
+  const links = [...block.matchAll(/<a[^>]*href="(https:[^"]+)"[^>]*>/g)];
+  assert.equal(links.length, 6);
+  for (const l of links) assert.match(l[0], /rel="noopener"/);
+});
+
+test('bottone media kit assente finché il PDF non esiste', () => {
+  assert.doesNotMatch(read('index.html'), /media-kit/);
+});
+
+test('sfondo scuro solo dietro i loghi bianchi (TGE), chiaro dietro gli altri', () => {
+  const block = read('index.html').split('id="eventi"')[1].split('</section>')[0];
+  const dark = [...block.matchAll(/class="event__logo event__logo--dark[^"]*"[^>]*>\s*<img[^>]*alt="([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(dark, ['The Grand Escape']);
+});

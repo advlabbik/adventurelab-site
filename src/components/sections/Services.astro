@@ -1,0 +1,29 @@
+---
+import type { SiteContent } from '../../content';
+interface Props { c: SiteContent }
+const { c } = Astro.props;
+---
+<section id="territori" class="section">
+  <div class="container">
+    <h2>{c.services.title}</h2>
+    <p class="muted intro">{c.services.intro}</p>
+    <ul class="grid services">
+      {c.services.items.map((s, i) => (
+        <li class="services__card">
+          <span class="services__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{s.title}</h3>
+          <p>{s.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .intro { max-width: 60ch; margin: -0.75rem 0 2rem; }
+  /* auto-fit: la griglia regge da 3 a 6 servizi senza toccare il CSS */
+  .services { grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); list-style: none; padding: 0; }
+  .services__card { border: 1px solid var(--c-line); border-radius: var(--radius); padding: 1.5rem; }
+  .services__n { color: var(--c-accent); font-weight: 700; }
+  .services h3 { font-size: var(--fs-3); margin: .5rem 0; }
+  .services p { margin: 0; color: var(--c-muted); }
+</style>

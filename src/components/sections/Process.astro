@@ -1,0 +1,19 @@
+---
+import type { SiteContent } from '../../content';
+interface Props { c: SiteContent }
+const { c } = Astro.props;
+---
+<section class="section section--alt">
+  <div class="container">
+    <h2>{c.process.title}</h2>
+    <ol class="grid process">
+      {c.process.steps.map((s) => <li><h3>{s.title}</h3><p class="muted">{s.text}</p></li>)}
+    </ol>
+  </div>
+</section>
+<style>
+  .process { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); padding: 0; list-style: none; counter-reset: step; }
+  .process li { counter-increment: step; border-top: 3px solid var(--c-accent); padding-top: 1rem; }
+  .process h3::before { content: counter(step) ' · '; color: var(--c-accent); }
+  .process h3 { font-size: var(--fs-3); margin: 0 0 .4rem; }
+</style>

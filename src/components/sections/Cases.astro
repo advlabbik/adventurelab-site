@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets';
+import type { SiteContent } from '../../content';
+import slovenia from '../../assets/photos/case-slovenia.jpg';
+import toscana from '../../assets/photos/case-toscana.jpg';
+import trentino from '../../assets/photos/case-trentino.jpg';
+interface Props { c: SiteContent }
+const { c } = Astro.props;
+// Le foto seguono l'ordine dei casi nei testi; un caso in più senza foto usa la prima.
+const photos = [slovenia, toscana, trentino];
+---
+<section id="casi" class="section">
+  <div class="container">
+    <h2>{c.cases.title}</h2>
+    <ul class="grid cases">
+      {c.cases.items.map((k, i) => (
+        <li class="case">
+          <Image src={photos[i] ?? photos[0]} alt="" widths={[400, 800]} sizes="(max-width: 700px) 100vw, 33vw" />
+          <h3>{k.place} · {k.event}</h3>
+          <p class="muted">{k.summary}</p>
+          <button class="btn" type="button" data-open={`case-${i}`}>{c.cases.open}</button>
+          <dialog id={`case-${i}`} class="case__dialog" aria-labelledby={`case-${i}-t`}>
+            <h3 id={`case-${i}-t`}>{k.place} · {k.event}</h3>
+            <p>{k.body}</p>
+            <ul class="case__stats">{k.stats.map((s) => <li><strong>{s.value}</strong> {s.label}</li>)}</ul>
+            <form method="dialog"><button class="btn">{c.cases.close}</button></form>
+          </dialog>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .cases { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); list-style: none; padding: 0; }
+  .case img { border-radius: var(--radius); aspect-ratio: 4/3; object-fit: cover; }
+  .case h3 { font-size: var(--fs-3); margin: 1rem 0 .3rem; }
+  .case__dialog { max-width: 640px; border: 0; border-radius: var(--radius); padding: 2rem; }
+  .case__dialog::backdrop { background: rgb(0 0 0 / .5); }
+  .case__stats { list-style: none; padding: 0; display: grid; gap: .4rem; }
+</style>
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-open]').forEach((b) =>
+    b.addEventListener('click', () => (document.getElementById(b.dataset.open!) as HTMLDialogElement).showModal()),
+  );
+</script>

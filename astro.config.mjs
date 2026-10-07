@@ -5,7 +5,10 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   // Dominio da cui il sito risponderà davvero: alimenta canonical, hreflang e sitemap.
   // Il dominio nudo, non www: www rimanda qui (vedi docs/dns-cutover.md).
-  site: 'https://adventurelab.cc',
+  // L'anteprima su GitHub Pages li sovrascrive (vedi .github/workflows/pages.yml):
+  // SITE_URL=https://advlabbik.github.io, SITE_BASE=/adventurelab-site/.
+  site: process.env.SITE_URL ?? 'https://adventurelab.cc',
+  base: process.env.SITE_BASE ?? '/',
 
   // Italiano alla radice, inglese sotto /en/.
   i18n: {

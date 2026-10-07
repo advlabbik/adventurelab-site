@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import Base from '../layouts/Base.astro';
 import { getContent } from '../content';
 const c = getContent('it');
@@ -6,6 +7,6 @@ const c = getContent('it');
 <Base lang="it" title="404 — AdventureLab" description={c.meta.description} path="/404/">
   <main class="container section">
     <h1>Pagina non trovata · Page not found</h1>
-    <p><a href="/">Torna alla home</a> · <a href="/en/">Back to home</a></p>
+    <p><a href={withBase('/')}>Torna alla home</a> · <a href={withBase('/en/')}>Back to home</a></p>
   </main>
 </Base>

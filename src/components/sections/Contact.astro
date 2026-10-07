@@ -1,11 +1,12 @@
 ---
+import { withBase } from '../../lib/paths';
 import type { Lang, SiteContent } from '../../content';
 import { site } from '../../../site.config';
 import SectionHead from '../SectionHead.astro';
 interface Props { lang: Lang; c: SiteContent }
 const { lang, c } = Astro.props;
 const f = c.contact.fields;
-const p = lang === 'it' ? '' : '/en';
+const p = withBase(lang === 'it' ? '' : '/en').replace(/\/$/, '');
 ---
 <section id="contatti" class="section">
   <div class="container contact">

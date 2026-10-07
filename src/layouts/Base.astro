@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../lib/paths';
 import '../styles/global.css';
 import type { Lang } from '../content';
 import { site } from '../../site.config';
@@ -7,7 +8,7 @@ interface Props { lang: Lang; title: string; description: string; path: string }
 const { lang, title, description, path } = Astro.props;
 
 const origin = Astro.site!.origin;
-const urlFor = (l: Lang) => `${origin}${l === 'it' ? '' : '/en'}${path}`;
+const urlFor = (l: Lang) => `${origin}${withBase(`${l === 'it' ? '' : '/en'}${path}`)}`;
 const indexable = import.meta.env.PUBLIC_SITE_ENV === 'production';
 ---
 <!doctype html>
@@ -22,13 +23,13 @@ const indexable = import.meta.env.PUBLIC_SITE_ENV === 'production';
     <link rel="alternate" hreflang="it" href={urlFor('it')} />
     <link rel="alternate" hreflang="en" href={urlFor('en')} />
     <link rel="alternate" hreflang="x-default" href={urlFor('it')} />
-    <link rel="icon" href="/favicon.png" />
+    <link rel="icon" href={withBase('/favicon.png')} />
     <meta name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={urlFor(lang)} />
-    <meta property="og:image" content={`${origin}/og.jpg`} />
+    <meta property="og:image" content={`${origin}${withBase('/og.jpg')}`} />
     <meta property="og:locale" content={lang === 'it' ? 'it_IT' : 'en_GB'} />
     {site.cfAnalyticsToken && (
       <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: site.cfAnalyticsToken })}></script>

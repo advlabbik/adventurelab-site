@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../../lib/paths';
 import type { SiteContent } from '../../content';
 import { site } from '../../../site.config';
 interface Props { c: SiteContent }
@@ -24,8 +25,8 @@ const { c } = Astro.props;
     </div>
     <figure class="hero__frame">
       <div class="hero__media">
-        <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="/video/hero-poster.jpg" aria-hidden="true">
-          <source src="/video/hero.mp4" type="video/mp4" />
+        <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster={withBase('/video/hero-poster.jpg')} aria-hidden="true">
+          <source src={withBase('/video/hero.mp4')} type="video/mp4" />
         </video>
         <button class="hero__pause" type="button" aria-label={c.a11y.pause} data-pause={c.a11y.pause} data-play={c.a11y.play}>❚❚</button>
       </div>

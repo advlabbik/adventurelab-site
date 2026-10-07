@@ -1,11 +1,12 @@
 ---
+import { withBase } from '../lib/paths';
 import { Image } from 'astro:assets';
 import type { Lang, SiteContent } from '../content';
 import logo from '../assets/logos/adventurelab.png';
 interface Props { lang: Lang; c: SiteContent; path?: string }
 const { lang, c, path = '/' } = Astro.props;
-const other = lang === 'it' ? `/en${path}` : path;
-const home = lang === 'it' ? '/' : '/en/';
+const other = withBase(lang === 'it' ? `/en${path}` : path);
+const home = withBase(lang === 'it' ? '/' : '/en/');
 const links = [
   ['#territori', c.nav.territories], ['#casi', c.nav.cases], ['#brand', c.nav.brands],
   ['#eventi', c.nav.events], ['#chi-siamo', c.nav.about],

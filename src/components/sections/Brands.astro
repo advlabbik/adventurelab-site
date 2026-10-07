@@ -1,4 +1,5 @@
 ---
+import { withBase } from '../../lib/paths';
 import { existsSync } from 'node:fs';
 import type { Lang, SiteContent } from '../../content';
 import SectionHead from '../SectionHead.astro';
@@ -14,7 +15,7 @@ const hasKit = existsSync(new URL(`../../../public/${kit}`, import.meta.url));
       <div><p class="label brands__label">{c.brands.audienceTitle}</p><p class="brands__text">{c.brands.audience}</p></div>
       <div>
         <p class="label brands__label">{c.brands.formatsTitle}</p><p class="brands__text">{c.brands.formats}</p>
-        {hasKit && <a class="btn btn--ghost" href={`/${kit}`} download>{c.brands.mediaKit}</a>}
+        {hasKit && <a class="btn btn--ghost" href={withBase(`/${kit}`)} download>{c.brands.mediaKit}</a>}
       </div>
     </div>
   </div>

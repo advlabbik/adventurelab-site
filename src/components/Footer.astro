@@ -1,11 +1,12 @@
 ---
+import { withBase } from '../lib/paths';
 import { Image } from 'astro:assets';
 import type { Lang, SiteContent } from '../content';
 import { site } from '../../site.config';
 import logo from '../assets/logos/adventurelab-paper.png';
 interface Props { lang: Lang; c: SiteContent }
 const { lang, c } = Astro.props;
-const p = lang === 'it' ? '' : '/en';
+const p = withBase(lang === 'it' ? '' : '/en').replace(/\/$/, '');
 const co = site.company;
 ---
 <footer class="footer section--ink">

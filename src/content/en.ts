@@ -426,7 +426,7 @@ export const en: SiteContent = {
   },
   legal: {
     privacyTitle: 'Privacy notice',
-    privacyBody: ['TODO: privacy notice text provided by the company (must mention Brevo, Calendly and the collab@bikeadventureseries.com mailbox)'],
+    privacyBody: ['TODO: privacy notice text provided by the company (must mention Brevo, Google Calendar and the collab@bikeadventureseries.com mailbox)'],
     cookieTitle: 'Cookies',
     cookieBody: ['TODO: cookie policy text provided by the company'],
   },

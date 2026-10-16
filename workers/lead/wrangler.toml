@@ -26,7 +26,8 @@ TURNSTILE_REQUIRED = "true"
 # SENDER_EMAIL deve essere un mittente validato su Brevo (Senders & domains) e NON
 # deve essere collab@ stessa. Vuoto = niente notifica, resta solo il contatto su Brevo.
 NOTIFY_TO = "collab@bikeadventureseries.com"
-SENDER_EMAIL = ""
+# info@bikeadventureseries.com: mittente già validato su Brevo (adventurelab.cc non ne ha uno).
+SENDER_EMAIL = "info@bikeadventureseries.com"
 SENDER_NAME = "adventurelab.cc"
 
 # Segreti (mai qui): BREVO_API_KEY, TURNSTILE_SECRET — con `wrangler secret put`.

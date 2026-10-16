@@ -110,7 +110,7 @@ export function notifyPayload(n, env) {
     replyTo: { email: n.email, name: n.name || n.email },
     subject: `[adventurelab.cc] ${kind} · ${n.org || n.name || n.email}`,
     htmlContent:
-      `<p>Nuova candidatura dal sito: dopo l'invio ha visto il Calendly per la call, se è configurato. Rispondere entro due giorni lavorativi.</p>` +
+      `<p>Nuova candidatura dal sito: dopo l'invio ha visto la pagina per prenotare la call, se è configurata. Rispondere entro due giorni lavorativi.</p>` +
       `<table style="font-size:14px;font-family:sans-serif">${table}</table>` +
       `<p style="color:#888;font-size:12px">Rispondi a questa email per scrivere direttamente a chi si è candidato.</p>`,
   };

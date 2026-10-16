@@ -26,3 +26,8 @@ test('con l’host aggiunge i parametri dell’embed inline', () => {
   assert.equal(u.searchParams.get('embed_domain'), 'adventurelab.cc');
   assert.equal(u.searchParams.get('embed_type'), 'Inline');
 });
+
+test('prenotazione di Google Calendar: URL lasciato com’è, nessun dato personale aggiunto', () => {
+  const base = 'https://calendar.google.com/calendar/appointments/schedules/AbC?gv=true';
+  assert.equal(calendlyUrl(base, { name: 'A', email: 'a@b.it', org: 'X' }, 'adventurelab.cc'), base);
+});

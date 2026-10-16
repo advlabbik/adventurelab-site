@@ -13,7 +13,7 @@ function strings(obj, path = '') {
   });
 }
 
-// Regola di Andrea (ago-ott 2026): mai i due punti nei testi rivolti a partecipanti,
+// Regola della direzione (ago-ott 2026): mai i due punti nei testi rivolti a partecipanti,
 // enti e clienti, nemmeno in titoli ed etichette. Restano leciti negli URL e nei TODO.
 test('nessun due punti nei testi visibili, in italiano e in inglese', () => {
   for (const [lang, c] of [['it', it], ['en', en]]) {
@@ -37,7 +37,7 @@ test('stesso numero di settori, fasce di budget e obiettivi nelle due lingue', (
   assert.equal(it.territori.form.goals.length, en.territori.form.goals.length);
 });
 
-// Correzioni di Andrea del 16/10/2026 sulla prima bozza: che non tornino.
+// Correzioni della direzione del 16/10/2026 sulla prima bozza: che non tornino.
 const all = () => [...strings(it), ...strings(en)].map(([, v]) => v);
 
 test('mai la durata della call: quindici minuti sminuiscono loro e noi', () => {
@@ -48,8 +48,8 @@ test('mai la scadenza del listino: le aziende devono poter bussare sempre', () =
   for (const v of all()) assert.doesNotMatch(v, /15 novembre|15 November|listino 2027|2027 rate card/i, v);
 });
 
-test('si parla da numero uno: niente squadra piccola, niente «le call le fa Andrea»', () => {
-  for (const v of all()) assert.doesNotMatch(v, /squadra piccola|small team|Andrea Borchi|pochi partner|few partners/i, v);
+test('si parla da numero uno: niente squadra piccola, niente «le call le fa una persona sola»', () => {
+  for (const v of all()) assert.doesNotMatch(v, /squadra piccola|small team|le call le fa|pochi partner|few partners/i, v);
 });
 
 test('niente categorie occupate in vista', () => {
@@ -64,7 +64,7 @@ test('i partecipanti sono diecimila, i paesi 88', () => {
   for (const v of all()) assert.doesNotMatch(v, /9\.000|9,000|novemila|nine thousand|71 paesi|71 countries/i, v);
 });
 
-// Andrea, 16/10/2026: il numero dei partenti contati al via (5.195 al TT 2026)
+// Direzione, 16/10/2026: il numero dei partenti contati al via
 // non va mai in pubblico, perché accanto agli iscritti mostra quanti non sono venuti.
 test('mai il conteggio dei partenti al via', () => {
   for (const [, v] of [...strings(it), ...strings(en)]) {

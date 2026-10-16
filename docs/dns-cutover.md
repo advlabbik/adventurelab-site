@@ -12,6 +12,18 @@ Prerequisito: dominio rinnovato e lontano dalla scadenza (verificare con `whois 
 8. Build di produzione: `pnpm build:prod` (fallisce se restano TODO) e `npx wrangler deploy`. Verificare l'assenza di `noindex` e un invio reale del form.
 9. Dopo una settimana stabile: controllare che su Aruba non resti nulla (caselle, sottodomini) e dismettere l'hosting web.
 
-## Inventario record (da compilare al passo 1)
-| Tipo | Nome | Valore | TTL |
+## Inventario record (16/10/2026)
+Letti con `dig` sia sui DNS di Aruba sia sulla zona Cloudflare già creata: coincidono.
+
+| Tipo | Nome | Valore | Note |
 |---|---|---|---|
+| A | `@` | 89.46.105.43 | vecchio sito Aruba: va sostituito dal Worker al passo 6 |
+| AAAA | `@` | 2a00:6d40:4:3::c219:43 | come sopra |
+| A | `www` | 89.46.105.43 | redirect su `@` al passo 6 |
+| MX | `@` | 1 smtp.google.com | posta Google Workspace |
+| TXT | `@` | `v=spf1 include:_spf.aruba.it ~all` | non include Google: la posta Google passa DMARC grazie al DKIM |
+| TXT | `@` | `google-site-verification=ST_6hFR8…` | |
+| TXT | `google._domainkey` | `v=DKIM1; k=rsa; p=MIIB…` | DKIM di Google |
+| TXT | `_dmarc` | `v=DMARC1; p= quarantine; adkim=r; aspf=r;` | |
+| A | `mail` | 62.149.128.72 | Aruba, da dismettere al passo 9 |
+| A | `ftp` | 89.46.104.211, 89.46.104.218 | Aruba, da dismettere al passo 9 |

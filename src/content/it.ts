@@ -1,15 +1,15 @@
 import type { SiteContent } from './types';
 
 /*
- * Testi del sito in italiano. Regole di scrittura (Andrea, ott 2026):
+ * Testi del sito in italiano. Regole di scrittura (direzione, ott 2026):
  *  - niente due punti nel testo visibile, nemmeno in titoli ed etichette;
  *  - solo numeri che rafforzano e che reggono (fonte: Marketing Hub, relazioni, questionari);
  *  - mai il numero dei partenti contati al via: accanto agli iscritti mostra chi non è venuto;
- *  - si parla da numero uno: mai «piccoli», «pochi», «le call le fa Andrea»; il primato col numero accanto;
+ *  - si parla da numero uno: mai «piccoli», «pochi», «le call le fa una persona sola»; il primato col numero accanto;
  *  - mai la durata della call, mai la scadenza del listino, mai le categorie occupate;
- *  - nessun filtro sul budget: ogni candidatura può prenotare la call (Andrea, 16/10);
- *  - la frase su che cosa fa AdventureLab (home.about.body[0]) è quella approvata da
- *    Andrea il 16/10/2026: non si cambia senza di lui.
+ *  - nessun filtro sul budget: ogni candidatura può prenotare la call (16/10);
+ *  - la frase su che cosa fa AdventureLab (home.about.body[0]) è quella approvata dalla
+ *    direzione il 16/10/2026: non si cambia senza la direzione.
  * Le chiavi devono restare identiche in en.ts (controllo in build).
  */
 export const it: SiteContent = {
@@ -434,7 +434,7 @@ export const it: SiteContent = {
   },
   legal: {
     privacyTitle: 'Informativa privacy',
-    privacyBody: ['TODO: testo informativa privacy fornito dall’azienda (deve citare Brevo, Calendly e la casella collab@bikeadventureseries.com)'],
+    privacyBody: ['TODO: testo informativa privacy fornito dall’azienda (deve citare Brevo, Google Calendar e la casella collab@bikeadventureseries.com)'],
     cookieTitle: 'Cookie',
     cookieBody: ['TODO: testo cookie policy fornito dall’azienda'],
   },

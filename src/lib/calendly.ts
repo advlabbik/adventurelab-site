@@ -1,11 +1,15 @@
 /**
- * URL dell'embed Calendly con i dati del form già dentro, così chi ha appena
+ * URL della pagina per prenotare la call, da mettere nell'iframe dopo la candidatura.
+ * Con Calendly i dati del form vanno già dentro, così chi ha appena
  * compilato non li riscrive. `a1` è la prima domanda personalizzata dell'evento
  * Calendly: va configurata come "Ente o azienda".
  */
 export function calendlyUrl(base: string, d: { name: string; email: string; org: string }, host = ''): string {
   if (!base) return '';
   const u = new URL(base);
+  // Prenotazione di Google Calendar: non accetta dati precompilati e si incorpora
+  // solo dall'indirizzo calendar.google.com/calendar/appointments/…?gv=true.
+  if (u.hostname !== 'calendly.com') return base;
   if (d.name) u.searchParams.set('name', d.name);
   if (d.email) u.searchParams.set('email', d.email);
   if (d.org) u.searchParams.set('a1', d.org);

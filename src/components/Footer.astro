@@ -1,12 +1,11 @@
 ---
-import { withBase } from '../lib/paths';
 import { Image } from 'astro:assets';
+import { href } from '../lib/routes';
 import type { Lang, SiteContent } from '../content';
 import { site } from '../../site.config';
 import logo from '../assets/logos/adventurelab-paper.png';
 interface Props { lang: Lang; c: SiteContent }
 const { lang, c } = Astro.props;
-const p = withBase(lang === 'it' ? '' : '/en').replace(/\/$/, '');
 const co = site.company;
 ---
 <footer class="footer section--ink">
@@ -17,14 +16,13 @@ const co = site.company;
     </div>
     <div class="footer__data">
       <p>{co.name} · {co.address}</p>
-      <p>P. IVA {co.vat} · REA {co.rea} · Capitale sociale {co.capital}</p>
+      <p>{c.footer.vat} {co.vat} · REA {co.rea} · {c.footer.capital} {co.capital} · PEC {co.pec}</p>
       <p>
         <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> ·
-        <a href={co.linkedin} rel="noopener">LinkedIn</a> ·
-        <a href={`${p}/privacy/`}>{c.footer.privacy}</a> ·
-        <a href={`${p}/cookie/`}>{c.footer.cookie}</a>
+        <a href={href('privacy', lang)}>{c.footer.privacy}</a> ·
+        <a href={href('cookie', lang)}>{c.footer.cookie}</a>
       </p>
-      <p>© {new Date().getFullYear()} AdventureLab — {c.footer.rights}</p>
+      <p>© {new Date().getFullYear()} AdventureLab · {c.footer.rights}</p>
     </div>
   </div>
 </footer>

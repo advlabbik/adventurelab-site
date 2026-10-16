@@ -150,3 +150,56 @@ test('ogni rifiuto lascia una riga di log col codice e senza email', async () =>
   assert.deepEqual(events.map((e) => [e.ev, e.code]), [['lead_rejected', 'turnstile_failed'], ['lead_rejected', 'rate_limited']]);
   assert.ok(lines.every((l) => !l.includes('visit.it')));
 });
+
+// --- Notifica alla casella del B2B (collab@) ---
+import { notifyPayload } from '../src/index.js';
+const notifyEnv = (over = {}) => env({ NOTIFY_TO: 'collab@bikeadventureseries.com', SENDER_EMAIL: 'noreply@example.com', ...over });
+const brand = { ...good, type: 'brand', org: 'Acme Bags', category: 'Luci', budget: 'Da 5.000 a 15.000 €', markets: 'DE, IT', page: '/aziende/' };
+
+test('notifyPayload: reply-to al candidato, oggetto con tipo ed ente, campi nella tabella', () => {
+  const p = notifyPayload(normalize(brand), { NOTIFY_TO: 'collab@x.it', SENDER_EMAIL: 'noreply@x.it' });
+  assert.deepEqual(p.to, [{ email: 'collab@x.it' }]);
+  assert.equal(p.replyTo.email, 'a+b@visit.it');
+  assert.match(p.subject, /Azienda · Acme Bags$/);
+  assert.match(p.htmlContent, /Luci/);
+  assert.match(p.htmlContent, /Da 5\.000 a 15\.000 €/);
+});
+
+test('notifyPayload: i testi del candidato sono escapati', () => {
+  const p = notifyPayload(normalize({ ...brand, org: '<script>x</script>' }), { NOTIFY_TO: 'c@x.it', SENDER_EMAIL: 's@x.it' });
+  assert.doesNotMatch(p.htmlContent, /<script>/);
+});
+
+test('con notifica configurata: una email a collab@ e il contatto su Brevo', async () => {
+  const res = await worker.fetch(req(brand), notifyEnv());
+  assert.equal(res.status, 200);
+  const mail = calls.find((c) => c.url === 'https://api.brevo.com/v3/smtp/email');
+  assert.ok(mail);
+  assert.equal(JSON.parse(mail.init.body).to[0].email, 'collab@bikeadventureseries.com');
+  assert.ok(calls.find((c) => c.url === 'https://api.brevo.com/v3/contacts'));
+});
+
+test('lista "0" ma notifica configurata → 200, arriva solo la email', async () => {
+  const res = await worker.fetch(req(brand), notifyEnv({ BREVO_LIST_ID: '0' }));
+  assert.equal(res.status, 200);
+  assert.ok(calls.find((c) => c.url.endsWith('/smtp/email')));
+  assert.ok(!calls.find((c) => c.url.endsWith('/contacts')));
+});
+
+test('contatto Brevo in errore ma notifica partita → 200: la candidatura non si perde', async () => {
+  globalThis.fetch = async (url) => {
+    calls.push({ url: String(url) });
+    if (String(url).includes('turnstile')) return Response.json({ success: true });
+    if (String(url).endsWith('/smtp/email')) return Response.json({ messageId: 'x' }, { status: 201 });
+    return new Response('unauthorized', { status: 401 });
+  };
+  const res = await worker.fetch(req(brand), notifyEnv());
+  assert.equal(res.status, 200);
+});
+
+test('notifica e contatto entrambi in errore → 502 brevo_error', async () => {
+  globalThis.fetch = async (url) =>
+    String(url).includes('turnstile') ? Response.json({ success: true }) : new Response('nope', { status: 500 });
+  const res = await worker.fetch(req(brand), notifyEnv());
+  assert.equal(res.status, 502);
+});

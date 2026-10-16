@@ -1,34 +1,33 @@
 ---
-import { Image } from 'astro:assets';
-import type { SiteContent } from '../../content';
+import type { Territori } from '../../content/types';
 import SectionHead from '../SectionHead.astro';
-interface Props { c: SiteContent }
-const { c } = Astro.props;
-const files = import.meta.glob<{ default: ImageMetadata }>('../../assets/clients/*.jpg', { eager: true });
-const names: Record<string, string> = {
-  norway: 'Visit Norway', 'parague-city-tourism': 'Prague City Tourism', lausanne: 'Lausanne Tourisme',
-  'visit-gallivare-2': 'Visit Gällivare', 'muenchen-tourismus-brand-design': 'München Tourismus', 'visit-berlin': 'visitBerlin',
-  'Visit-Rovaniemi': 'Visit Rovaniemi', 'Marchio-Regione-Toscana': 'Regione Toscana', helsinki: 'Helsinki',
-  bastogne: 'Bastogne', 'visit-tallinn': 'Visit Tallinn', LiveRiga: 'Live Riga', 'visit-oslo': 'Visit Oslo', bormio: 'Bormio',
-};
-const logos = Object.entries(files).map(([path, mod]) => {
-  const key = path.split('/').pop()!.replace('.jpg', '');
-  return { src: mod.default, alt: names[key] ?? key };
-});
+/**
+ * I committenti come un muro di nomi, in tre gruppi: le capitali per impressionare,
+ * regioni ed enti, e i piccoli (comuni, parchi, valli) per dire che lavoriamo anche con loro.
+ * Scritte e non loghi: stessa voce per tutti, e nessun permesso d'uso da chiedere.
+ */
+interface Props { n: number; clients: Territori['clients'] }
+const { n, clients } = Astro.props;
 ---
-<section id="clienti" class="section clients">
+<section id="clienti" class="section section--ink clients">
   <div class="container">
-    <SectionHead n={1} label={c.sheets.clients} title={c.clients.title} />
-    <ul class="clients__grid">
-      {logos.map((l) => <li><Image src={l.src} alt={l.alt} width={160} /></li>)}
-    </ul>
+    <SectionHead n={n} label={clients.label} title={clients.title} intro={clients.intro} />
+    <div class="clients__groups">
+      {clients.groups.map((g, i) => (
+        <div class:list={['clients__group', { 'clients__group--big': i === 0 }]}>
+          <p class="clients__head">{g.title}</p>
+          <ul>{g.names.map((name) => <li>{name}</li>)}</ul>
+        </div>
+      ))}
+    </div>
   </div>
 </section>
 <style>
-  /* 14 loghi: 7 colonne = due righe piene; 2 su telefono. */
-  .clients__grid { display: grid; grid-template-columns: repeat(2, 1fr); list-style: none; padding: 0; margin: 0; border-top: var(--rule-hair) solid var(--ink); border-left: var(--rule-hair) solid var(--ink); }
-  .clients__grid li { display: grid; place-items: center; min-height: 96px; padding: var(--space-4); border-right: var(--rule-hair) solid var(--ink); border-bottom: var(--rule-hair) solid var(--ink); background: var(--paper-raised); }
-  @media (min-width: 640px) { .clients__grid { grid-template-columns: repeat(7, 1fr); } }
-  @media (min-width: 640px) and (max-width: 1000px) { .clients__grid li { padding: var(--space-2); min-height: 72px; } }
-  .clients img { max-height: 48px; width: auto; filter: grayscale(1); mix-blend-mode: multiply; }
+  .clients__groups { display: grid; gap: var(--space-6); border-top: var(--rule-strong) solid var(--paper-on-ink); padding-top: var(--space-5); }
+  @media (min-width: 900px) { .clients__groups { grid-template-columns: 1.4fr 1fr 1fr; } }
+  .clients__head { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--idro-on-ink); margin: 0 0 var(--space-4); }
+  .clients ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); }
+  .clients li { font-family: var(--font-display); font-weight: 800; font-stretch: 108%; text-transform: uppercase; font-size: 17px; line-height: 1.25; }
+  .clients__group--big li { font-weight: 900; font-stretch: 118%; font-size: clamp(22px, 2.6vw, 32px); line-height: 1.05; }
+  .clients__group--big ul { gap: var(--space-2) var(--space-5); }
 </style>

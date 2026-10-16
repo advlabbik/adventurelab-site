@@ -1,15 +1,4 @@
 ---
-import Base from '../../layouts/Base.astro';
-import Nav from '../../components/Nav.astro';
-import Footer from '../../components/Footer.astro';
-import { getContent } from '../../content';
-const c = getContent('en');
+import LegalPage from '../../components/pages/LegalPage.astro';
 ---
-<Base lang="en" title={`${c.legal.cookieTitle} — AdventureLab`} description={c.meta.description} path="/cookie/">
-  <Nav lang="en" c={c} path="/cookie/" />
-  <main id="main" class="container section">
-    <h1>{c.legal.cookieTitle}</h1>
-    {c.legal.cookieBody.map((p) => <p>{p}</p>)}
-  </main>
-  <Footer lang="en" c={c} />
-</Base>
+<LegalPage lang="en" page="cookie" />

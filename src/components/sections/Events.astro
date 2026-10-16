@@ -1,29 +1,41 @@
 ---
 import { Image } from 'astro:assets';
-import type { SiteContent } from '../../content';
+import type { Home } from '../../content/types';
 import SectionHead from '../SectionHead.astro';
-import tt from '../../assets/events/tuscany-trail.png';
-import tge from '../../assets/events/the-grand-escape.png';
-import ur from '../../assets/events/unpaved-roads.png';
-import nc from '../../assets/events/northcape4000.png';
-interface Props { c: SiteContent }
-const { c } = Astro.props;
-const logos: Record<string, ImageMetadata> = { 'Tuscany Trail': tt, 'The Grand Escape': tge, 'Unpaved Roads': ur, NorthCape4000: nc };
-// Il logo TGE è bianco: è l'unico che vuole lo sfondo scuro.
-const whiteLogos = new Set(['The Grand Escape']);
+import tt from '../../assets/photos/tt-cipressi.jpg';
+import nc from '../../assets/photos/nc4k-capo-nord.jpg';
+import tg from '../../assets/photos/tg-cime.jpg';
+import tge from '../../assets/photos/tge-slovenia.jpg';
+import ur from '../../assets/photos/case-toscana.jpg';
+// FFP: foto dal sito finalfrontierpatagonia.com, da far approvare a Eduardo (licenziatario) prima della produzione.
+import ffp from '../../assets/photos/ffp-patagonia.jpg';
+interface Props { n: number; events: Home['events'] }
+const { n, events } = Astro.props;
+// Le foto si legano al nome dell'evento; un evento senza foto mostra le curve di livello.
+const photos: Record<string, ImageMetadata> = {
+  'Tuscany Trail': tt, NorthCape4000: nc, 'Trentino Gravel': tg, 'The Grand Escape': tge, 'Unpaved Roads': ur,
+  'Final Frontier Patagonia': ffp,
+};
 ---
 <section id="eventi" class="section">
   <div class="container">
-    <SectionHead n={6} label={c.sheets.events} title={c.events.title} />
+    <SectionHead n={n} label={events.label} title={events.title} intro={events.intro} />
     <ul class="events">
-      {c.events.items.map((e) => (
+      {events.items.map((e) => (
         <li class="event">
-          <div class:list={['event__logo', { 'event__logo--dark': whiteLogos.has(e.name) }]}>
-            {logos[e.name] ? <Image src={logos[e.name]} alt={e.name} height={52} /> : <span class="h3">{e.name}</span>}
+          {photos[e.name] ? (
+            <Image class="event__photo" src={photos[e.name]} alt="" widths={[400, 700]} sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 33vw" />
+          ) : (
+            <svg class="event__photo event__contours" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <g>{[24, 48, 74, 102, 132, 164, 198].map((r, i) => <ellipse cx="250" cy="150" rx={r * 1.5} ry={r} transform={`rotate(${-12 + i * 2} 250 150)`} />)}</g>
+            </svg>
+          )}
+          <div class="event__body">
+            <h3 class="h3">{e.name}</h3>
+            <p class="event__line">{e.line}</p>
+            <p class="label">{e.stat}</p>
+            <a href={e.url} rel="noopener" target="_blank" class="event__link">{e.url.replace(/^https:\/\/(www\.)?|\/.*$/g, '')} ↗</a>
           </div>
-          <p class="event__line">{e.line}</p>
-          <p class="label">{e.stat}</p>
-          <a href={e.url} rel="noopener" target="_blank" class="event__link">{e.url.replace(/^https:\/\/|\/.*$/g, '')} ↗</a>
         </li>
       ))}
     </ul>
@@ -34,10 +46,11 @@ const whiteLogos = new Set(['The Grand Escape']);
   .events { display: grid; grid-template-columns: 1fr; list-style: none; padding: 0; margin: 0; border-top: var(--rule-hair) solid var(--ink); border-left: var(--rule-hair) solid var(--ink); }
   @media (min-width: 640px) { .events { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 960px) { .events { grid-template-columns: repeat(3, 1fr); } }
-  .event { padding: var(--space-5); border-right: var(--rule-hair) solid var(--ink); border-bottom: var(--rule-hair) solid var(--ink); display: grid; gap: var(--space-3); align-content: start; }
-  .event > p { margin: 0; }
-  .event__logo { background: var(--paper-sunk); height: 92px; display: grid; place-items: center; padding: var(--space-3); }
-  .event__logo--dark { background: var(--ink); color: var(--paper-on-ink); }
-  .event__logo img { max-height: 52px; width: auto; }
+  .event { border-right: var(--rule-hair) solid var(--ink); border-bottom: var(--rule-hair) solid var(--ink); display: grid; grid-template-rows: auto 1fr; background: var(--paper-raised); }
+  .event :global(.event__photo) { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-bottom: var(--rule-hair) solid var(--ink); display: block; }
+  .event__contours { background: var(--paper-sunk); }
+  .event__contours g { fill: none; stroke: var(--rock); stroke-width: 1; }
+  .event__body { padding: var(--space-5); display: grid; gap: var(--space-3); align-content: start; }
+  .event__body > * { margin: 0; }
   .event__link { font-family: var(--font-mono); font-size: 12px; color: var(--idro); }
 </style>

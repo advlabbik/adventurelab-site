@@ -1,18 +1,29 @@
 ---
-import type { SiteContent } from '../../content';
-interface Props { c: SiteContent }
-const { c } = Astro.props;
+import type { Stat } from '../../content/types';
+interface Props { label: string; items: Stat[] }
+const { label, items } = Astro.props;
 ---
-<section class="numbers" aria-label={c.numbers.label}>
-  <ul class="container numbers__band">
-    {c.numbers.items.map((n) => <li><b>{n.value}</b><span>{n.label}</span></li>)}
-  </ul>
+<section class="numbers" aria-label={label}>
+  <div class="container">
+    <p class="label numbers__label">{label}</p>
+    <ul class="numbers__band">
+      {items.map((n) => <li><b>{n.value}</b><span>{n.label}</span></li>)}
+    </ul>
+  </div>
 </section>
 <style>
   .numbers { padding-block: var(--space-6); }
-  .numbers__band { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); list-style: none; padding: 0; margin-block: 0; border-top: var(--rule-strong) solid var(--ink); border-bottom: var(--rule-hair) solid var(--ink); }
-  .numbers__band li { padding: var(--space-5) var(--space-4); border-right: var(--rule-hair) solid var(--ink); display: grid; gap: var(--space-1); align-content: start; }
+  .numbers__label { margin: 0 0 var(--space-3); }
+  .numbers__band { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); list-style: none; padding: 0; margin-block: 0; border-top: var(--rule-strong) solid var(--ink); border-bottom: var(--rule-hair) solid var(--ink); }
+  .numbers__band li { padding: var(--space-5) var(--space-4); border-right: var(--rule-hair) solid var(--ink); display: grid; gap: var(--space-2); align-content: start; }
   .numbers__band li:last-child { border-right: 0; }
-  .numbers b { font-family: var(--font-display); font-weight: 900; font-stretch: 112%; font-size: clamp(30px, 3.6vw, 44px); line-height: 1; font-variant-numeric: tabular-nums; }
-  .numbers span { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-muted); }
+  .numbers b { font-family: var(--font-display); font-weight: 900; font-stretch: 112%; font-size: clamp(26px, 3.1vw, 42px); line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .numbers span { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .06em; line-height: 1.45; text-transform: uppercase; color: var(--ink-muted); }
+  @media (max-width: 560px) {
+    .numbers__band { grid-template-columns: 1fr 1fr; border-bottom: 0; }
+    .numbers__band li { border-bottom: var(--rule-hair) solid var(--ink); }
+    .numbers__band li:nth-child(2n) { border-right: 0; }
+    /* il quinto numero, da solo sull'ultima riga, prende tutta la larghezza */
+    .numbers__band li:last-child:nth-child(odd) { grid-column: span 2; border-right: 0; }
+  }
 </style>

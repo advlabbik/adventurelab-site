@@ -53,3 +53,12 @@ h1, h2, h3 { text-wrap: balance; }
 .skip { position: absolute; left: var(--space-4); top: -100px; z-index: 20; background: var(--ink); color: var(--paper-on-ink); padding: var(--space-3) var(--space-4); font-family: var(--font-mono); font-size: 12px; }
 .skip:focus { top: var(--space-4); }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Attacco sotto il titolo di sezione (SectionHead). */
+.section__intro { font-size: 20px; line-height: 1.5; max-width: 54ch; margin: calc(-1 * var(--space-4)) 0 var(--space-6); }
+.section--ink .section__intro { color: var(--paper-on-ink); }
+
+/* Foto in cornice: il "foglio" con il bordo d'inchiostro, come nell'hero. */
+.frame { margin: 0; padding: var(--space-3); border: var(--rule-hair) solid var(--ink); background: var(--paper-raised); }
+.frame img { display: block; width: 100%; border: var(--rule-hair) solid var(--ink); object-fit: cover; }
+.frame figcaption { margin-top: var(--space-3); }

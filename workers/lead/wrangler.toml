@@ -22,6 +22,13 @@ BREVO_LIST_ID = "0"
 # Fail-closed. Spento solo in [env.preview], che è un worker separato.
 TURNSTILE_REQUIRED = "true"
 
+# Notifica di ogni candidatura alla casella unica del B2B (reply-to = il candidato).
+# SENDER_EMAIL deve essere un mittente validato su Brevo (Senders & domains) e NON
+# deve essere collab@ stessa. Vuoto = niente notifica, resta solo il contatto su Brevo.
+NOTIFY_TO = "collab@bikeadventureseries.com"
+SENDER_EMAIL = ""
+SENDER_NAME = "adventurelab.cc"
+
 # Segreti (mai qui): BREVO_API_KEY, TURNSTILE_SECRET — con `wrangler secret put`.
 
 [[ratelimits]]
@@ -46,6 +53,10 @@ name = "adventurelab-lead-preview"
 ALLOWED_ORIGINS = "http://localhost:4321"
 BREVO_LIST_ID = "0"
 TURNSTILE_REQUIRED = "false"
+# Niente notifiche dall'anteprima: senza Turnstile chiunque potrebbe riempire collab@.
+NOTIFY_TO = ""
+SENDER_EMAIL = ""
+SENDER_NAME = "adventurelab.cc (anteprima)"
 
 [[env.preview.ratelimits]]
 name = "RATE_LIMITER"

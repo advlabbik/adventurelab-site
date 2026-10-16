@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../Nav.astro';
+import Footer from '../Footer.astro';
+import Hero from '../sections/Hero.astro';
+import Numbers from '../sections/Numbers.astro';
+import Doors from '../sections/Doors.astro';
+import Proofs from '../sections/Proofs.astro';
+import PhotoBand from '../sections/PhotoBand.astro';
+import Events from '../sections/Events.astro';
+import About from '../sections/About.astro';
+import Closing from '../sections/Closing.astro';
+import { getContent, type Lang } from '../../content';
+import { href } from '../../lib/routes';
+import { site } from '../../../site.config';
+import partenza from '../../assets/photos/campiglia-partenza.jpg';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = getContent(lang);
+const h = c.home;
+const hrefs = { territori: href('territori', lang), aziende: href('aziende', lang) };
+---
+<Base lang={lang} title={h.meta.title} description={h.meta.description} page="home">
+  <Nav lang={lang} c={c} page="home" />
+  <main id="main">
+    <Hero hero={h.hero} coords={site.coords.home} primaryHref={hrefs.territori} secondaryHref={hrefs.aziende} doors pauseLabel={c.a11y.pause} playLabel={c.a11y.play} />
+    <hr class="segnavia" aria-hidden="true" />
+    <Numbers label={h.numbers.label} items={h.numbers.items} />
+    <Doors n={1} doors={h.doors} hrefs={hrefs} />
+    <Proofs n={2} id="forza" label={h.moat.label} title={h.moat.title} intro={h.moat.intro} items={h.moat.items} />
+    <PhotoBand src={partenza} alt={h.moat.alt} text={h.moat.band} caption={h.moat.caption} position="center 40%" />
+    <Events n={3} events={h.events} />
+    <About n={4} about={h.about} />
+    <hr class="segnavia" aria-hidden="true" />
+    <Closing
+      title={h.closing.title}
+      text={h.closing.text}
+      links={h.doors.items.map((d) => ({ href: hrefs[d.kind], label: d.cta }))}
+    />
+  </main>
+  <Footer lang={lang} c={c} />
+</Base>

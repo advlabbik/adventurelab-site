@@ -19,7 +19,10 @@ export const site = {
    */
   calendlyUrl: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0O9T8gP2DS6_60OkuJ7P61Wwa0cd5yQJkSMXVWLQhHqXvoYwOfNEO6kbd6HMYzPfoNPOys3VB3?gv=true',
 
-  /** Token Cloudflare Web Analytics. Vuoto = nessuno snippet. */
+  /**
+   * Token Cloudflare Web Analytics. Vuoto = nessuno snippet.
+   * Se lo accendi, aggiorna privacy e cookie: oggi dicono che il sito non usa analisi.
+   */
   cfAnalyticsToken: '',
 
   /**

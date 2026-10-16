@@ -15,9 +15,8 @@ enabled = true
 # Solo i domini veri: localhost e l'anteprima workers.dev stanno in [env.preview].
 ALLOWED_ORIGINS = "https://adventurelab.cc,https://www.adventurelab.cc"
 
-# Lista Brevo di destinazione. "0" = segnaposto voluto: il worker rifiuta ogni invio
-# con brevo_list_not_configured finché la lista non esiste (spec §5).
-BREVO_LIST_ID = "0"
+# Lista Brevo di destinazione: "Lead AdventureLab" (cartella AdventureLab), creata il 16/10/2026.
+BREVO_LIST_ID = "40"
 
 # Fail-closed. Spento solo in [env.preview], che è un worker separato.
 TURNSTILE_REQUIRED = "true"

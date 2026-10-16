@@ -24,7 +24,7 @@ Pagine separate e non sezioni, perché i due compratori vogliono cose diverse (p
 
 - [x] Frase su chi fa cosa (`home.about.body[0]`) e numeri della Regione Toscana confermati dalla direzione il 16/10.
 - [x] Prenotazione della call: Google Calendar «Call Bike Adventure Series 2027» in `site.config.ts` (forma `?gv=true`, incorporabile). Da confermare che sia quella giusta per adventurelab.cc.
-- [ ] Worker: `SENDER_EMAIL` = info@bikeadventureseries.com (già validato) e `leadEndpoint` già impostati; restano lista Brevo (`BREVO_LIST_ID`), attributi `ADVLAB_TIPO`, `ADVLAB_ENTE` (testo), `ADVLAB_OPTIN` (booleano), `ADVLAB_LAST_SIGNUP_AT` (testo), segreti e deploy.
+- [ ] Worker: `SENDER_EMAIL` = info@bikeadventureseries.com (già validato) e `leadEndpoint` già impostati; lista Brevo «Lead AdventureLab» (id 40) e attributi `ADVLAB_*` creati il 16/10; restano segreti e deploy.
 - [ ] Testi di privacy e cookie (devono citare Brevo, Calendly e collab@).
 - [ ] Certificato e DNS (`docs/dns-cutover.md`): il certificato di adventurelab.cc su Aruba è scaduto dal 7/7/2026.
 - [x] Loghi dei partner (dal sito del Tuscany Trail). Mancano Mondraker e We Make Things.

@@ -78,7 +78,8 @@ export function brevoPayload(n, listId, now = new Date()) {
     updateEnabled: true,
     listIds: [listId],
     attributes: {
-      FIRSTNAME: n.name,
+      // In questo account il nome è NOME (field_key firstname): FIRSTNAME non esiste.
+      NOME: n.name,
       // Attributo di categoria già esistente nell'account: 1 = Ita, 2 = Eng
       // (stessa convenzione di tt-subscribe e dei sync verso il database).
       LINGUA: n.lang === 'en' ? 2 : 1,

@@ -44,7 +44,7 @@ test('brevoPayload: lista, attributi e LINGUA numerica', () => {
     updateEnabled: true,
     listIds: [77],
     attributes: {
-      FIRSTNAME: 'Àlice D’Amico',
+      NOME: 'Àlice D’Amico',
       LINGUA: 2,
       SIGNUP_SOURCE: 'adventurelab:contatti',
       ADVLAB_TIPO: 'territorio',

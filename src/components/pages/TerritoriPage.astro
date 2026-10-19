@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../Nav.astro';
+import Footer from '../Footer.astro';
+import Hero from '../sections/Hero.astro';
+import Numbers from '../sections/Numbers.astro';
+import Cards from '../sections/Cards.astro';
+import Feature from '../sections/Feature.astro';
+import Cases from '../sections/Cases.astro';
+import PhotoBand from '../sections/PhotoBand.astro';
+import Clients from '../sections/Clients.astro';
+import Steps from '../sections/Steps.astro';
+import Fit from '../sections/Fit.astro';
+import Apply from '../sections/Apply.astro';
+import { getContent, type Lang } from '../../content';
+import { site } from '../../../site.config';
+import borgo from '../../assets/photos/territori-borgo.jpg';
+import bar from '../../assets/photos/sosta-bar.jpg';
+import valdorcia from '../../assets/photos/tt365-valdorcia.jpg';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const c = getContent(lang);
+const t = c.territori;
+---
+<Base lang={lang} title={t.meta.title} description={t.meta.description} page="territori">
+  <Nav lang={lang} c={c} page="territori" />
+  <main id="main">
+    <Hero hero={t.hero} coords={site.coords.territori} primaryHref="#candidatura" secondaryHref="#casi" image={borgo} pauseLabel={c.a11y.pause} playLabel={c.a11y.play} />
+    <hr class="segnavia" aria-hidden="true" />
+    <Numbers label={t.numbers.label} items={t.numbers.items} />
+    <Cards n={1} id="servizi" label={t.services.label} title={t.services.title} intro={t.services.intro} items={t.services.items} numbered />
+    <Feature n={2} id="tuscany-trail-365" label={t.tt365.label} title={t.tt365.title} intro={t.tt365.intro} text={t.tt365.text} points={t.tt365.points} cta={t.tt365.cta} url={t.tt365.url} image={valdorcia} alt={t.tt365.alt} caption={t.tt365.caption} />
+    <Cases n={3} cases={t.cases} />
+    <PhotoBand src={bar} alt={t.band.alt} text={t.band.text} source={t.band.source} position="center 18%" />
+    <Clients n={4} clients={t.clients} />
+    <Steps n={5} id="come" label={t.howto.label} title={t.howto.title} intro={t.howto.intro} steps={t.howto.steps} />
+    <Fit n={6} label={t.fit.label} title={t.fit.title} intro={t.fit.intro} items={t.fit.items} />
+    <hr class="segnavia" aria-hidden="true" />
+    <Apply n={7} lang={lang} c={c} kind="territorio" />
+  </main>
+  <Footer lang={lang} c={c} />
+</Base>

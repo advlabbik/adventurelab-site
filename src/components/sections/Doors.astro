@@ -1,0 +1,42 @@
+---
+import { Image } from 'astro:assets';
+import type { Home } from '../../content/types';
+import SectionHead from '../SectionHead.astro';
+import territori from '../../assets/photos/campiglia-porta-drone.jpg';
+import aziende from '../../assets/photos/bici-carica.jpg';
+interface Props { n: number; doors: Home['doors']; hrefs: Record<'territori' | 'aziende', string> }
+const { n, doors, hrefs } = Astro.props;
+const photos = { territori, aziende };
+---
+<section id="strade" class="section">
+  <div class="container">
+    <SectionHead n={n} label={doors.label} title={doors.title} intro={doors.intro} />
+    <ul class="doors">
+      {doors.items.map((d) => (
+        <li class="door">
+          <a class="door__link" href={hrefs[d.kind]}>
+            <Image class="door__photo" src={photos[d.kind]} alt={d.alt} widths={[480, 800, 1100]} sizes="(max-width: 760px) 100vw, 50vw" />
+            <span class="door__body">
+              <span class="label">{d.who}</span>
+              <span class="door__title">{d.title}</span>
+              <span class="door__text">{d.text}</span>
+              <span class="btn btn--primary door__cta">{d.cta}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .doors { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-5); list-style: none; padding: 0; margin: 0; }
+  .door__link { display: grid; grid-template-rows: auto 1fr; height: 100%; border: var(--rule-hair) solid var(--ink); background: var(--paper-raised); text-decoration: none; color: inherit; transition: box-shadow .15s, transform .15s; }
+  .door__link:hover { box-shadow: 6px 6px 0 var(--ink); transform: translate(-2px, -2px); }
+  @media (prefers-reduced-motion: reduce) { .door__link, .door__link:hover { transition: none; transform: none; } }
+  .door__link :global(.door__photo) { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-bottom: var(--rule-hair) solid var(--ink); }
+  .door__body { display: grid; gap: var(--space-3); align-content: start; padding: var(--space-5); }
+  .door__title { font-family: var(--font-display); font-weight: 900; font-stretch: 118%; text-transform: uppercase; font-size: clamp(24px, 2.6vw, 32px); line-height: 1; }
+  .door__text { font-size: 18px; line-height: 1.5; color: var(--ink-muted); }
+  .door__cta { justify-self: start; margin-top: var(--space-2); }
+  .door__link:hover .door__cta { background: var(--ink); border-color: var(--ink); }
+</style>

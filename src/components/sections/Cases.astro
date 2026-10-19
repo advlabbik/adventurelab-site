@@ -1,0 +1,58 @@
+---
+import { Image } from 'astro:assets';
+import type { Territori } from '../../content/types';
+import SectionHead from '../SectionHead.astro';
+import campiglia from '../../assets/photos/campiglia-porta-drone.jpg';
+import trentino from '../../assets/photos/tg-trento.jpg';
+import valdisole from '../../assets/photos/ur-partenza.jpg';
+interface Props { n: number; cases: Territori['cases'] }
+const { n, cases } = Astro.props;
+// Le foto seguono l'ordine dei casi nei testi; un caso in più senza foto usa la prima.
+const photos = [campiglia, trentino, valdisole];
+---
+<section id="casi" class="section">
+  <div class="container">
+    <SectionHead n={n} label={cases.label} title={cases.title} intro={cases.intro} />
+    <ul class="cases">
+      {cases.items.map((k, i) => (
+        <li class="case">
+          <Image class="case__photo" src={photos[i] ?? photos[0]} alt={k.alt} widths={[400, 800]} sizes="(max-width: 700px) 100vw, 33vw" />
+          <div class="case__body">
+            <p class="label">{k.event}</p>
+            <h3 class="case__place place">{k.place}</h3>
+            <p class="muted case__summary">{k.summary}</p>
+            {k.stats.length > 0 && <ul class="case__stats">{k.stats.map((s) => <li><b>{s.value}</b><span>{s.label}</span></li>)}</ul>}
+            <button class="btn btn--ghost" type="button" data-open={`case-${i}`}>{cases.open}</button>
+          </div>
+          <dialog id={`case-${i}`} class="case__dialog" aria-labelledby={`case-${i}-t`}>
+            <p class="label">{k.event}</p>
+            <h3 id={`case-${i}-t`} class="case__place place">{k.place}</h3>
+            <p>{k.body}</p>
+            {k.stats.length > 0 && <ul class="case__stats">{k.stats.map((s) => <li><b>{s.value}</b><span>{s.label}</span></li>)}</ul>}
+            <form method="dialog"><button class="btn">{cases.close}</button></form>
+          </dialog>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-5); list-style: none; padding: 0; margin: 0; }
+  .case { display: grid; grid-template-rows: auto 1fr; border: var(--rule-hair) solid var(--ink); background: var(--paper-raised); }
+  .case :global(.case__photo) { aspect-ratio: 4 / 3; width: 100%; object-fit: cover; border-bottom: var(--rule-hair) solid var(--ink); }
+  .case__body { padding: var(--space-5); display: grid; gap: var(--space-3); align-content: start; justify-items: start; }
+  .case__body > * { margin: 0; }
+  .case__place { font-size: 28px; line-height: 1.1; margin: 0; }
+  .case__stats { list-style: none; padding: var(--space-3) 0 0; margin: 0; width: 100%; display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-2); border-top: var(--rule-hair) solid var(--rule-soft); }
+  .case__stats li { display: grid; gap: 2px; align-content: start; }
+  .case__stats b { font-family: var(--font-display); font-weight: 900; font-stretch: 112%; font-size: 22px; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .case__stats span { font-family: var(--font-mono); font-size: 10.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--ink-muted); }
+  .case__dialog { max-width: 640px; width: calc(100% - 2 * var(--space-4)); border: var(--rule-hair) solid var(--ink); border-radius: var(--radius-none); padding: var(--space-6); background: var(--paper); color: var(--ink); overscroll-behavior: contain; }
+  .case__dialog > * { margin: 0 0 var(--space-4); }
+  .case__dialog::backdrop { background: rgb(22 25 28 / .6); }
+</style>
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-open]').forEach((b) =>
+    b.addEventListener('click', () => (document.getElementById(b.dataset.open!) as HTMLDialogElement).showModal()),
+  );
+</script>

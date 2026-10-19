@@ -1,0 +1,24 @@
+---
+import type { Item } from '../../content/types';
+import SectionHead from '../SectionHead.astro';
+interface Props { n: number; id?: string; label: string; title: string; intro: string; steps: Item[] }
+const { n, id, label, title, intro, steps } = Astro.props;
+---
+<section id={id} class="section section--alt">
+  <div class="container">
+    <SectionHead n={n} label={label} title={title} intro={intro} />
+    <ol class="process">
+      {steps.map((s, i) => (
+        <li><span class="process__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span><h3 class="h3">{s.title}</h3><p class="muted">{s.text}</p></li>
+      ))}
+    </ol>
+  </div>
+</section>
+<style>
+  /* Il metodo è una sequenza vera: i numeri dicono l'ordine. */
+  .process { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); list-style: none; padding: 0; margin: 0; gap: 0; border-left: var(--rule-hair) solid var(--ink); }
+  .process li { padding: 0 var(--space-5) var(--space-5); border-right: var(--rule-hair) solid var(--ink); display: grid; gap: var(--space-3); align-content: start; }
+  .process__n { font-family: var(--font-display); font-weight: 900; font-stretch: 112%; font-size: 44px; line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .process p { margin: 0; }
+  @media (max-width: 520px) { .process li { padding-bottom: var(--space-6); } }
+</style>

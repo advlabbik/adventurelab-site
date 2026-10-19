@@ -1,0 +1,33 @@
+---
+import { Image } from 'astro:assets';
+import SectionHead from '../SectionHead.astro';
+/** Un prodotto in evidenza (Tuscany Trail 365): foto grande, cosa comprende, link al sito del prodotto. */
+interface Props {
+  n: number; id?: string; label: string; title: string; intro: string; text: string;
+  points: string[]; cta: string; url: string; image: ImageMetadata; alt: string; caption: string;
+}
+const { n, id, label, title, intro, text, points, cta, url, image, alt, caption } = Astro.props;
+---
+<section id={id} class="section section--alt">
+  <div class="container feature">
+    <div>
+      <SectionHead n={n} label={label} title={title} intro={intro} />
+      <p class="feature__text">{text}</p>
+      <ul class="feature__points">{points.map((p) => <li>{p}</li>)}</ul>
+      <a class="btn btn--ghost" href={url} rel="noopener" target="_blank">{cta} ↗</a>
+    </div>
+    <figure class="frame feature__frame">
+      <Image src={image} alt={alt} widths={[600, 1000, 1400]} sizes="(max-width: 900px) 100vw, 50vw" />
+      <figcaption class="label">{caption}</figcaption>
+    </figure>
+  </div>
+</section>
+<style>
+  .feature { display: grid; gap: var(--space-6); align-items: center; }
+  @media (min-width: 900px) { .feature { grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); } }
+  .feature__text { font-size: 19px; max-width: 52ch; margin: 0 0 var(--space-5); }
+  .feature__points { list-style: none; padding: 0; margin: 0 0 var(--space-5); border-top: var(--rule-strong) solid var(--ink); }
+  .feature__points li { position: relative; padding: var(--space-3) 0 var(--space-3) var(--space-6); border-bottom: var(--rule-hair) solid var(--rule-soft); }
+  .feature__points li::before { content: ''; position: absolute; left: 0; top: calc(var(--space-3) + .5em); width: 18px; height: 10px; background: linear-gradient(90deg, var(--segnavia) 0 33.3%, var(--on-segnavia) 33.3% 66.6%, var(--segnavia) 66.6%); outline: var(--rule-hair) solid var(--ink); }
+  .feature__frame img { aspect-ratio: 16 / 10; }
+</style>

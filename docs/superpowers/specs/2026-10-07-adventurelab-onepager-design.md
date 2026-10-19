@@ -92,7 +92,7 @@ L'account Brevo è condiviso da tutti i brand, quindi gli attributi nuovi hanno 
 |---|---|---|
 | `LINGUA` | categoria (esiste già) | 1 = it, 2 = en: la stessa convenzione del TT, così il contatto entra nei segmenti IT/EN già esistenti |
 | `SIGNUP_SOURCE` | testo (esiste già) | `adventurelab:contatti` |
-| `FIRSTNAME` | testo (esiste già) | nome |
+| `NOME` | testo (esiste già, field_key firstname) | nome |
 | `ADVLAB_TIPO` | categoria (**da creare**) | territorio / brand / altro |
 | `ADVLAB_ENTE` | testo (**da creare**) | ente o azienda |
 | `ADVLAB_OPTIN` | booleano (**da creare**) | consenso agli aggiornamenti |

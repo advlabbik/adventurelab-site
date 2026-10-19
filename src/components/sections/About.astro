@@ -1,0 +1,48 @@
+---
+import { Image } from 'astro:assets';
+import type { Home } from '../../content/types';
+import SectionHead from '../SectionHead.astro';
+import photo from '../../assets/photos/tt-partenza-aerea.jpg';
+/** Chi siamo: una frase che si ricorda, i numeri che la provano, poi i dati che servono a chi firma. */
+interface Props { n: number; about: Home['about'] }
+const { n, about } = Astro.props;
+---
+<section id="chi-siamo" class="section section--ink about">
+  <div class="container about__grid">
+    <div class="about__text">
+      <SectionHead n={n} label={about.label} title={about.title} intro={about.intro} />
+      <p class="about__statement">{about.statement}</p>
+      <ul class="about__stats">
+        {about.stats.map((s) => <li><b>{s.value}</b><span>{s.label}</span></li>)}
+      </ul>
+      {about.body.map((p) => <p class="about__p">{p}</p>)}
+    </div>
+    <figure class="about__frame"><Image src={photo} alt={about.alt} widths={[500, 900]} sizes="(max-width: 900px) 100vw, 40vw" /></figure>
+  </div>
+  <div class="container">
+    <dl class="about__facts">
+      {about.facts.map((f) => (
+        <div><dt>{f.label}</dt><dd>{f.value.includes('@') ? <a href={`mailto:${f.value}`}>{f.value}</a> : f.value}</dd></div>
+      ))}
+    </dl>
+  </div>
+</section>
+<style>
+  .about__grid { display: grid; gap: var(--space-6); align-items: start; }
+  @media (min-width: 900px) { .about__grid { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); } }
+  .about__statement { font-family: var(--font-display); font-weight: 900; font-stretch: 118%; text-transform: uppercase; font-size: clamp(28px, 4vw, 52px); line-height: 1; margin: 0 0 var(--space-6); text-wrap: balance; }
+  .about__stats { list-style: none; padding: 0; margin: 0 0 var(--space-6); display: grid; grid-template-columns: repeat(2, 1fr); border-top: var(--rule-strong) solid var(--paper-on-ink); }
+  @media (min-width: 600px) { .about__stats { grid-template-columns: repeat(4, 1fr); } }
+  .about__stats li { display: grid; gap: var(--space-2); align-content: start; padding: var(--space-4) var(--space-4) var(--space-4) 0; border-bottom: var(--rule-hair) solid var(--muted-on-ink); }
+  .about__stats b { font-family: var(--font-display); font-weight: 900; font-stretch: 105%; font-size: clamp(24px, 2.3vw, 34px); line-height: 1; color: var(--segnavia-on-ink); font-variant-numeric: tabular-nums; }
+  .about__stats span { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: .06em; line-height: 1.45; text-transform: uppercase; color: var(--muted-on-ink); }
+  .about__p { font-size: 19px; max-width: 54ch; color: var(--paper-on-ink); }
+  .about__frame { margin: 0; padding: var(--space-3); border: var(--rule-hair) solid var(--muted-on-ink); }
+  .about__frame img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; }
+  @media (max-width: 899px) { .about__frame img { aspect-ratio: 16 / 10; } }
+  .about__facts { margin: var(--space-6) 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0 var(--space-5); border-top: var(--rule-hair) solid var(--muted-on-ink); }
+  .about__facts div { padding: var(--space-3) 0; border-bottom: var(--rule-hair) solid #3A3F44; }
+  .about__facts dt { font-family: var(--font-mono); font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-on-ink); }
+  .about__facts dd { margin: var(--space-1) 0 0; font-family: var(--font-mono); font-size: 13px; color: var(--paper-on-ink); overflow-wrap: anywhere; }
+  .about__facts a { color: var(--idro-on-ink); }
+</style>

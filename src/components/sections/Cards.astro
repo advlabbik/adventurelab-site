@@ -1,0 +1,40 @@
+---
+import type { Item } from '../../content/types';
+import SectionHead from '../SectionHead.astro';
+/** Griglia di voci con titolo e testo: servizi, motivi, livelli, voci del report. */
+interface Props {
+  n: number; id?: string; label: string; title: string; intro: string;
+  items: (Item & { scope?: string })[];
+  note?: string; tone?: 'paper' | 'alt' | 'ink'; numbered?: boolean;
+}
+const { n, id, label, title, intro, items, note = '', tone = 'paper', numbered = false } = Astro.props;
+---
+<section id={id} class:list={['section', { 'section--alt': tone === 'alt', 'section--ink': tone === 'ink' }]}>
+  <div class="container">
+    <SectionHead n={n} label={label} title={title} intro={intro} />
+    <ul class:list={['cards', { 'cards--numbered': numbered }]}>
+      {items.map((s, i) => (
+        <li>
+          {numbered && <span class="cards__n" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>}
+          {s.scope && <p class="label cards__scope">{s.scope}</p>}
+          <h3 class="h3">{s.title}</h3>
+          <p class="cards__text">{s.text}</p>
+        </li>
+      ))}
+    </ul>
+    {note && <p class="cards__note">{note}</p>}
+  </div>
+</section>
+<style>
+  /* auto-fit: la griglia regge da 3 a 6 voci senza toccare il CSS */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 0 var(--space-5); list-style: none; padding: 0; margin: 0; border-top: var(--rule-strong) solid currentColor; }
+  .cards li { padding: var(--space-5) 0 var(--space-6); border-bottom: var(--rule-hair) solid currentColor; display: grid; gap: var(--space-3); align-content: start; }
+  .cards p { margin: 0; }
+  .cards__text { color: var(--ink-muted); }
+  .section--ink .cards__text { color: var(--muted-on-ink); }
+  .cards__scope { color: var(--idro); }
+  .section--ink .cards__scope { color: var(--idro-on-ink); }
+  .cards__n { font-family: var(--font-display); font-weight: 900; font-stretch: 112%; font-size: 40px; line-height: 1; font-variant-numeric: tabular-nums; color: var(--segnavia); }
+  .section--ink .cards__n { color: var(--segnavia-on-ink); }
+  .cards__note { margin: var(--space-6) 0 0; font-size: 19px; max-width: 60ch; padding-left: var(--space-4); border-left: var(--rule-segnavia) solid var(--segnavia); }
+</style>

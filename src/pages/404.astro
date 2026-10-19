@@ -1,0 +1,13 @@
+---
+import { href } from '../lib/routes';
+import Base from '../layouts/Base.astro';
+import { getContent } from '../content';
+const it = getContent('it');
+const en = getContent('en');
+---
+<Base lang="it" title="404 · AdventureLab" description={it.home.meta.description} page="home" noAlternates>
+  <main class="container section">
+    <h1>{it.notFound.title} · {en.notFound.title}</h1>
+    <p><a href={href('home', 'it')}>{it.notFound.home}</a> · <a href={href('home', 'en')}>{en.notFound.home}</a></p>
+  </main>
+</Base>

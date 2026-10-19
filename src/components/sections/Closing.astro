@@ -1,0 +1,23 @@
+---
+/** Chiusura della home: le due strade, di nuovo, prima del footer. */
+interface Props { title: string; text: string; links: { href: string; label: string }[] }
+const { title, text, links } = Astro.props;
+---
+<section class="closing section--alt">
+  <div class="container closing__in">
+    <div>
+      <p class="closing__title">{title}</p>
+      <p class="closing__text">{text}</p>
+    </div>
+    <p class="closing__cta">
+      {links.map((l) => <a class="btn btn--primary" href={l.href}>{l.label}</a>)}
+    </p>
+  </div>
+</section>
+<style>
+  .closing { padding-block: var(--space-7); border-top: var(--rule-hair) solid var(--ink); }
+  .closing__in { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); align-items: center; }
+  .closing__title { font-family: var(--font-display); font-weight: 900; font-stretch: 118%; text-transform: uppercase; font-size: clamp(28px, 4vw, 44px); line-height: 1; margin: 0 0 var(--space-3); }
+  .closing__text { font-size: 19px; color: var(--ink-muted); margin: 0; max-width: 44ch; }
+  .closing__cta { display: flex; flex-wrap: wrap; gap: var(--space-3); margin: 0; }
+</style>

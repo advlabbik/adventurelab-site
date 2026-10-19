@@ -1,0 +1,56 @@
+---
+import { Image } from 'astro:assets';
+import type { Home } from '../../content/types';
+import SectionHead from '../SectionHead.astro';
+import tt from '../../assets/photos/tt-cipressi.jpg';
+import nc from '../../assets/photos/nc4k-capo-nord.jpg';
+import tg from '../../assets/photos/tg-cime.jpg';
+import tge from '../../assets/photos/tge-slovenia.jpg';
+import ur from '../../assets/photos/case-toscana.jpg';
+// FFP: foto dal sito finalfrontierpatagonia.com, da far approvare al licenziatario prima della produzione.
+import ffp from '../../assets/photos/ffp-patagonia.jpg';
+interface Props { n: number; events: Home['events'] }
+const { n, events } = Astro.props;
+// Le foto si legano al nome dell'evento; un evento senza foto mostra le curve di livello.
+const photos: Record<string, ImageMetadata> = {
+  'Tuscany Trail': tt, NorthCape4000: nc, 'Trentino Gravel': tg, 'The Grand Escape': tge, 'Unpaved Roads': ur,
+  'Final Frontier Patagonia': ffp,
+};
+---
+<section id="eventi" class="section">
+  <div class="container">
+    <SectionHead n={n} label={events.label} title={events.title} intro={events.intro} />
+    <ul class="events">
+      {events.items.map((e) => (
+        <li class="event">
+          {photos[e.name] ? (
+            <Image class="event__photo" src={photos[e.name]} alt="" widths={[400, 700]} sizes="(max-width: 640px) 100vw, (max-width: 960px) 50vw, 33vw" />
+          ) : (
+            <svg class="event__photo event__contours" viewBox="0 0 400 250" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+              <g>{[24, 48, 74, 102, 132, 164, 198].map((r, i) => <ellipse cx="250" cy="150" rx={r * 1.5} ry={r} transform={`rotate(${-12 + i * 2} 250 150)`} />)}</g>
+            </svg>
+          )}
+          <div class="event__body">
+            <h3 class="h3">{e.name}</h3>
+            <p class="event__line">{e.line}</p>
+            <p class="label">{e.stat}</p>
+            <a href={e.url} rel="noopener" target="_blank" class="event__link">{e.url.replace(/^https:\/\/(www\.)?|\/.*$/g, '')} ↗</a>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  /* 6 eventi: 3 colonne = due righe piene. */
+  .events { display: grid; grid-template-columns: 1fr; list-style: none; padding: 0; margin: 0; border-top: var(--rule-hair) solid var(--ink); border-left: var(--rule-hair) solid var(--ink); }
+  @media (min-width: 640px) { .events { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .events { grid-template-columns: repeat(3, 1fr); } }
+  .event { border-right: var(--rule-hair) solid var(--ink); border-bottom: var(--rule-hair) solid var(--ink); display: grid; grid-template-rows: auto 1fr; background: var(--paper-raised); }
+  .event :global(.event__photo) { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-bottom: var(--rule-hair) solid var(--ink); display: block; }
+  .event__contours { background: var(--paper-sunk); }
+  .event__contours g { fill: none; stroke: var(--rock); stroke-width: 1; }
+  .event__body { padding: var(--space-5); display: grid; gap: var(--space-3); align-content: start; }
+  .event__body > * { margin: 0; }
+  .event__link { font-family: var(--font-mono); font-size: 12px; color: var(--idro); }
+</style>

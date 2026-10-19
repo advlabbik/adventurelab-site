@@ -1,0 +1,23 @@
+---
+import SectionHead from '../SectionHead.astro';
+/** Le condizioni per lavorare insieme: il criterio di selezione dichiarato. */
+interface Props { n: number; label: string; title: string; intro: string; items: string[] }
+const { n, label, title, intro, items } = Astro.props;
+---
+<section class="section section--ink">
+  <div class="container fit">
+    <div>
+      <SectionHead n={n} label={label} title={title} intro={intro} />
+    </div>
+    <ul class="fit__list">
+      {items.map((t) => <li>{t}</li>)}
+    </ul>
+  </div>
+</section>
+<style>
+  .fit { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--space-6); align-items: start; }
+  .fit__list { list-style: none; padding: 0; margin: 0; border-top: var(--rule-strong) solid var(--paper-on-ink); }
+  .fit__list li { position: relative; padding: var(--space-4) 0 var(--space-4) var(--space-6); border-bottom: var(--rule-hair) solid var(--muted-on-ink); font-size: 19px; line-height: 1.45; }
+  /* il segnavia in piccolo, come i bolli bianco-rossi sui sentieri */
+  .fit__list li::before { content: ''; position: absolute; left: 0; top: calc(var(--space-4) + .4em); width: 18px; height: 10px; background: linear-gradient(90deg, var(--segnavia) 0 33.3%, var(--on-segnavia) 33.3% 66.6%, var(--segnavia) 66.6%); }
+</style>

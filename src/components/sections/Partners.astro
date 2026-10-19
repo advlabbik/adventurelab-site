@@ -1,0 +1,40 @@
+---
+import { Image } from 'astro:assets';
+import SectionHead from '../SectionHead.astro';
+/**
+ * I loghi dei marchi partner, presi dal sito del Tuscany Trail (ttrefactor/src/assets/images/sponsor).
+ * In grigio e fusi col foglio, così colori e sfondi diversi non fanno a pugni; a colori al passaggio.
+ * L'ordine e i nomi vengono dai testi (aziende.partners.names): un nome senza file mostra la scritta.
+ */
+interface Props { n: number; label: string; title: string; intro: string; names: string[] }
+const { n, label, title, intro, names } = Astro.props;
+const files = import.meta.glob<{ default: ImageMetadata }>('../../assets/sponsors/*.{webp,png,jpg}', { eager: true });
+const fileFor: Record<string, string> = {
+  Vittoria: 'vittoria', Abus: 'abus', Northwave: 'northwave', 'Selle San Marco': 'selle-san-marco',
+  Enervit: 'enervit', 'Ride with GPS': 'ride-with-gps', 'RH+': 'rh-plus', Sportler: 'sportler-bike',
+};
+const logo = (name: string) => {
+  const key = fileFor[name];
+  const hit = key && Object.entries(files).find(([p]) => p.split('/').pop()!.startsWith(`${key}.`));
+  return hit ? hit[1].default : undefined;
+};
+---
+<section class="section section--alt">
+  <div class="container">
+    <SectionHead n={n} label={label} title={title} intro={intro} />
+    <ul class="partners">
+      {names.map((name) => {
+        const src = logo(name);
+        return <li>{src ? <Image src={src} alt={name} height={64} densities={[1, 2]} /> : <span>{name}</span>}</li>;
+      })}
+    </ul>
+  </div>
+</section>
+<style>
+  .partners { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(2, 1fr); border-top: var(--rule-hair) solid var(--ink); border-left: var(--rule-hair) solid var(--ink); }
+  @media (min-width: 720px) { .partners { grid-template-columns: repeat(4, 1fr); } }
+  .partners li { display: grid; place-items: center; min-height: 120px; padding: var(--space-5); border-right: var(--rule-hair) solid var(--ink); border-bottom: var(--rule-hair) solid var(--ink); background: var(--paper-raised); }
+  .partners img { max-height: 56px; max-width: 100%; width: auto; filter: grayscale(1) contrast(1.1); mix-blend-mode: multiply; transition: filter .2s; }
+  .partners li:hover img { filter: none; }
+  .partners span { font-family: var(--font-display); font-weight: 900; font-stretch: 112%; text-transform: uppercase; font-size: 17px; }
+</style>

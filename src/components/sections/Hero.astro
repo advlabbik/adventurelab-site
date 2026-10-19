@@ -1,0 +1,87 @@
+---
+import { Image } from 'astro:assets';
+import { withBase } from '../../lib/paths';
+import type { Hero as HeroText } from '../../content/types';
+interface Props {
+  hero: HeroText;
+  coords: string;
+  primaryHref: string;
+  secondaryHref: string;
+  /** In home i due bottoni sono le due strade, con lo stesso peso; altrove il primo è il contatto (segnavia). */
+  doors?: boolean;
+  image?: ImageMetadata;
+  pauseLabel: string;
+  playLabel: string;
+}
+const { hero, coords, primaryHref, secondaryHref, doors = false, image, pauseLabel, playLabel } = Astro.props;
+---
+<section class="hero">
+  <div class="container hero__grid">
+    <div class="hero__text">
+      <!-- Curve di livello procedurali: da sostituire con quelle del terreno reale (design system, Contours). -->
+      <svg class="hero__contours" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+        <defs><filter id="hero-warp"><feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="7" /><feDisplacementMap in="SourceGraphic" scale="70" /></filter></defs>
+        <g filter="url(#hero-warp)">
+          {[[30, 22], [62, 45], [96, 70], [132, 97], [170, 126], [210, 157], [252, 190], [296, 224]].map(([rx, ry]) => <ellipse cx="300" cy="120" rx={rx} ry={ry} />)}
+        </g>
+      </svg>
+      <p class="eyebrow">Foglio 00 · {hero.label} · {coords}</p>
+      <h1>{hero.title} <span class="place">{hero.place}</span></h1>
+      <p class="hero__sub">{hero.subtitle}</p>
+      <p class="hero__cta">
+        <a href={primaryHref} class:list={['btn', { 'btn--primary': !doors }]}>{hero.ctaPrimary} →</a>
+        <a href={secondaryHref} class:list={['btn', { 'btn--ghost': !doors }]}>{hero.ctaSecondary}{doors && ' →'}</a>
+      </p>
+    </div>
+    <figure class="hero__frame">
+      <div class="hero__media">
+        {image ? (
+          <Image class="hero__img" src={image} alt={hero.alt} widths={[600, 900, 1300]} sizes="(max-width: 860px) 100vw, 46vw" loading="eager" fetchpriority="high" />
+        ) : (
+          <>
+            <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster={withBase('/video/hero-poster.jpg')} aria-hidden="true">
+              <source src={withBase('/video/hero.mp4')} type="video/mp4" />
+            </video>
+            <button class="hero__pause" type="button" aria-label={pauseLabel} data-pause={pauseLabel} data-play={playLabel}>❚❚</button>
+          </>
+        )}
+      </div>
+      <figcaption class="label">{hero.caption}</figcaption>
+    </figure>
+  </div>
+</section>
+<style>
+  .hero { padding-block: var(--space-6) var(--space-7); overflow: hidden; }
+  .hero__grid { display: grid; gap: var(--space-6); grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; }
+  .hero__text { position: relative; isolation: isolate; padding-block: var(--space-5); }
+  .hero__contours { position: absolute; inset: -80px -40px; width: calc(100% + 80px); height: calc(100% + 160px); z-index: -1; pointer-events: none; }
+  .hero__contours g { fill: none; stroke: var(--rock); stroke-width: .8; opacity: .55; }
+  .hero h1 { font-family: var(--font-display); font-weight: 900; font-stretch: 125%; text-transform: uppercase; font-size: clamp(34px, 5.2vw, 62px); line-height: .94; letter-spacing: -.01em; margin: 0 0 var(--space-5); }
+  .hero h1 .place { display: block; font-size: .62em; line-height: 1.1; margin-top: .25em; text-wrap: balance; }
+  .hero__sub { font-size: 20px; line-height: 1.5; max-width: 46ch; margin: 0 0 var(--space-5); }
+  .hero__cta { display: flex; gap: var(--space-3); flex-wrap: wrap; margin: 0; }
+  .hero__frame { margin: 0; padding: var(--space-4); border: var(--rule-hair) solid var(--ink); background: var(--paper-raised); }
+  .hero__media { position: relative; border: var(--rule-hair) solid var(--ink); aspect-ratio: 4 / 5; overflow: hidden; }
+  .hero__video, .hero :global(.hero__img) { width: 100%; height: 100%; object-fit: cover; }
+  .hero__frame figcaption { margin-top: var(--space-3); }
+  .hero__pause { position: absolute; right: var(--space-3); bottom: var(--space-3); width: 36px; height: 36px; border: var(--rule-hair) solid var(--paper-on-ink); border-radius: var(--radius-none); background: rgb(22 25 28 / .55); color: var(--paper-on-ink); cursor: pointer; font-size: 11px; }
+  @media (max-width: 860px) {
+    .hero__grid { grid-template-columns: 1fr; }
+    .hero__media { aspect-ratio: 16 / 10; }
+    .hero__sub { font-size: 18px; }
+  }
+</style>
+<script>
+  const video = document.querySelector<HTMLVideoElement>('.hero__video');
+  const btn = document.querySelector<HTMLButtonElement>('.hero__pause');
+  const sync = () => {
+    if (!video || !btn) return;
+    btn.setAttribute('aria-label', video.paused ? btn.dataset.play! : btn.dataset.pause!);
+    btn.textContent = video.paused ? '▶' : '❚❚';
+  };
+  if (video && matchMedia('(prefers-reduced-motion: reduce)').matches) { video.pause(); video.removeAttribute('autoplay'); }
+  btn?.addEventListener('click', () => { if (!video) return; video.paused ? video.play() : video.pause(); });
+  video?.addEventListener('play', sync);
+  video?.addEventListener('pause', sync);
+  sync();
+</script>

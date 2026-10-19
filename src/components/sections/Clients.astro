@@ -1,0 +1,33 @@
+---
+import type { Territori } from '../../content/types';
+import SectionHead from '../SectionHead.astro';
+/**
+ * I committenti come un muro di nomi, in tre gruppi: le capitali per impressionare,
+ * regioni ed enti, e i piccoli (comuni, parchi, valli) per dire che lavoriamo anche con loro.
+ * Scritte e non loghi: stessa voce per tutti, e nessun permesso d'uso da chiedere.
+ */
+interface Props { n: number; clients: Territori['clients'] }
+const { n, clients } = Astro.props;
+---
+<section id="clienti" class="section section--ink clients">
+  <div class="container">
+    <SectionHead n={n} label={clients.label} title={clients.title} intro={clients.intro} />
+    <div class="clients__groups">
+      {clients.groups.map((g, i) => (
+        <div class:list={['clients__group', { 'clients__group--big': i === 0 }]}>
+          <p class="clients__head">{g.title}</p>
+          <ul>{g.names.map((name) => <li>{name}</li>)}</ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .clients__groups { display: grid; gap: var(--space-6); border-top: var(--rule-strong) solid var(--paper-on-ink); padding-top: var(--space-5); }
+  @media (min-width: 900px) { .clients__groups { grid-template-columns: 1.4fr 1fr 1fr; } }
+  .clients__head { font-family: var(--font-mono); font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--idro-on-ink); margin: 0 0 var(--space-4); }
+  .clients ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); }
+  .clients li { font-family: var(--font-display); font-weight: 800; font-stretch: 108%; text-transform: uppercase; font-size: 17px; line-height: 1.25; }
+  .clients__group--big li { font-weight: 900; font-stretch: 118%; font-size: clamp(22px, 2.6vw, 32px); line-height: 1.05; }
+  .clients__group--big ul { gap: var(--space-2) var(--space-5); }
+</style>

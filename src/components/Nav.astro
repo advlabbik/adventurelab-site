@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import { href, type PageKey } from '../lib/routes';
+import type { Lang, SiteContent } from '../content';
+import logo from '../assets/logos/adventurelab.png';
+interface Props { lang: Lang; c: SiteContent; page: PageKey }
+const { lang, c, page } = Astro.props;
+const other: Lang = lang === 'it' ? 'en' : 'it';
+// Il bottone rosso porta sempre al contatto: la candidatura della pagina,
+// oppure le due strade della home quando la pagina non ha un modulo.
+const cta = page === 'territori' || page === 'aziende' ? '#candidatura' : href('home', lang, '#strade');
+const links: [PageKey | 'about', string, string][] = [
+  ['territori', href('territori', lang), c.nav.territori],
+  ['aziende', href('aziende', lang), c.nav.aziende],
+  ['about', href('home', lang, '#chi-siamo'), c.nav.about],
+];
+---
+<a href="#main" class="skip">{c.a11y.skip}</a>
+<header class="nav">
+  <div class="container nav__in">
+    <a href={href('home', lang)} class="nav__logo"><Image src={logo} alt="AdventureLab" height={22} densities={[1, 2]} loading="eager" /></a>
+    <nav aria-label={c.nav.main} class="nav__menu">
+      <ul class="nav__links">
+        {links.map(([key, url, label]) => <li><a href={url} aria-current={key === page ? 'page' : undefined}>{label}</a></li>)}
+      </ul>
+    </nav>
+    <a href={href(page, other)} hreflang={other} lang={other} class="nav__lang">{other.toUpperCase()}<span class="sr-only"> · {c.langSwitch.label}</span></a>
+    <a href={cta} class="btn btn--primary nav__cta">{c.nav.cta}</a>
+  </div>
+</header>
+<style>
+  .nav { position: sticky; top: 0; z-index: 10; background: var(--paper); border-bottom: var(--rule-hair) solid var(--ink); }
+  .nav__in { display: flex; align-items: center; gap: var(--space-5); min-height: 60px; }
+  .nav__logo { margin-right: auto; }
+  .nav__logo img { height: 22px; width: auto; }
+  .nav__links { display: flex; gap: var(--space-5); list-style: none; margin: 0; padding: 0; }
+  .nav__links a, .nav__lang { font-family: var(--font-mono); font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; text-decoration: none; }
+  .nav__links a:hover, .nav__lang:hover, .nav__links a[aria-current='page'] { text-decoration: underline; text-underline-offset: 4px; }
+  .nav__links a[aria-current='page'] { text-decoration-color: var(--segnavia); text-decoration-thickness: 2px; }
+  @media (max-width: 720px) {
+    .nav__in { gap: var(--space-3); }
+    .nav__links { gap: var(--space-3); }
+    .nav__links li:last-child { display: none; }
+  }
+  @media (max-width: 480px) {
+    .nav__logo img { height: 18px; }
+    .nav__links a, .nav__lang { font-size: 10.5px; letter-spacing: .04em; }
+    .nav__cta { padding-inline: var(--space-3); font-size: 11px; }
+  }
+  @media (max-width: 400px) { .nav__menu { display: none; } }
+</style>

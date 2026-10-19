@@ -117,6 +117,21 @@ export function notifyPayload(n, env) {
   };
 }
 
+/** Gli hostname delle origini ammesse: il token Turnstile deve essere stato risolto su uno di questi. */
+const allowedHostnames = (env) =>
+  allowedOrigins(env).flatMap((o) => {
+    try {
+      return [new URL(o).hostname];
+    } catch {
+      return [];
+    }
+  });
+
+/**
+ * 'ok', 'failed' (token non valido o scaduto: il form ne chiede un altro e ritenta)
+ * o 'hostname'. Il widget è condiviso con gli altri siti, quindi un token valido
+ * può essere stato preso altrove: senza hostname tra i nostri si rifiuta.
+ */
 async function verifyTurnstile(env, token, ip) {
   const form = new FormData();
   form.append('secret', env.TURNSTILE_SECRET);
@@ -124,7 +139,8 @@ async function verifyTurnstile(env, token, ip) {
   if (ip) form.append('remoteip', ip);
   const res = await fetch(TURNSTILE_VERIFY, { method: 'POST', body: form });
   const data = await res.json();
-  return data.success === true;
+  if (data.success !== true) return 'failed';
+  return allowedHostnames(env).includes(data.hostname) ? 'ok' : 'hostname';
 }
 
 export default {
@@ -167,9 +183,9 @@ export default {
       if (env.TURNSTILE_REQUIRED === 'true') {
         if (!env.TURNSTILE_SECRET) return reject('turnstile_misconfigured', 500);
         const token = String(body.turnstileToken ?? '');
-        if (!token || !(await verifyTurnstile(env, token, ip))) {
-          return reject('turnstile_failed', 403);
-        }
+        const verdict = token ? await verifyTurnstile(env, token, ip) : 'failed';
+        if (verdict === 'failed') return reject('turnstile_failed', 403);
+        if (verdict === 'hostname') return reject('turnstile_hostname', 403);
       }
 
       const listId = Number(env.BREVO_LIST_ID);

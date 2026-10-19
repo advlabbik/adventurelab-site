@@ -19,13 +19,15 @@ const req = (body, origin = ORIGIN, method = 'POST') =>
     headers: { origin, 'content-type': 'application/json', 'cf-connecting-ip': '1.2.3.4' },
     body: method === 'POST' ? (typeof body === 'string' ? body : JSON.stringify(body)) : undefined,
   });
+// Risposta di siteverify per un token preso sul nostro dominio.
+const TS_OK = { success: true, hostname: 'adventurelab.cc' };
 const good = { name: 'Àlice D’Amico', email: ' A+b@Visit.IT ', org: 'Visit Prato', type: 'territorio', consent: true, optin: false, lang: 'it', website: '', turnstileToken: 't' };
 
 beforeEach(() => {
   calls = [];
   globalThis.fetch = async (url, init) => {
     calls.push({ url: String(url), init });
-    if (String(url).includes('turnstile')) return Response.json({ success: true });
+    if (String(url).includes('turnstile')) return Response.json(TS_OK);
     return new Response(null, { status: 201 });
   };
 });
@@ -105,6 +107,27 @@ test('Turnstile negativo → 403 e niente Brevo', async () => {
   assert.ok(calls.every((c) => !c.url.includes('brevo')));
 });
 
+test('Turnstile risolto su un altro dominio del widget → 403 turnstile_hostname e niente Brevo', async () => {
+  globalThis.fetch = async (url) => (calls.push({ url: String(url) }), Response.json({ success: true, hostname: 'tuscanytrail.it' }));
+  const res = await worker.fetch(req(good), env());
+  assert.equal(res.status, 403);
+  assert.equal((await res.json()).error, 'turnstile_hostname');
+  assert.ok(calls.every((c) => !c.url.includes('brevo')));
+});
+
+test('Turnstile senza hostname nella risposta → 403 fail-closed', async () => {
+  globalThis.fetch = async (url) => (calls.push({ url: String(url) }), Response.json({ success: true }));
+  const res = await worker.fetch(req(good), env());
+  assert.equal((await res.json()).error, 'turnstile_hostname');
+});
+
+test('Turnstile risolto su www.adventurelab.cc → ammesso', async () => {
+  globalThis.fetch = async (url) =>
+    String(url).includes('turnstile') ? Response.json({ success: true, hostname: 'www.adventurelab.cc' }) : new Response(null, { status: 201 });
+  const res = await worker.fetch(req(good), env({ ALLOWED_ORIGINS: 'https://adventurelab.cc,https://www.adventurelab.cc' }));
+  assert.equal(res.status, 200);
+});
+
 test('lista "0" → 500 brevo_list_not_configured', async () => {
   const res = await worker.fetch(req(good), env({ BREVO_LIST_ID: '0' }));
   assert.equal((await res.json()).error, 'brevo_list_not_configured');
@@ -121,7 +144,7 @@ test('invio valido → 200 e una chiamata Brevo con api-key', async () => {
 test('contatto già esistente (duplicate_parameter) → 200', async () => {
   globalThis.fetch = async (url) =>
     String(url).includes('turnstile')
-      ? Response.json({ success: true })
+      ? Response.json(TS_OK)
       : new Response('{"code":"duplicate_parameter"}', { status: 400 });
   const res = await worker.fetch(req(good), env());
   assert.equal(res.status, 200);
@@ -129,7 +152,7 @@ test('contatto già esistente (duplicate_parameter) → 200', async () => {
 
 test('Brevo 401 (es. IP non autorizzato) → 502 brevo_error', async () => {
   globalThis.fetch = async (url) =>
-    String(url).includes('turnstile') ? Response.json({ success: true }) : new Response('unauthorized', { status: 401 });
+    String(url).includes('turnstile') ? Response.json(TS_OK) : new Response('unauthorized', { status: 401 });
   const res = await worker.fetch(req(good), env());
   assert.equal(res.status, 502);
   assert.equal((await res.json()).error, 'brevo_error');
@@ -189,7 +212,7 @@ test('lista "0" ma notifica configurata → 200, arriva solo la email', async ()
 test('contatto Brevo in errore ma notifica partita → 200: la candidatura non si perde', async () => {
   globalThis.fetch = async (url) => {
     calls.push({ url: String(url) });
-    if (String(url).includes('turnstile')) return Response.json({ success: true });
+    if (String(url).includes('turnstile')) return Response.json(TS_OK);
     if (String(url).endsWith('/smtp/email')) return Response.json({ messageId: 'x' }, { status: 201 });
     return new Response('unauthorized', { status: 401 });
   };
@@ -199,7 +222,7 @@ test('contatto Brevo in errore ma notifica partita → 200: la candidatura non s
 
 test('notifica e contatto entrambi in errore → 502 brevo_error', async () => {
   globalThis.fetch = async (url) =>
-    String(url).includes('turnstile') ? Response.json({ success: true }) : new Response('nope', { status: 500 });
+    String(url).includes('turnstile') ? Response.json(TS_OK) : new Response('nope', { status: 500 });
   const res = await worker.fetch(req(brand), notifyEnv());
   assert.equal(res.status, 502);
 });

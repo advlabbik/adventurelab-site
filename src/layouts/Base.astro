@@ -2,6 +2,14 @@
 import { withBase } from '../lib/paths';
 import { routes, type PageKey } from '../lib/routes';
 import '../styles/global.css';
+// I quattro font del testo d'apertura arrivano prima della prima pittura: con lo
+// swap tardivo titolo, sottotitolo e didascalie cambiano altezza e spingono giù
+// la foto d'apertura (layout shift). Solo latin: è il sottoinsieme che usiamo.
+import archivoWoff2 from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
+import spectralWoff2 from '@fontsource/spectral/files/spectral-latin-400-normal.woff2?url';
+import spectralItalicWoff2 from '@fontsource/spectral/files/spectral-latin-400-italic.woff2?url';
+import martianWoff2 from '@fontsource-variable/martian-mono/files/martian-mono-latin-wght-normal.woff2?url';
+const preloadFonts = [archivoWoff2, spectralWoff2, spectralItalicWoff2, martianWoff2];
 import type { Lang } from '../content';
 import { site } from '../../site.config';
 
@@ -18,6 +26,7 @@ const indexable = import.meta.env.PUBLIC_SITE_ENV === 'production';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
+    {preloadFonts.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
     <meta name="description" content={description} />
     {!indexable && <meta name="robots" content="noindex, nofollow" />}
     {!noAlternates && (

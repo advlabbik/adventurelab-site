@@ -113,13 +113,22 @@ const thanks = kind === 'territorio' ? t.thanks : a.thanks;
 
   const form = document.querySelector<HTMLFormElement>('.apply__form');
   if (form) {
-    // Turnstile: lo script si carica una volta sola, solo se il widget c'è.
-    if (form.querySelector('.cf-turnstile')) {
+    // Turnstile: lo script si carica una volta sola, solo se il widget c'è, e
+    // solo quando serve (modulo vicino allo schermo, primo campo toccato o, al
+    // più tardi, l'invio). Caricato subito, la sua iframe rallenta la foto d'apertura.
+    let turnstileLoaded = false;
+    const loadTurnstile = () => {
+      if (turnstileLoaded || !form.querySelector('.cf-turnstile')) return;
+      turnstileLoaded = true;
       const s = document.createElement('script');
       s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js';
       s.async = true; s.defer = true;
       document.head.append(s);
-    }
+    };
+    new IntersectionObserver((entries, io) => {
+      if (entries.some((e) => e.isIntersecting)) { io.disconnect(); loadTurnstile(); }
+    }, { rootMargin: '600px 0px' }).observe(form);
+    form.addEventListener('focusin', loadTurnstile, { once: true });
     const root = form.closest('section')!;
     const errorsMap = JSON.parse(root.querySelector('.apply__errors')!.textContent!);
     const errorEl = form.querySelector<HTMLElement>('.apply__error')!;
@@ -133,6 +142,7 @@ const thanks = kind === 'territorio' ? t.thanks : a.thanks;
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (btn.disabled) return; // doppio clic: un solo invio
+      loadTurnstile();
       errorEl.hidden = true;
       const d = new FormData(form);
       if (!form.querySelector<HTMLInputElement>('[name=email]')!.checkValidity()) return showError(errorsMap.invalid_email);

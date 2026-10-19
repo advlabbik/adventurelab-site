@@ -12,6 +12,7 @@
     "check:content": "node scripts/check-content.mjs",
     "build": "pnpm check:content && astro build",
     "build:prod": "PUBLIC_SITE_ENV=production STRICT_CONTENT=1 pnpm build",
+    "deploy:prod": "rm -rf dist && pnpm build:prod && wrangler deploy",
     "preview": "astro preview",
     "check": "astro check",
     "check:worker": "tsc --noEmit -p workers/lead/tsconfig.json",

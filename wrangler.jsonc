@@ -3,6 +3,13 @@
   "name": "adventurelab-site",
   "account_id": "fe10f419d554dfcaca3986a6e7056944",
   "compatibility_date": "2026-10-01",
+  // Al primo deploy wrangler sostituisce i record DNS di Aruba su @ e www.
+  // www serve lo stesso sito finché non c'è la Redirect Rule www → dominio nudo
+  // (docs/dns-cutover.md, passo 6): i canonical puntano già al dominio nudo.
+  "routes": [
+    { "pattern": "adventurelab.cc", "custom_domain": true },
+    { "pattern": "www.adventurelab.cc", "custom_domain": true }
+  ],
   "assets": {
     "directory": "./dist",
     "html_handling": "auto-trailing-slash",

@@ -17,6 +17,7 @@ import { site } from '../../../site.config';
 import borgo from '../../assets/photos/territori-borgo.jpg';
 import bar from '../../assets/photos/sosta-bar.jpg';
 import valdorcia from '../../assets/photos/tt365-valdorcia.jpg';
+import copertinaGuida from '../../assets/photos/guida-copertina.webp';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const c = getContent(lang);
@@ -36,7 +37,8 @@ const t = c.territori;
     <Steps n={5} id="come" label={t.howto.label} title={t.howto.title} intro={t.howto.intro} steps={t.howto.steps} />
     <Fit n={6} label={t.fit.label} title={t.fit.title} intro={t.fit.intro} items={t.fit.items} />
     <hr class="segnavia" aria-hidden="true" />
-    <Apply n={7} lang={lang} c={c} kind="territorio" />
+    {t.guide.url && <Feature n={7} id="guida" label={t.guide.label} title={t.guide.title} intro={t.guide.intro} text={t.guide.text} points={t.guide.points} cta={t.guide.cta} url={t.guide.url} image={copertinaGuida} alt={t.guide.alt} caption={t.guide.caption} external={false} />}
+    <Apply n={t.guide.url ? 8 : 7} lang={lang} c={c} kind="territorio" />
   </main>
   <Footer lang={lang} c={c} />
 </Base>

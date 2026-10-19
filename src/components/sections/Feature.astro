@@ -5,8 +5,10 @@ import SectionHead from '../SectionHead.astro';
 interface Props {
   n: number; id?: string; label: string; title: string; intro: string; text: string;
   points: string[]; cta: string; url: string; image: ImageMetadata; alt: string; caption: string;
+  /** false per un link dentro il sito: stessa scheda, niente freccia. */
+  external?: boolean;
 }
-const { n, id, label, title, intro, text, points, cta, url, image, alt, caption } = Astro.props;
+const { n, id, label, title, intro, text, points, cta, url, image, alt, caption, external = true } = Astro.props;
 ---
 <section id={id} class="section section--alt">
   <div class="container feature">
@@ -14,7 +16,9 @@ const { n, id, label, title, intro, text, points, cta, url, image, alt, caption 
       <SectionHead n={n} label={label} title={title} intro={intro} />
       <p class="feature__text">{text}</p>
       <ul class="feature__points">{points.map((p) => <li>{p}</li>)}</ul>
-      <a class="btn btn--ghost" href={url} rel="noopener" target="_blank">{cta} ↗</a>
+      {external
+        ? <a class="btn btn--ghost" href={url} rel="noopener" target="_blank">{cta} ↗</a>
+        : <a class="btn" href={url}>{cta} →</a>}
     </div>
     <figure class="frame feature__frame">
       <Image src={image} alt={alt} widths={[600, 1000, 1400]} sizes="(max-width: 900px) 100vw, 50vw" />

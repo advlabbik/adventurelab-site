@@ -67,6 +67,9 @@ export function normalize(body) {
     consent: body.consent === true,
     optin: body.optin === true,
     lang: body.lang === 'en' ? 'en' : 'it',
+    // "guida": chi lascia l'email per leggere la guida per i territori. Non è una
+    // candidatura, quindi niente avviso a collab@ e una provenienza sua su Brevo.
+    source: body.source === 'guida' ? 'guida' : 'candidatura',
     honeypot: clip(body.website, 200),
   };
 }
@@ -83,7 +86,7 @@ export function brevoPayload(n, listId, now = new Date()) {
       // Attributo di categoria già esistente nell'account: 1 = Ita, 2 = Eng
       // (stessa convenzione di tt-subscribe e dei sync verso il database).
       LINGUA: n.lang === 'en' ? 2 : 1,
-      SIGNUP_SOURCE: 'adventurelab:contatti',
+      SIGNUP_SOURCE: n.source === 'guida' ? 'adventurelab:guida-territori' : 'adventurelab:contatti',
       ADVLAB_TIPO: n.type,
       ADVLAB_ENTE: n.org,
       ADVLAB_OPTIN: n.optin,
@@ -190,7 +193,8 @@ export default {
 
       const listId = Number(env.BREVO_LIST_ID);
       const listOk = Number.isInteger(listId) && listId > 0;
-      const notifyOk = Boolean(env.NOTIFY_TO && env.SENDER_EMAIL);
+      // Chi legge la guida non va avvisato a collab@: arriva solo su Brevo.
+      const notifyOk = n.source !== 'guida' && Boolean(env.NOTIFY_TO && env.SENDER_EMAIL);
       if (!listOk && !notifyOk) return reject('brevo_list_not_configured', 500);
       if (!env.BREVO_API_KEY) return reject('brevo_key_missing', 500);
       const headers = { 'content-type': 'application/json', accept: 'application/json', 'api-key': env.BREVO_API_KEY };

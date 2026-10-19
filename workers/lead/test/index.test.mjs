@@ -226,3 +226,19 @@ test('notifica e contatto entrambi in errore → 502 brevo_error', async () => {
   const res = await worker.fetch(req(brand), notifyEnv());
   assert.equal(res.status, 502);
 });
+
+test('guida: provenienza propria su Brevo e nessun avviso a collab@', async () => {
+  const res = await worker.fetch(
+    req({ ...good, source: 'guida', name: '' }),
+    env({ NOTIFY_TO: 'collab@example.com', SENDER_EMAIL: 'info@example.com' }),
+  );
+  assert.equal(res.status, 200);
+  assert.ok(!calls.some((c) => c.url.includes('/smtp/email')), 'nessuna email a collab@');
+  const contact = calls.find((c) => c.url.includes('/contacts'));
+  assert.equal(JSON.parse(contact.init.body).attributes.SIGNUP_SOURCE, 'adventurelab:guida-territori');
+});
+
+test('candidatura: provenienza contatti, come prima', () => {
+  assert.equal(brevoPayload(normalize(good), 40).attributes.SIGNUP_SOURCE, 'adventurelab:contatti');
+  assert.equal(normalize({ ...good, source: 'altro' }).source, 'candidatura');
+});

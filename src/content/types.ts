@@ -65,6 +65,8 @@ export interface Territori {
   clients: Head & { groups: { title: string; names: string[] }[] };
   howto: Head & { steps: Item[] };
   fit: Head & { items: string[] };
+  /** La guida per i territori (url vuoto = la sezione non compare, per esempio finché manca la traduzione). */
+  guide: Head & { text: string; points: string[]; cta: string; url: string; alt: string; caption: string };
   form: Head & {
     org: string;
     territory: string;

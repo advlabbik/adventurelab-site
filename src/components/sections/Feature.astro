@@ -7,10 +7,12 @@ interface Props {
   points: string[]; cta: string; url: string; image: ImageMetadata; alt: string; caption: string;
   /** false per un link dentro il sito: stessa scheda, niente freccia. */
   external?: boolean;
+  /** 'ink' per la sezione in evidenza (la guida): fondo scuro e bottone grande. */
+  tone?: 'alt' | 'ink';
 }
-const { n, id, label, title, intro, text, points, cta, url, image, alt, caption, external = true } = Astro.props;
+const { n, id, label, title, intro, text, points, cta, url, image, alt, caption, external = true, tone = 'alt' } = Astro.props;
 ---
-<section id={id} class="section section--alt">
+<section id={id} class={`section section--${tone}`}>
   <div class="container feature">
     <div>
       <SectionHead n={n} label={label} title={title} intro={intro} />
@@ -18,7 +20,7 @@ const { n, id, label, title, intro, text, points, cta, url, image, alt, caption,
       <ul class="feature__points">{points.map((p) => <li>{p}</li>)}</ul>
       {external
         ? <a class="btn btn--ghost" href={url} rel="noopener" target="_blank">{cta} ↗</a>
-        : <a class="btn" href={url}>{cta} →</a>}
+        : <a class="btn btn--primary feature__cta" href={url}>{cta} →</a>}
     </div>
     <figure class="frame feature__frame">
       <Image src={image} alt={alt} widths={[600, 1000, 1400]} sizes="(max-width: 900px) 100vw, 50vw" />
@@ -34,4 +36,8 @@ const { n, id, label, title, intro, text, points, cta, url, image, alt, caption,
   .feature__points li { position: relative; padding: var(--space-3) 0 var(--space-3) var(--space-6); border-bottom: var(--rule-hair) solid var(--rule-soft); }
   .feature__points li::before { content: ''; position: absolute; left: 0; top: calc(var(--space-3) + .5em); width: 18px; height: 10px; background: linear-gradient(90deg, var(--segnavia) 0 33.3%, var(--on-segnavia) 33.3% 66.6%, var(--segnavia) 66.6%); outline: var(--rule-hair) solid var(--ink); }
   .feature__frame img { aspect-ratio: 16 / 10; }
+  .feature__cta { font-size: 15px; padding: var(--space-4) var(--space-6); }
+  .section--ink .feature__points { border-top-color: var(--paper-on-ink); }
+  .section--ink .feature__points li { border-bottom-color: rgba(255, 255, 255, .18); }
+  .section--ink .feature__cta:hover { background: var(--paper-on-ink); border-color: var(--paper-on-ink); color: var(--ink); }
 </style>

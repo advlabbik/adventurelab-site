@@ -36,7 +36,7 @@ const { hero, coords, primaryHref, secondaryHref, doors = false, image, pauseLab
     <figure class="hero__frame">
       <div class="hero__media">
         {image ? (
-          <Image class="hero__img" src={image} alt={hero.alt} widths={[600, 900, 1300]} sizes="(max-width: 860px) 100vw, 46vw" loading="eager" fetchpriority="high" />
+          <Image class="hero__img" src={image} alt={hero.alt} widths={[450, 750, 1000, 1300]} sizes="(max-width: 860px) calc(100vw - 64px), 46vw" loading="eager" fetchpriority="high" />
         ) : (
           <>
             <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster={withBase('/video/hero-poster.jpg')} aria-hidden="true">

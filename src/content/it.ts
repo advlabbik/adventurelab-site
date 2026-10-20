@@ -192,7 +192,7 @@ export const it: SiteContent = {
     },
     services: {
       label: 'Cosa facciamo',
-      title: 'Tre modi di lavorare con noi',
+      title: 'Quattro modi di lavorare con noi',
       intro: 'Si parte da quello che serve al territorio, non da quello che abbiamo da vendere.',
       items: [
         {
@@ -206,6 +206,10 @@ export const it: SiteContent = {
         {
           title: 'Promozione verso chi pedala',
           text: 'Il racconto del territorio alla nostra community, con fotografie, articoli e i canali della serie. Arriva a chi sceglie dove andare in bicicletta, e poi ci va.',
+        },
+        {
+          title: 'Consulenza',
+          text: 'Per l’ente che deve decidere e vuole farlo con chi i ciclisti li conosce. Valutiamo un progetto prima che parta, scriviamo la parte cicloturistica di un bando o di un piano, formiamo gli operatori del territorio e misuriamo i risultati di quello che è stato fatto.',
         },
       ],
     },

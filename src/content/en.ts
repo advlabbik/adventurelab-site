@@ -184,7 +184,7 @@ export const en: SiteContent = {
     },
     services: {
       label: 'What we do',
-      title: 'Three ways to work with us',
+      title: 'Four ways to work with us',
       intro: 'We start from what the destination needs, not from what we have to sell.',
       items: [
         {
@@ -198,6 +198,10 @@ export const en: SiteContent = {
         {
           title: 'Promotion to people who ride',
           text: 'The story of your destination told to our community, with photography, articles and the series channels. It reaches people who choose where to ride, and then go.',
+        },
+        {
+          title: 'Consulting',
+          text: 'For the body that has to decide and wants to do it with people who know riders. We assess a project before it starts, write the cycle tourism part of a funding bid or a plan, train local operators and measure the results of what has been done.',
         },
       ],
     },

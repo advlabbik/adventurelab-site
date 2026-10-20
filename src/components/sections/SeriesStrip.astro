@@ -1,0 +1,32 @@
+---
+import type { Home, Aziende } from '../../content/types';
+import SectionHead from '../SectionHead.astro';
+/**
+ * La serie in home, in breve: i nomi degli eventi e il link alla pagina aziende,
+ * dove ci sono le foto e i numeri. Le aziende comprano gli eventi, quindi la
+ * vetrina completa sta là, e qui non si ripete.
+ */
+interface Props { n: number; head: Home['events']; items: Aziende['series']['items']; href: string }
+const { n, head, items, href } = Astro.props;
+---
+<section id="eventi" class="section">
+  <div class="container">
+    <SectionHead n={n} label={head.label} title={head.title} intro={head.intro} />
+    <ul class="strip">
+      {items.map((e) => (
+        <li>
+          <span class="h3 strip__name">{e.name}</span>
+          <span class="label">{e.stat}</span>
+        </li>
+      ))}
+    </ul>
+    <a class="btn btn--ghost strip__cta" href={href}>{head.cta} →</a>
+  </div>
+</section>
+<style>
+  .strip { list-style: none; padding: 0; margin: 0 0 var(--space-5); display: grid; grid-template-columns: 1fr; border-top: var(--rule-hair) solid var(--ink); }
+  @media (min-width: 640px) { .strip { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 960px) { .strip { grid-template-columns: repeat(3, 1fr); } }
+  .strip li { display: grid; gap: var(--space-1); padding: var(--space-4) 0; border-bottom: var(--rule-hair) solid var(--rule-soft); }
+  .strip__name { margin: 0; }
+</style>

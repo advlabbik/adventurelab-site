@@ -86,7 +86,7 @@ export const en: SiteContent = {
     moat: {
       label: 'What cannot be copied',
       title: 'Five things money cannot buy',
-      intro: 'An event can be imitated in one season. These five things cannot, because they take years and people to build.',
+      intro: 'We have built them since 2013, one edition after another, together with the tens of thousands of people who have ridden with us. Nobody improvises them. You can only have them on your side.',
       items: [
         {
           title: 'An audience that is waiting',
@@ -122,14 +122,7 @@ export const en: SiteContent = {
       label: 'The series',
       title: 'The Bike Adventure Series',
       intro: 'Six bike adventures on two continents, and one audience that rides through all of them.',
-      items: [
-        { name: 'Tuscany Trail', line: 'Tuscany, May. A week of white roads from the sea to the hills.', stat: '6,156 riders in 2026', url: 'https://www.tuscanytrail.it' },
-        { name: 'NorthCape4000', line: 'From Italy to the North Cape, three weeks on the bike.', stat: 'Sold out in 48 hours', url: 'https://www.northcape4000.com' },
-        { name: 'Trentino Gravel', line: 'The Dolomites and lakes of Trentino, in late September.', stat: 'Sold out in 22 minutes', url: 'https://www.trentinogravel.com' },
-        { name: 'The Grand Escape', line: 'The most beautiful roads in Europe, three dates in three countries.', stat: 'Over 1,400 riders', url: 'https://www.thegrandescape.cc' },
-        { name: 'Unpaved Roads', line: 'Weekend gravel, in stages across Italy.', stat: 'Over a thousand riders', url: 'https://www.unpavedroads.cc' },
-        { name: 'Final Frontier Patagonia', line: 'From Chilean to Argentine Patagonia, at the end of the world.', stat: 'Chile and Argentina', url: 'https://www.finalfrontierpatagonia.com' },
-      ],
+      cta: 'The events of the series',
     },
     about: {
       label: 'About',
@@ -191,7 +184,7 @@ export const en: SiteContent = {
     },
     services: {
       label: 'What we do',
-      title: 'Three ways to work with us',
+      title: 'Four ways to work with us',
       intro: 'We start from what the destination needs, not from what we have to sell.',
       items: [
         {
@@ -205,6 +198,10 @@ export const en: SiteContent = {
         {
           title: 'Promotion to people who ride',
           text: 'The story of your destination told to our community, with photography, articles and the series channels. It reaches people who choose where to ride, and then go.',
+        },
+        {
+          title: 'Consulting',
+          text: 'For the body that has to decide and wants to do it with people who know riders. We assess a project before it starts, write the cycle tourism part of a funding bid or a plan, train local operators and measure the results of what has been done.',
         },
       ],
     },
@@ -371,6 +368,19 @@ export const en: SiteContent = {
         { value: '82%', label: 'open rate on emails to participants' },
       ],
     },
+    series: {
+      label: 'The events',
+      title: 'The Bike Adventure Series',
+      intro: 'Six bike adventures on two continents, and one audience that rides through all of them. A partnership puts your brand inside one of these events, or all of them, in front of riders who prepare for months and then ride it.',
+      items: [
+        { name: 'Tuscany Trail', line: 'Tuscany, May. A week of white roads from the sea to the hills.', stat: '6,156 riders in 2026', url: 'https://www.tuscanytrail.it' },
+        { name: 'NorthCape4000', line: 'From Italy to the North Cape, three weeks on the bike.', stat: 'Sold out in 48 hours', url: 'https://www.northcape4000.com' },
+        { name: 'Trentino Gravel', line: 'The Dolomites and lakes of Trentino, in late September.', stat: 'Sold out in 22 minutes', url: 'https://www.trentinogravel.com' },
+        { name: 'The Grand Escape', line: 'The most beautiful roads in Europe, three dates in three countries.', stat: 'Over 1,400 riders', url: 'https://www.thegrandescape.cc' },
+        { name: 'Unpaved Roads', line: 'Weekend gravel, in stages across Italy.', stat: 'Over a thousand riders', url: 'https://www.unpavedroads.cc' },
+        { name: 'Final Frontier Patagonia', line: 'From Chilean to Argentine Patagonia, at the end of the world.', stat: 'Chile and Argentina', url: 'https://www.finalfrontierpatagonia.com' },
+      ],
+    },
     why: {
       label: 'Why it works',
       title: 'Before, during and after',
@@ -392,7 +402,7 @@ export const en: SiteContent = {
       items: [
         { scope: 'One event', title: 'Technical sponsor', text: 'The simplest way into the series, with an essential presence at the event and with its participants.' },
         { scope: 'One event', title: 'Partner', text: 'The event becomes your stage, before, during and after.' },
-        { scope: 'The whole series', title: 'BAS Partner', text: 'Presence at every event, from Tuscany to the North Cape and Patagonia. Few places.' },
+        { scope: 'The whole series', title: 'Series Partner', text: 'Presence at every event, from Tuscany to the North Cape and Patagonia. Few places.' },
       ],
       note: 'If you want to go deeper we talk on a call, then you receive a one page proposal, with no endless quotes. You can sign for one season or two.',
     },

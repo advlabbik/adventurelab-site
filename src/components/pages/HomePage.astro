@@ -7,7 +7,7 @@ import Numbers from '../sections/Numbers.astro';
 import Doors from '../sections/Doors.astro';
 import Proofs from '../sections/Proofs.astro';
 import PhotoBand from '../sections/PhotoBand.astro';
-import Events from '../sections/Events.astro';
+import SeriesStrip from '../sections/SeriesStrip.astro';
 import About from '../sections/About.astro';
 import Closing from '../sections/Closing.astro';
 import { getContent, type Lang } from '../../content';
@@ -29,7 +29,7 @@ const hrefs = { territori: href('territori', lang), aziende: href('aziende', lan
     <Doors n={1} doors={h.doors} hrefs={hrefs} />
     <Proofs n={2} id="forza" label={h.moat.label} title={h.moat.title} intro={h.moat.intro} items={h.moat.items} />
     <PhotoBand src={partenza} alt={h.moat.alt} text={h.moat.band} caption={h.moat.caption} position="center 40%" />
-    <Events n={3} events={h.events} />
+    <SeriesStrip n={3} head={h.events} items={c.aziende.series.items} href={hrefs.aziende + '#serie'} />
     <About n={4} about={h.about} />
     <hr class="segnavia" aria-hidden="true" />
     <Closing

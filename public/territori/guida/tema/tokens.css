@@ -1,0 +1,143 @@
+/* ============================================================
+   AdventureLab · token della guida per i territori
+   I colori e i font sono quelli del design system «Foglio IGM» del sito
+   adventurelab.cc (carta #F1F2EE, inchiostro #16191C, segnavia #C8201E,
+   idro #2C5F8A; Archivo per i titoli, Spectral per il testo, Martian Mono
+   per le etichette). I nomi dei token restano quelli delle guide degli
+   eventi, così guide.css e chrome.css sono gli stessi file con le stesse
+   classi.
+   ============================================================ */
+
+:root {
+  /* --- Colori ---------------------------------------------------------
+     Contrasti (WCAG AA, testo piccolo):
+       --idro su --neve ............... 6,1:1  (link, occhielli)
+       --segnavia su --neve ........... 5,4:1  (numeri dei capitoli)
+       --muted su --neve .............. 7,0:1  (etichette)
+       --ink su --neve ................ 16:1   (testo) */
+  --neve: #f1f2ee;         /* carta, il fondo della pagina */
+  --paper: #e4e6e0;        /* carta incassata, fondo dei riquadri */
+  --paper-raised: #fafaf7;
+  --blu: #16191c;          /* primario: bottoni, barre, numeri grandi */
+  --blu-notte: #000000;
+  --ghiaccio: #f1f2ee;     /* testo chiaro sul nero */
+  --ink: #16191c;
+  --oro: #2c5f8a;          /* occhielli sopra i titoli: l'idro del sito */
+  --oro-chiaro: #c8201e;   /* numeri dei capitoli e segni: il segnavia */
+  --heading: #16191c;
+  --idro: #2c5f8a;
+  --segnavia: #c8201e;
+
+  --line: rgba(22, 25, 28, 0.14);
+  --line-strong: rgba(22, 25, 28, 0.22);
+  --line-hard: rgba(22, 25, 28, 0.4);
+  --line-neve: rgba(241, 242, 238, 0.3);
+  --muted: #4e5450;
+  --muted-strong: rgba(22, 25, 28, 0.86);
+  --blu-velo: rgba(22, 25, 28, 0.06);
+
+  /* --- Tipografia ----------------------------------------------------- */
+  --font-display: 'Archivo', 'Arial Black', Arial, sans-serif;
+  --font-titolo: 'Archivo', 'Arial Black', Arial, sans-serif;
+  --font-body: 'Spectral', Georgia, 'Times New Roman', serif;
+  --font-mono: 'Martian Mono', ui-monospace, Menlo, monospace;
+
+  --fs-h1: clamp(40px, 9vw, 76px);
+  --fs-h2: clamp(30px, 6.4vw, 46px);
+  --fs-h3: clamp(21px, 4.6vw, 26px);
+  --fs-h4: clamp(19px, 4.4vw, 23px);
+  --fs-num: clamp(30px, 8.6vw, 52px);
+  --fs-stat: clamp(34px, 8vw, 50px);
+  --fs-lead: clamp(19px, 4.8vw, 21px);
+  --fs-body: clamp(17px, 4.3vw, 18.5px);
+  --fs-sm: 16px;
+  --fs-xs: clamp(14.5px, 3.7vw, 15.5px);
+  --fs-kicker: 12px;
+  --fs-label: 11px;
+
+  /* --- Spaziature ----------------------------------------------------- */
+  --pad-x: clamp(16px, 5vw, 40px);
+  --sec-y: clamp(76px, 10vw, 104px);
+  --sec-y-sm: clamp(56px, 8vw, 72px);
+  --maxw-text: 720px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--neve);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+a {
+  color: var(--idro);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--idro);
+  outline-offset: 2px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  margin: 0;
+  text-wrap: pretty;
+}
+
+p {
+  margin: 0;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--neve);
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* Titoli dei capitoli e titolo di copertina come i titoli di sezione del sito:
+   Archivo nero, largo, tutto maiuscolo. */
+.guida .cap-testa h2,
+.copertina .laguida {
+  font-family: var(--font-titolo);
+  font-weight: 900;
+  font-stretch: 118%;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

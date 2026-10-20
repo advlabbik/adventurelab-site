@@ -17,10 +17,13 @@ import { site } from '../../../site.config';
 import borgo from '../../assets/photos/territori-borgo.jpg';
 import bar from '../../assets/photos/sosta-bar.jpg';
 import valdorcia from '../../assets/photos/tt365-valdorcia.jpg';
+import copertinaGuida from '../../assets/photos/guida-copertina.webp';
 interface Props { lang: Lang }
 const { lang } = Astro.props;
 const c = getContent(lang);
 const t = c.territori;
+// La guida è la seconda sezione: dove manca (inglese, finché non è tradotta) le altre non saltano un numero.
+const g = t.guide.url ? 1 : 0;
 ---
 <Base lang={lang} title={t.meta.title} description={t.meta.description} page="territori">
   <Nav lang={lang} c={c} page="territori" />
@@ -29,14 +32,15 @@ const t = c.territori;
     <hr class="segnavia" aria-hidden="true" />
     <Numbers label={t.numbers.label} items={t.numbers.items} />
     <Cards n={1} id="servizi" label={t.services.label} title={t.services.title} intro={t.services.intro} items={t.services.items} numbered />
-    <Feature n={2} id="tuscany-trail-365" label={t.tt365.label} title={t.tt365.title} intro={t.tt365.intro} text={t.tt365.text} points={t.tt365.points} cta={t.tt365.cta} url={t.tt365.url} image={valdorcia} alt={t.tt365.alt} caption={t.tt365.caption} />
-    <Cases n={3} cases={t.cases} />
+    {t.guide.url && <Feature n={2} id="guida" tone="ink" label={t.guide.label} title={t.guide.title} intro={t.guide.intro} text={t.guide.text} points={t.guide.points} cta={t.guide.cta} url={t.guide.url} image={copertinaGuida} alt={t.guide.alt} caption={t.guide.caption} external={false} />}
+    <Feature n={2 + g} id="tuscany-trail-365" label={t.tt365.label} title={t.tt365.title} intro={t.tt365.intro} text={t.tt365.text} points={t.tt365.points} cta={t.tt365.cta} url={t.tt365.url} image={valdorcia} alt={t.tt365.alt} caption={t.tt365.caption} />
+    <Cases n={3 + g} cases={t.cases} />
     <PhotoBand src={bar} alt={t.band.alt} text={t.band.text} source={t.band.source} position="center 18%" />
-    <Clients n={4} clients={t.clients} />
-    <Steps n={5} id="come" label={t.howto.label} title={t.howto.title} intro={t.howto.intro} steps={t.howto.steps} />
-    <Fit n={6} label={t.fit.label} title={t.fit.title} intro={t.fit.intro} items={t.fit.items} />
+    <Clients n={4 + g} clients={t.clients} />
+    <Steps n={5 + g} id="come" label={t.howto.label} title={t.howto.title} intro={t.howto.intro} steps={t.howto.steps} />
+    <Fit n={6 + g} label={t.fit.label} title={t.fit.title} intro={t.fit.intro} items={t.fit.items} />
     <hr class="segnavia" aria-hidden="true" />
-    <Apply n={7} lang={lang} c={c} kind="territorio" />
+    <Apply n={7 + g} lang={lang} c={c} kind="territorio" />
   </main>
   <Footer lang={lang} c={c} />
 </Base>

@@ -1,0 +1,537 @@
+/* ============================================================
+   Aggiunte della guida per i territori al motore comune delle guide.
+   Copertina col nero del sito, etichette in Martian Mono, il segnavia
+   rosso come filo, il cancello dopo il secondo capitolo e la scheda
+   delle dieci domande.
+   ============================================================ */
+
+/* ---------- avviso di bozza ---------- */
+.bozza {
+  position: relative;
+  z-index: 30;
+  margin: 0;
+  padding: 10px var(--pad-x);
+  background: var(--segnavia);
+  color: #fff;
+  font: 600 12px / 1.5 var(--font-mono);
+  letter-spacing: 0.04em;
+  text-align: center;
+}
+
+/* ---------- copertina ---------- */
+.copertina-in {
+  width: min(88%, 680px);
+  background: rgba(22, 25, 28, 0.93);
+  border-top: 8px solid var(--segnavia);
+}
+
+.copertina .occhiello {
+  font: 600 11px / 1.5 var(--font-mono);
+  letter-spacing: 0.08em;
+  color: #8db4d9;
+}
+
+.copertina h1.laguida {
+  margin: 0 0 16px;
+  font-size: clamp(30px, 6.2vw, 54px);
+  color: var(--neve);
+}
+
+.copertina .dati {
+  font-size: var(--fs-body);
+  font-style: italic;
+  color: #d9dbd5;
+}
+
+.copertina .btn-nero {
+  background: var(--segnavia);
+  border-color: var(--segnavia);
+  color: #fff;
+}
+
+.copertina .btn-nero:hover {
+  background: #a51a18;
+  border-color: #a51a18;
+}
+
+.copertina .spaziato {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: rgba(241, 242, 238, 0.75);
+}
+
+.marchio {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 112%;
+  text-transform: uppercase;
+}
+
+/* ---------- capitoli ---------- */
+.guida .cap-num {
+  color: var(--segnavia);
+  font-family: var(--font-display);
+  font-weight: 900;
+}
+
+.guida .cap-testa {
+  border-top: 2px solid var(--ink);
+  padding-top: 18px;
+}
+
+.guida h3 {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-stretch: 112%;
+  text-transform: uppercase;
+  font-size: clamp(18px, 4.2vw, 21px);
+  letter-spacing: 0;
+}
+
+.guida .box-tit,
+.guida .num span,
+.guida .grande span {
+  font-family: var(--font-body);
+}
+
+.guida .box-tit {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--idro);
+}
+
+.guida .fonte {
+  margin-top: 10px;
+  font: 400 13px / 1.5 var(--font-mono);
+  color: var(--muted);
+}
+
+.guida .box.segnavia {
+  border-left: 8px solid var(--segnavia);
+  background: var(--paper-raised);
+  padding: clamp(18px, 4vw, 28px);
+}
+
+.guida .box.segnavia p + p {
+  margin-top: 14px;
+}
+
+/* elenco degli errori: numeri grandi in segnavia */
+.guida ol.errori {
+  list-style: none;
+  counter-reset: err;
+  margin: 24px 0;
+  padding: 0;
+}
+
+.guida ol.errori li {
+  counter-increment: err;
+  position: relative;
+  padding: 0 0 22px 56px;
+  margin: 0 0 22px;
+  border-bottom: 1px solid var(--line);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+}
+
+.guida ol.errori li:last-child {
+  border-bottom: 0;
+}
+
+.guida ol.errori li::before {
+  content: counter(err);
+  position: absolute;
+  left: 0;
+  top: -6px;
+  font: 900 34px / 1 var(--font-display);
+  font-stretch: 118%;
+  color: var(--segnavia);
+}
+
+/* dieci domande */
+.guida ol.domande {
+  list-style: none;
+  counter-reset: dom;
+  margin: 24px 0;
+  padding: 0;
+  border-top: 2px solid var(--ink);
+}
+
+.guida ol.domande li {
+  counter-increment: dom;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line-strong);
+  font-size: var(--fs-body);
+  line-height: 1.5;
+}
+
+.guida ol.domande li::before {
+  content: counter(dom, decimal-leading-zero);
+  font: 600 13px / 1.9 var(--font-mono);
+  color: var(--idro);
+}
+
+/* committenti */
+.guida .committenti {
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guida .committenti li {
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+}
+
+.guida .committenti b {
+  display: block;
+  margin-bottom: 4px;
+  font: 600 11px / 1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.btn-nero {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 18px;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--neve);
+  font: 600 12px / 1 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.btn-nero:hover {
+  background: var(--segnavia);
+  border-color: var(--segnavia);
+  color: #fff;
+}
+
+/* ---------- il confronto con il rapporto nazionale (premessa) ----------
+   Il blocco più visibile della guida dopo la copertina: nero, filo segnavia,
+   due numeri con due barre in proporzione (2.000 contro 20.000). */
+.guida .confronto {
+  margin: 40px 0 32px;
+  padding: clamp(24px, 5vw, 44px);
+  background: var(--ink);
+  color: var(--neve);
+  border-top: 8px solid var(--segnavia);
+}
+
+.guida .confronto .confronto-occhiello {
+  margin: 0 0 12px;
+  font: 600 11px / 1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8db4d9;
+}
+
+.guida .confronto h3 {
+  margin: 0 0 30px;
+  font: 900 clamp(26px, 5.8vw, 42px) / 1.02 var(--font-display);
+  font-stretch: 118%;
+  text-transform: uppercase;
+  color: var(--neve);
+}
+
+.guida .confronto-coppia {
+  display: grid;
+  gap: 26px;
+}
+
+.guida .confronto-coppia strong {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 112%;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+
+.guida .confronto-loro strong {
+  font-size: clamp(30px, 6.4vw, 46px);
+  color: #a9aea7;
+}
+
+.guida .confronto-noi strong {
+  font-size: clamp(54px, 14vw, 112px);
+  color: #fff;
+}
+
+.guida .confronto-coppia span {
+  display: block;
+  margin-top: 8px;
+  max-width: 34ch;
+  font: 400 var(--fs-sm) / 1.5 var(--font-body);
+  color: #d9dbd5;
+}
+
+/* le barre: la seconda è dieci volte la prima */
+.guida .confronto-loro::after,
+.guida .confronto-noi::after {
+  content: '';
+  display: block;
+  height: 12px;
+  margin-top: 12px;
+}
+
+.guida .confronto-loro::after {
+  width: 10%;
+  min-width: 18px;
+  background: #a9aea7;
+}
+
+.guida .confronto-noi::after {
+  width: 100%;
+  background: var(--segnavia);
+}
+
+.guida .confronto .confronto-piu {
+  margin: 28px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid rgba(241, 242, 238, 0.25);
+  font: 400 var(--fs-lead) / 1.4 var(--font-body);
+  color: var(--neve);
+}
+
+.guida .confronto .confronto-piu b {
+  font-family: var(--font-display);
+  font-weight: 900;
+  font-stretch: 112%;
+  color: #f0685e;
+}
+
+.guida .confronto .confronto-fonte {
+  margin: 14px 0 0;
+  font: 400 12px / 1.5 var(--font-mono);
+  color: #a9aea7;
+}
+
+@media (min-width: 1100px) {
+  .guida .confronto {
+    margin-left: -48px;
+    margin-right: -48px;
+  }
+}
+
+@media print {
+  .guida .confronto {
+    background: none;
+    color: var(--ink);
+    border: 2px solid var(--ink);
+    border-top: 8px solid var(--segnavia);
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .guida .confronto h3,
+  .guida .confronto-noi strong,
+  .guida .confronto .confronto-piu {
+    color: var(--ink);
+  }
+
+  .guida .confronto-coppia span,
+  .guida .confronto .confronto-fonte {
+    color: var(--muted);
+  }
+}
+
+/* ---------- cancello ---------- */
+.cancello {
+  margin: 56px 0;
+  padding: clamp(24px, 5vw, 40px);
+  background: var(--ink);
+  color: var(--neve);
+  border-top: 8px solid var(--segnavia);
+}
+
+.cancello .occhiello {
+  margin: 0 0 10px;
+  font: 600 11px / 1.4 var(--font-mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8db4d9;
+}
+
+.cancello h2 {
+  margin: 0 0 16px;
+  font: 900 clamp(28px, 6vw, 42px) / 1 var(--font-display);
+  font-stretch: 118%;
+  text-transform: uppercase;
+  color: var(--neve);
+}
+
+.cancello p {
+  margin: 0 0 14px;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  color: #d9dbd5;
+}
+
+.cancello ul {
+  margin: 0 0 22px;
+  padding-left: 1.1em;
+  color: #d9dbd5;
+  font-size: var(--fs-body);
+  line-height: 1.6;
+}
+
+.cancello form {
+  display: grid;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.cancello label {
+  display: grid;
+  gap: 6px;
+  font: 600 11px / 1.4 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--neve);
+}
+
+.cancello input[type='email'],
+.cancello input[type='text'],
+.cancello select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #a9aea7;
+  border-radius: 0;
+  background: var(--neve);
+  color: var(--ink);
+  font: 400 16px / 1.3 var(--font-body);
+}
+
+.cancello .consenso {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  text-transform: none;
+  letter-spacing: 0;
+  font: 400 14px / 1.5 var(--font-body);
+  color: #d9dbd5;
+}
+
+.cancello .consenso input {
+  margin-top: 4px;
+}
+
+.cancello button {
+  justify-self: start;
+  padding: 15px 20px;
+  border: 1px solid var(--segnavia);
+  border-radius: 0;
+  background: var(--segnavia);
+  color: #fff;
+  font: 600 12px / 1 var(--font-mono);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.cancello button:hover {
+  background: #a51a18;
+}
+
+.cancello .nota {
+  margin: 4px 0 0;
+  font: 400 13px / 1.5 var(--font-mono);
+  color: #a9aea7;
+}
+
+.cancello .grazie {
+  font-size: var(--fs-lead);
+  color: var(--neve);
+}
+
+.cancello .consenso a {
+  color: inherit;
+  text-decoration: underline;
+}
+
+/* Il campo trappola: invisibile a chi legge, compilato solo dai bot. */
+.cancello .trappola {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.cancello .cf-turnstile:empty {
+  display: none;
+}
+
+.cancello button:disabled {
+  opacity: 0.7;
+  cursor: wait;
+}
+
+.cancello .errore {
+  margin: 4px 0 0;
+  padding-left: 12px;
+  border-left: 3px solid var(--segnavia);
+  font: 400 15px / 1.5 var(--font-body);
+  color: var(--neve);
+}
+
+/* Il resto della guida, finché il cancello è chiuso, mostra solo l'attacco
+   del terzo capitolo e sfuma. */
+.chiusa .dopo-cancello {
+  max-height: 420px;
+  overflow: hidden;
+  position: relative;
+  pointer-events: none;
+  user-select: none;
+}
+
+.chiusa .dopo-cancello::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 260px;
+  background: linear-gradient(to bottom, rgba(241, 242, 238, 0), var(--neve));
+}
+
+@media (min-width: 640px) {
+  .cancello form {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cancello form .largo,
+  .cancello form .consenso,
+  .cancello form button,
+  .cancello form .nota {
+    grid-column: 1 / -1;
+  }
+}
+
+@media print {
+  .bozza,
+  .cancello {
+    display: none !important;
+  }
+
+  .chiusa .dopo-cancello {
+    max-height: none;
+    overflow: visible;
+  }
+
+  .chiusa .dopo-cancello::after {
+    display: none;
+  }
+}

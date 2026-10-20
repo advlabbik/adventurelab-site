@@ -314,6 +314,23 @@ export const en: SiteContent = {
         'The will to build over several editions.',
       ],
     },
+    // The English guide is not ready yet: with an empty url the section does not render.
+    guide: {
+      label: 'The guide',
+      title: 'Seven things to know about cycle tourism before spending a euro',
+      intro: 'For municipalities, tourism boards, regions, parks and tourism consortia. Free.',
+      text: 'Written from what our riders tell us, and from what we have seen work, and fail, in destinations. The first two chapters are open to everyone, the rest after leaving an email address.',
+      points: [
+        'Why the low season is the cycle tourist’s market',
+        'Who today’s cycle tourist is, and why it is not who you imagine',
+        'The ways money gets wasted, always the same ones',
+        'How to prove the return on every euro spent',
+      ],
+      cta: 'Read the guide',
+      url: '',
+      alt: 'A rider with a bike loaded with bikepacking bags on a white road between cypress trees',
+      caption: 'Tuscany · white roads',
+    },
     form: {
       label: 'Application',
       title: 'Apply for your destination',
@@ -428,13 +445,15 @@ export const en: SiteContent = {
     privacyTitle: 'Privacy notice',
     // Una riga che comincia con «## » diventa un titolo di sezione (LegalPage.astro).
     privacyBody: [
-      'Last updated 16 October 2026.',
+      'Last updated 19 October 2026.',
       '## Who is responsible',
       'The data controller is AdventureLab S.r.l., via Giulio Braga 98, 59100 Prato (PO), Italy, VAT no. 02410590976, certified email adventurelab@pec.it. For anything about your personal data write to collab@bikeadventureseries.com, the mailbox we read every day for all our work with destinations and brands.',
       '## What you give us with your application, and why',
-      'There is no account to create and nothing to buy on this site. The only form is the application, on the destinations page and on the brands page. It asks for your name, work email, organisation and role, and then for what we need to prepare the first call, that is the territory, the goal, the sector, the markets, the indicative budget and what success would look like for you. We also record the language and the page you wrote from.',
+      'There is no account to create and nothing to buy on this site. There are two forms, the application, on the destinations page and on the brands page, and the one for the guide for destinations, described below. It asks for your name, work email, organisation and role, and then for what we need to prepare the first call, that is the territory, the goal, the sector, the markets, the indicative budget and what success would look like for you. We also record the language and the page you wrote from.',
       'We use this data to assess the partnership, reply to you and prepare the call. The legal basis is taking steps at your request prior to entering into a contract (Art. 6(1)(b) GDPR). To send the application we ask you to confirm that you have read this notice.',
       'Your application goes to two places. A copy reaches the collab@bikeadventureseries.com mailbox as an email, with your address set as the reply-to. Your contact is saved in Brevo, in a list kept only for AdventureLab applications, together with the type of application, your organisation, the language and the date.',
+      '## The guide for destinations',
+      'To read the whole guide «Seven things to know about cycle tourism before spending a euro» we ask for your work email, type of organisation, role and area. Your contact is saved in Brevo, in the same list kept for AdventureLab, marked as coming from the guide, and it is not sent to the applications mailbox. We use it to send you occasional AdventureLab emails about cycle tourism, projects and events, because you ask for them by ticking the consent box (Art. 6(1)(a) GDPR). Every email has an unsubscribe link, and withdrawal takes effect from that moment.',
       '## Updates, only if you ask',
       'If you tick the updates box we write to you now and then about AdventureLab projects, events and results. The legal basis is your consent (Art. 6(1)(a) GDPR). Every email carries an unsubscribe link, and you can also write to us. Withdrawing your consent takes effect from that moment and does not affect what was lawful before. If you leave the box unticked you receive no such emails.',
       '## Booking the call',

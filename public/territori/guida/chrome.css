@@ -1,0 +1,798 @@
+/* La cornice del minisito: barra in alto, copertina, indice, cassetto, binario,
+   ricerca, piè di pagina. È la cornice della Guida del Tuscany Trail 2027
+   (repo tuscany-trail-guida) con i token NorthCape4000: il testo dei capitoli
+   sta in tema/guide.css, questo file usa solo i token di tema/tokens.css.
+
+   Quando la guida passerà su bas-guides questa cornice la darà il lettore, e
+   questo file servirà solo all'anteprima su GitHub Pages. */
+
+:root {
+  --testa: 58px;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--testa) + 18px);
+}
+
+/* tokens.css dà a ogni [id] un margine per l'header del sito, che qui non c'è:
+   la barra della guida è alta --testa, e lo scroll-padding sopra basta. */
+[id] {
+  scroll-margin-top: 0;
+}
+
+body {
+  overflow-x: clip;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+.sr {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* ---------- barra in alto ---------- */
+
+/* ============ avviso di lingua ============ */
+/* Sta nel flusso sopra la copertina e se ne va con lo scorrimento: la barra in
+   alto resta fissa e non se lo trascina dietro. Nascosto finché lo script in
+   testa non mette .avviso-altra su <html>. */
+.avviso-lingua {
+  display: none;
+  margin: 0;
+  padding: 10px var(--pad-x);
+  background: var(--ink);
+  color: var(--neve);
+  font: 500 var(--fs-sm) / 1.4 var(--font-body);
+  text-align: center;
+}
+
+.avviso-altra .avviso-lingua {
+  display: block;
+}
+
+.avviso-lingua a {
+  color: inherit;
+  font-weight: 700;
+}
+
+.barra-top {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 40;
+  height: var(--testa);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0 var(--pad-x);
+  background: rgba(241, 242, 238, 0.96);
+  -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--line);
+  transform: translateY(-100%);
+  /* visibility, e non solo il transform: spinta fuori dallo schermo la barra
+     restava raggiungibile col Tab, e i primi quattro tasti finivano su bottoni
+     invisibili. È la stessa trappola della barra fissa di ttrefactor. Il ritardo
+     di 0.25s lascia finire l'uscita prima di nasconderla. */
+  visibility: hidden;
+  transition: transform 0.25s ease, visibility 0s 0.25s;
+}
+
+.barra-top.su {
+  transform: none;
+  visibility: visible;
+  transition: transform 0.25s ease, visibility 0s;
+}
+
+.marchio {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font: 800 18px / 1.2 var(--font-display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--blu);
+  text-decoration: none;
+}
+
+.marchio span {
+  font: 500 14px / 1.2 var(--font-body);
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--muted-strong);
+}
+
+.azioni {
+  flex: none;
+  display: flex;
+  gap: 8px;
+}
+
+.btn-ico {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--line-hard);
+  background: var(--neve);
+  color: var(--ink);
+  font: 500 13px / 1 var(--font-body);
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.btn-ico:hover {
+  border-color: var(--blu);
+  color: var(--blu);
+}
+
+.btn-ico svg {
+  flex: none;
+  width: 17px;
+  height: 17px;
+}
+
+.lingua-sw {
+  letter-spacing: 0.06em;
+}
+
+.progresso {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 0;
+  height: 2px;
+  background: var(--blu);
+}
+
+/* ---------- copertina ----------
+   Il PhotoHero del sito a tutto schermo: la foto, la targa bordeaux in basso a
+   sinistra (l'unica trasparenza del brand book, al 92%) e la scritta verticale
+   sul bordo destro. */
+
+.copertina {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--ink);
+  color: var(--neve);
+}
+
+.copertina > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 60%;
+}
+
+.copertina .spaziato {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+  margin: 0;
+  padding: 72px 16px 18px;
+  writing-mode: vertical-rl;
+  font: 400 9.5px / 1.9 var(--font-body);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(241, 242, 238, 0.7);
+}
+
+.copertina-in {
+  position: relative;
+  z-index: 1;
+  width: min(64%, 600px);
+  padding: clamp(24px, 4vw, 40px);
+  background: rgba(26, 60, 28, 0.93);
+}
+
+.copertina h1 {
+  margin: 0 0 14px;
+}
+
+/* Il titolo è il logo ufficiale dell'Edizione X (bianco su trasparente, dal
+   sito): il nome resta nell'alt, per chi legge con lo screen reader. */
+.copertina h1 img {
+  display: block;
+  width: min(100%, 360px);
+  height: auto;
+}
+
+.copertina .occhiello {
+  margin: 0 0 14px;
+  font: 600 var(--fs-kicker) / 1.4 var(--font-display);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--oro-chiaro);
+}
+
+.copertina .laguida {
+  margin: 0 0 12px;
+  font: 800 clamp(34px, 5.4vw, 52px) / 1 var(--font-display);
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--neve);
+}
+
+.copertina .dati {
+  margin: 0 0 22px;
+  font: 400 var(--fs-sm) / 1.5 var(--font-body);
+  color: var(--neve);
+}
+
+.copertina .cd {
+  margin: 0 0 22px;
+}
+
+.copertina .cd-gancio {
+  margin: 14px 0 8px;
+  font: 400 var(--fs-xs) / 1.5 var(--font-body);
+  color: var(--neve);
+}
+
+.copertina .cd-link {
+  font: 500 14px / 1 var(--font-body);
+  color: var(--neve);
+  text-decoration: none;
+  border-bottom: 1px solid var(--neve);
+  padding-bottom: 3px;
+}
+
+.copertina .bottoni {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.lingue {
+  position: absolute;
+  top: 18px;
+  left: var(--pad-x);
+  z-index: 2;
+  display: flex;
+  border: 1px solid rgba(241, 242, 238, 0.7);
+  background: rgba(10, 21, 10, 0.32);
+}
+
+.lingue a,
+.lingue span {
+  padding: 10px 12px;
+  font: 500 12.5px / 1 var(--font-body);
+  letter-spacing: 0.08em;
+  color: var(--neve);
+  text-decoration: none;
+}
+
+.lingue span {
+  background: var(--neve);
+  color: var(--blu);
+}
+
+.lingue a:hover {
+  background: rgba(241, 242, 238, 0.18);
+  color: var(--neve);
+}
+
+/* Sotto i 700px la targa prende tutta la larghezza, come in PhotoHero: al 64%
+   di uno schermo da 390px il titolo andrebbe a capo a ogni parola. */
+@media (max-width: 700px) {
+  /* La scritta verticale su un telefono finirebbe sotto la targa: la guida di
+     prima la toglieva già sotto i 640px. */
+  .copertina .spaziato {
+    display: none;
+  }
+
+  /* Su telefono la targa non sta più sopra la foto: con titolo, date,
+     countdown e bottone copriva quasi tutto lo schermo, e su un iPhone con le
+     barre del browser della foto restava una striscia di cielo (100px a
+     390×664, niente a 375×560). Qui la foto viene prima, alta metà schermo, e la
+     targa la segue. */
+  .copertina {
+    display: block;
+    min-height: 0;
+    background: #1A3C1C;
+  }
+
+  .copertina > img {
+    position: relative;
+    height: 52vh;
+    height: 52svh;
+  }
+
+  .copertina-in {
+    width: 100%;
+    padding: 24px var(--pad-x) 32px;
+    background: #1A3C1C;
+  }
+}
+
+/* ---------- indice ---------- */
+
+.indice {
+  padding: var(--sec-y-sm) 0 10px;
+}
+
+.indice h2 {
+  margin: 0 0 14px;
+  font: 600 var(--fs-kicker) / 1.4 var(--font-display);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+
+.indice .sottotitolo {
+  margin: 0 0 28px;
+  font: 700 var(--fs-h3) / 1.2 var(--font-display);
+  color: var(--heading);
+}
+
+.voci-indice {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line-strong);
+}
+
+.voci-indice li {
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.guida .voci-indice a {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 4px 14px;
+  align-items: baseline;
+  padding: 16px 0;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.vi-num {
+  grid-row: 1 / 3;
+  font: 700 clamp(24px, 6.4vw, 32px) / 1 var(--font-display);
+  color: var(--blu);
+  font-variant-numeric: tabular-nums;
+}
+
+.vi-tit {
+  font: 700 clamp(17px, 4.4vw, 20px) / 1.3 var(--font-display);
+  color: var(--heading);
+  transition: color 0.15s;
+}
+
+.guida .voci-indice a:hover .vi-tit {
+  color: var(--blu);
+}
+
+.vi-min {
+  font: 400 12px / 1 var(--font-body);
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.vi-som {
+  grid-column: 2 / 4;
+  font: 400 var(--fs-sm) / 1.45 var(--font-body);
+  color: var(--muted-strong);
+}
+
+/* ---------- binario laterale (schermi larghi) ---------- */
+
+.binario {
+  display: none;
+}
+
+@media (min-width: 1260px) {
+  .binario {
+    display: block;
+    position: fixed;
+    top: calc(var(--testa) + 30px);
+    left: max(24px, calc(50% - var(--maxw-text) / 2 - 290px));
+    width: 236px;
+    max-height: calc(100vh - var(--testa) - 60px);
+    overflow: auto;
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0s 0.25s;
+  }
+
+  .binario.su {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+    transition: opacity 0.25s, visibility 0s;
+  }
+
+  .binario ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .binario a {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    padding: 6px 8px;
+    color: var(--muted-strong);
+    font: 400 13.5px / 1.35 var(--font-body);
+    text-decoration: none;
+  }
+
+  .binario a b {
+    flex: none;
+    width: 20px;
+    text-align: right;
+    font: 700 13px / 1.35 var(--font-display);
+    color: var(--blu);
+  }
+
+  .binario a:hover {
+    color: var(--ink);
+  }
+
+  .binario a.attivo {
+    background: var(--blu-velo);
+    color: var(--blu);
+  }
+
+  .binario .bt {
+    margin: 0 0 12px 8px;
+    font: 600 var(--fs-kicker) / 1 var(--font-display);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--oro);
+  }
+}
+
+/* ---------- cassetto indice (telefono e tablet) ---------- */
+
+.velo {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(10, 21, 10, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}
+
+.velo.aperto {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cassetto {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 51;
+  width: min(400px, 92vw);
+  display: flex;
+  flex-direction: column;
+  background: var(--neve);
+  border-left: 1px solid var(--line);
+  transform: translateX(100%);
+  /* Chiuso era solo spostato: aria-hidden lo toglieva agli screen reader, ma i
+     suoi 16 link restavano nel giro del Tab. */
+  visibility: hidden;
+  transition: transform 0.25s ease, visibility 0s 0.25s;
+}
+
+.cassetto.aperto {
+  transform: none;
+  visibility: visible;
+  transition: transform 0.25s ease, visibility 0s;
+}
+
+.cassetto-testa {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px 10px var(--pad-x);
+  border-bottom: 1px solid var(--line);
+}
+
+.cassetto-testa b {
+  font: 600 var(--fs-kicker) / 1 var(--font-display);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+
+.chiudi {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.chiudi svg {
+  width: 22px;
+  height: 22px;
+}
+
+.chiudi:hover {
+  color: var(--blu);
+}
+
+.cassetto ol {
+  margin: 0;
+  padding: 8px 0 30px;
+  overflow: auto;
+  list-style: none;
+}
+
+.cassetto a {
+  display: flex;
+  gap: 14px;
+  align-items: baseline;
+  padding: 12px var(--pad-x);
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font: 400 var(--fs-body) / 1.3 var(--font-body);
+  text-decoration: none;
+}
+
+.cassetto a b {
+  flex: none;
+  width: 26px;
+  text-align: right;
+  font: 700 18px / 1 var(--font-display);
+  color: var(--blu);
+}
+
+.cassetto a.attivo {
+  background: var(--blu-velo);
+  color: var(--blu);
+}
+
+/* ---------- ricerca ---------- */
+
+.cerca {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: none;
+  flex-direction: column;
+  background: var(--neve);
+}
+
+.cerca.aperto {
+  display: flex;
+}
+
+.cerca-testa {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  max-width: var(--maxw-text);
+  margin: 0 auto;
+  padding: 10px var(--pad-x);
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.cerca-testa svg.lente {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  color: var(--blu);
+}
+
+.cerca-testa input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 4px;
+  border: 0;
+  outline: none;
+  background: transparent;
+  font: 700 clamp(19px, 4.8vw, 22px) / 1.3 var(--font-display);
+  color: var(--heading);
+}
+
+.cerca-testa input::placeholder {
+  font-weight: 400;
+  font-family: var(--font-body);
+  color: var(--muted);
+}
+
+.cerca-corpo {
+  flex: 1;
+  overflow: auto;
+}
+
+.cerca-in {
+  max-width: var(--maxw-text);
+  margin: 0 auto;
+  padding: 10px var(--pad-x) 60px;
+}
+
+.cerca-info {
+  margin: 14px 0;
+  font: 400 13px / 1.4 var(--font-body);
+  color: var(--muted-strong);
+}
+
+/* I suggerimenti sono Chip. */
+.suggerimenti {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 6px 0 0;
+}
+
+.suggerimenti button {
+  min-height: 44px;
+  padding: 9px 16px;
+  border: 1px solid var(--line-hard);
+  background: transparent;
+  color: var(--ink);
+  font: 400 13px / 1 var(--font-body);
+  cursor: pointer;
+}
+
+.suggerimenti button:hover {
+  border-color: var(--blu);
+  color: var(--blu);
+}
+
+.risultati {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.risultati li {
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.risultati a {
+  display: block;
+  padding: 14px 6px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.risultati a:hover,
+.risultati a.sel {
+  background: var(--blu-velo);
+}
+
+.ris-cap {
+  display: block;
+  margin-bottom: 6px;
+  font: 600 var(--fs-kicker) / 1.3 var(--font-display);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--oro);
+}
+
+.ris-txt {
+  display: block;
+  font: 400 var(--fs-sm) / 1.5 var(--font-body);
+}
+
+.risultati mark {
+  background: var(--ghiaccio);
+  color: var(--ink);
+}
+
+/* ---------- piè di pagina ---------- */
+
+footer {
+  margin-top: var(--sec-y);
+  padding: 28px 0 60px;
+  border-top: 1px solid var(--line);
+  font: 400 13.5px / 1.6 var(--font-body);
+  color: var(--muted-strong);
+}
+
+footer .colonna {
+  max-width: var(--maxw-text);
+  margin: 0 auto;
+  padding: 0 var(--pad-x);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px 20px;
+}
+
+footer a,
+footer button {
+  color: var(--muted-strong);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+footer button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+}
+
+@media (max-width: 640px) {
+  .marchio span,
+  .btn-ico .etic {
+    display: none;
+  }
+
+  .btn-ico {
+    padding: 9px 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media print {
+  .avviso-lingua,
+  .barra-top,
+  .lingue,
+  .binario,
+  .cassetto,
+  .velo,
+  .cerca,
+  .copertina .bottoni,
+  .copertina .cd,
+  footer button {
+    display: none !important;
+  }
+
+  .copertina {
+    min-height: 0;
+    height: 100vh;
+    break-after: page;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+
+/* ---------- didascalie e mappa (aggiunte per il Trentino Gravel) ---------- */
+
+.guida figure.foto figcaption {
+  margin: 10px auto 0;
+  max-width: var(--maxw-text);
+  padding: 0 var(--pad-x);
+  font: 400 var(--fs-xs) / 1.5 var(--font-body);
+  color: var(--muted);
+  text-align: center;
+}
+
+.guida figure.mappa a {
+  display: block;
+  cursor: zoom-in;
+}

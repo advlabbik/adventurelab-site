@@ -206,3 +206,19 @@ test('ogni titolo di sezione ha sopra l’eyebrow "Foglio"', () => {
     assert.equal(eyebrows, h2s, f);
   }
 });
+
+test('guida per i territori: pubblicata, indicizzabile, modulo collegato al worker, niente Google Fonts', () => {
+  const html = read('territori/guida/index.html');
+  assert.doesNotMatch(html, /noindex/);
+  assert.doesNotMatch(html, /fonts\.googleapis|fonts\.gstatic/);
+  assert.doesNotMatch(html, /class="bozza"/);
+  assert.doesNotMatch(html, /has\('tutto'\)/);
+  assert.match(html, /class="cf-turnstile"/);
+  assert.match(html, /name="website"/);
+  assert.match(html, /href="\/privacy\/"/);
+  const js = read('territori/guida/cancello.js');
+  assert.match(js, /adventurelab-lead\.account-fe1\.workers\.dev/);
+  assert.match(js, /source:'guida'/);
+  const terr = read('territori/index.html');
+  assert.match(terr, /href="\/territori\/guida\/"/);
+});

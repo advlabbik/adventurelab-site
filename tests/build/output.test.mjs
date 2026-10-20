@@ -126,8 +126,14 @@ test('aziende: i loghi dei partner, con il nome come alt', () => {
   for (const n of ['Vittoria', 'Abus', 'Selle San Marco']) assert.ok(alts.includes(n), n);
 });
 
-test('home: sei eventi, link esterni e sicuri', () => {
+test('home: la serie in breve, sei nomi e il link agli eventi nella pagina aziende', () => {
   const b = block(read('index.html'), 'eventi');
+  for (const e of ['Tuscany Trail', 'NorthCape4000', 'Trentino Gravel', 'The Grand Escape', 'Unpaved Roads', 'Final Frontier Patagonia']) assert.match(b, new RegExp(e), e);
+  assert.match(b, /href="[^"]*aziende\/#serie"/);
+});
+
+test('aziende: sei eventi della serie, link esterni e sicuri', () => {
+  const b = block(read(PAGES.aziende.it), 'serie');
   const links = [...b.matchAll(/<a[^>]*href="(https:[^"]+)"[^>]*>/g)];
   assert.equal(links.length, 6);
   for (const l of links) assert.match(l[0], /rel="noopener"/);

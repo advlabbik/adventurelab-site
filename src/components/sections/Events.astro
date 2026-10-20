@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import type { Home } from '../../content/types';
+import type { Aziende } from '../../content/types';
 import SectionHead from '../SectionHead.astro';
 import tt from '../../assets/photos/tt-cipressi.jpg';
 import nc from '../../assets/photos/nc4k-capo-nord.jpg';
@@ -9,15 +9,15 @@ import tge from '../../assets/photos/tge-slovenia.jpg';
 import ur from '../../assets/photos/case-toscana.jpg';
 // FFP: foto dal sito finalfrontierpatagonia.com, da far approvare al licenziatario prima della produzione.
 import ffp from '../../assets/photos/ffp-patagonia.jpg';
-interface Props { n: number; events: Home['events'] }
-const { n, events } = Astro.props;
+interface Props { n: number; id?: string; events: Aziende['series'] }
+const { n, id = 'eventi', events } = Astro.props;
 // Le foto si legano al nome dell'evento; un evento senza foto mostra le curve di livello.
 const photos: Record<string, ImageMetadata> = {
   'Tuscany Trail': tt, NorthCape4000: nc, 'Trentino Gravel': tg, 'The Grand Escape': tge, 'Unpaved Roads': ur,
   'Final Frontier Patagonia': ffp,
 };
 ---
-<section id="eventi" class="section">
+<section id={id} class="section">
   <div class="container">
     <SectionHead n={n} label={events.label} title={events.title} intro={events.intro} />
     <ul class="events">

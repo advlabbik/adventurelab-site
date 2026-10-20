@@ -45,7 +45,8 @@ export interface Home {
   numbers: { label: string; items: Stat[] };
   doors: Head & { items: Door[] };
   moat: Head & { items: (Item & { proof: string })[]; band: string; caption: string; alt: string };
-  events: Head & { items: { name: string; line: string; stat: string; url: string }[] };
+  /** In home la serie è una striscia: i nomi, e il link agli eventi nella pagina aziende. */
+  events: Head & { cta: string };
   about: Head & { statement: string; body: string[]; stats: Stat[]; facts: { label: string; value: string }[]; alt: string };
   closing: { title: string; text: string };
 }
@@ -80,6 +81,8 @@ export interface Aziende {
   meta: Meta;
   hero: Hero;
   numbers: { label: string; items: Stat[] };
+  /** Gli eventi della Bike Adventure Series: è quello che le aziende comprano. Unica fonte, la home ne mostra i nomi. */
+  series: Head & { items: { name: string; line: string; stat: string; url: string }[] };
   why: Head & { items: Item[] };
   band: { text: string; alt: string };
   tiers: Head & { items: (Item & { scope: string })[]; note: string };

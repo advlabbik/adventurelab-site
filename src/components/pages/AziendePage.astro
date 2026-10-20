@@ -8,6 +8,7 @@ import Cards from '../sections/Cards.astro';
 import PhotoBand from '../sections/PhotoBand.astro';
 import Partners from '../sections/Partners.astro';
 import Apply from '../sections/Apply.astro';
+import Events from '../sections/Events.astro';
 import { getContent, type Lang } from '../../content';
 import { site } from '../../../site.config';
 import arco from '../../assets/photos/nc4k-partenza-vittoria.jpg';
@@ -20,16 +21,17 @@ const a = c.aziende;
 <Base lang={lang} title={a.meta.title} description={a.meta.description} page="aziende">
   <Nav lang={lang} c={c} page="aziende" />
   <main id="main">
-    <Hero hero={a.hero} coords={site.coords.aziende} primaryHref="#candidatura" secondaryHref="#perche" image={arco} pauseLabel={c.a11y.pause} playLabel={c.a11y.play} />
+    <Hero hero={a.hero} coords={site.coords.aziende} primaryHref="#candidatura" secondaryHref="#serie" image={arco} pauseLabel={c.a11y.pause} playLabel={c.a11y.play} />
     <hr class="segnavia" aria-hidden="true" />
     <Numbers label={a.numbers.label} items={a.numbers.items} />
-    <Cards n={1} id="perche" label={a.why.label} title={a.why.title} intro={a.why.intro} items={a.why.items} numbered />
+    <Events n={1} id="serie" events={a.series} />
+    <Cards n={2} id="perche" label={a.why.label} title={a.why.title} intro={a.why.intro} items={a.why.items} numbered />
     <PhotoBand src={cipressi} alt={a.band.alt} text={a.band.text} position="center 55%" />
-    <Partners n={2} label={a.partners.label} title={a.partners.title} intro={a.partners.intro} names={a.partners.names} />
-    <Cards n={3} id="livelli" label={a.tiers.label} title={a.tiers.title} intro={a.tiers.intro} items={a.tiers.items} note={a.tiers.note} />
-    <Cards n={4} id="report" label={a.report.label} title={a.report.title} intro={a.report.intro} items={a.report.items} tone="alt" />
+    <Partners n={3} label={a.partners.label} title={a.partners.title} intro={a.partners.intro} names={a.partners.names} />
+    <Cards n={4} id="livelli" label={a.tiers.label} title={a.tiers.title} intro={a.tiers.intro} items={a.tiers.items} note={a.tiers.note} />
+    <Cards n={5} id="report" label={a.report.label} title={a.report.title} intro={a.report.intro} items={a.report.items} tone="alt" />
     <hr class="segnavia" aria-hidden="true" />
-    <Apply n={5} lang={lang} c={c} kind="brand" />
+    <Apply n={6} lang={lang} c={c} kind="brand" />
   </main>
   <Footer lang={lang} c={c} />
 </Base>

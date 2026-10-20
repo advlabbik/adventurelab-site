@@ -130,14 +130,7 @@ export const it: SiteContent = {
       label: 'La serie',
       title: 'La Bike Adventure Series',
       intro: 'Sei avventure in bicicletta su due continenti, e un solo pubblico che le attraversa.',
-      items: [
-        { name: 'Tuscany Trail', line: 'Toscana, maggio. Una settimana di strade bianche dal mare alle colline.', stat: '6.156 iscritti nel 2026', url: 'https://www.tuscanytrail.it' },
-        { name: 'NorthCape4000', line: 'Dall’Italia a Capo Nord, tre settimane in bicicletta.', stat: 'Esaurito in 48 ore', url: 'https://www.northcape4000.com' },
-        { name: 'Trentino Gravel', line: 'Dolomiti e laghi del Trentino, a fine settembre.', stat: 'Esaurito in 22 minuti', url: 'https://www.trentinogravel.com' },
-        { name: 'The Grand Escape', line: 'Le strade più belle d’Europa, in tre date e tre paesi.', stat: 'Oltre 1.400 iscritti', url: 'https://www.thegrandescape.cc' },
-        { name: 'Unpaved Roads', line: 'Gravel nel weekend, a tappe in Italia.', stat: 'Oltre mille iscritti', url: 'https://www.unpavedroads.cc' },
-        { name: 'Final Frontier Patagonia', line: 'Dalla Patagonia cilena a quella argentina, ai confini del mondo.', stat: 'Cile e Argentina', url: 'https://www.finalfrontierpatagonia.com' },
-      ],
+      cta: 'Gli eventi della serie',
     },
     about: {
       label: 'Chi siamo',
@@ -378,6 +371,19 @@ export const it: SiteContent = {
         { value: '82%', label: 'di aperture, le email agli iscritti' },
       ],
     },
+    series: {
+      label: 'Gli eventi',
+      title: 'La Bike Adventure Series',
+      intro: 'Sei avventure in bicicletta su due continenti, e un solo pubblico che le attraversa. Una partnership è il tuo marchio dentro uno di questi eventi, o dentro tutti, davanti a chi lo prepara per mesi e poi lo pedala.',
+      items: [
+        { name: 'Tuscany Trail', line: 'Toscana, maggio. Una settimana di strade bianche dal mare alle colline.', stat: '6.156 iscritti nel 2026', url: 'https://www.tuscanytrail.it' },
+        { name: 'NorthCape4000', line: 'Dall’Italia a Capo Nord, tre settimane in bicicletta.', stat: 'Esaurito in 48 ore', url: 'https://www.northcape4000.com' },
+        { name: 'Trentino Gravel', line: 'Dolomiti e laghi del Trentino, a fine settembre.', stat: 'Esaurito in 22 minuti', url: 'https://www.trentinogravel.com' },
+        { name: 'The Grand Escape', line: 'Le strade più belle d’Europa, in tre date e tre paesi.', stat: 'Oltre 1.400 iscritti', url: 'https://www.thegrandescape.cc' },
+        { name: 'Unpaved Roads', line: 'Gravel nel weekend, a tappe in Italia.', stat: 'Oltre mille iscritti', url: 'https://www.unpavedroads.cc' },
+        { name: 'Final Frontier Patagonia', line: 'Dalla Patagonia cilena a quella argentina, ai confini del mondo.', stat: 'Cile e Argentina', url: 'https://www.finalfrontierpatagonia.com' },
+      ],
+    },
     why: {
       label: 'Perché funziona',
       title: 'Prima, durante e dopo',
@@ -399,7 +405,7 @@ export const it: SiteContent = {
       items: [
         { scope: 'Un evento', title: 'Sponsor tecnico', text: 'Il modo più semplice di entrare nella serie, con una presenza essenziale all’evento e verso i suoi partecipanti.' },
         { scope: 'Un evento', title: 'Partner', text: 'L’evento diventa il tuo palcoscenico, prima, durante e dopo.' },
-        { scope: 'Tutta la serie', title: 'BAS Partner', text: 'La presenza su tutti gli eventi, dalla Toscana a Capo Nord fino alla Patagonia. Pochi posti.' },
+        { scope: 'Tutta la serie', title: 'Partner della serie', text: 'La presenza su tutti gli eventi, dalla Toscana a Capo Nord fino alla Patagonia. Pochi posti.' },
       ],
       note: 'Se vuoi approfondire ci sentiamo in una call, poi ricevi una proposta di una pagina, senza preventivi infiniti. Si firma per una stagione o per due.',
     },

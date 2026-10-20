@@ -86,7 +86,7 @@ export const en: SiteContent = {
     moat: {
       label: 'What cannot be copied',
       title: 'Five things money cannot buy',
-      intro: 'An event can be imitated in one season. These five things cannot, because they take years and people to build.',
+      intro: 'We have built them since 2013, one edition after another, together with the tens of thousands of people who have ridden with us. Nobody improvises them. You can only have them on your side.',
       items: [
         {
           title: 'An audience that is waiting',

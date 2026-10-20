@@ -94,7 +94,7 @@ export const it: SiteContent = {
     moat: {
       label: 'Quello che non si copia',
       title: 'Cinque cose che non si comprano',
-      intro: 'Un evento si può imitare in una stagione. Queste cinque cose no, perché si costruiscono solo con gli anni e con le persone.',
+      intro: 'Le abbiamo costruite dal 2013, un’edizione dopo l’altra, insieme alle decine di migliaia di persone che hanno pedalato con noi. Nessuno le improvvisa. Si possono solo avere dalla propria parte.',
       items: [
         {
           title: 'Un pubblico che ci aspetta',

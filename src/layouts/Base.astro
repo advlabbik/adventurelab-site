@@ -12,6 +12,7 @@ import martianWoff2 from '@fontsource-variable/martian-mono/files/martian-mono-l
 const preloadFonts = [archivoWoff2, spectralWoff2, spectralItalicWoff2, martianWoff2];
 import type { Lang } from '../content';
 import { site } from '../../site.config';
+import ConsentBar from '../components/ConsentBar.astro';
 
 interface Props { lang: Lang; title: string; description: string; page: PageKey; noAlternates?: boolean }
 const { lang, title, description, page, noAlternates = false } = Astro.props;
@@ -51,5 +52,6 @@ const indexable = import.meta.env.PUBLIC_SITE_ENV === 'production';
   </head>
   <body>
     <slot />
+    <ConsentBar lang={lang} />
   </body>
 </html>

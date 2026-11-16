@@ -20,12 +20,26 @@ const co = site.company;
       <p>
         <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a> ·
         <a href={href('privacy', lang)}>{c.footer.privacy}</a> ·
-        <a href={href('cookie', lang)}>{c.footer.cookie}</a>
+        <a href={href('cookie', lang)}>{c.footer.cookie}</a> ·
+        <a href={href('cookie', lang)} data-cookie-prefs>{c.footer.cookiePrefs}</a>
       </p>
       <p>© {new Date().getFullYear()} AdventureLab · {c.footer.rights}</p>
     </div>
   </div>
 </footer>
+
+<script is:inline>
+  document.querySelectorAll('[data-cookie-prefs]').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      // Riapre la barra del consenso (ConsentBar). Senza l'API di consenso di
+      // Zaraz il link resta un link alla pagina sui cookie.
+      if (window.zaraz && window.zaraz.consent && document.getElementById('consent-bar')) {
+        e.preventDefault();
+        document.dispatchEvent(new CustomEvent('al:cookie-prefs'));
+      }
+    });
+  });
+</script>
 <style>
   .footer { padding-block: var(--space-6); }
   .footer__in { display: grid; gap: var(--space-5); grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); align-items: start; }

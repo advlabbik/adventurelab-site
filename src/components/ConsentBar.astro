@@ -1,0 +1,149 @@
+---
+import { getContent, type Lang } from '../content';
+import { href } from '../lib/routes';
+interface Props { lang: Lang }
+const { lang } = Astro.props;
+const t = getContent(lang).consent;
+/**
+ * La barra del consenso ai cookie, in fondo alla pagina. Portata da unpaved-roads
+ * (ConsentBar), che a sua volta viene da ttrefactor (#102, #104, #105).
+ *
+ * Il consenso lo tiene Zaraz (repo zaraz-consent, overlay adventurelab.cc): è lui
+ * che carica Google Analytics 4 solo dopo un «Accetta». Il banner di Zaraz è una
+ * finestra modale che blocca tutta la pagina: sulla zona è nascosto (`hideModal`)
+ * e questa barra ne usa solo l'API.
+ *
+ * Finché non si sceglie, la pagina sotto resta scurita e ferma (`inert`, niente
+ * scorrimento). È ammesso perché «Rifiuta tutto» è lì con la stessa misura e porta
+ * al sito intero; vietati sono il cookie wall e il rifiuto nascosto. Riaperta da
+ * «Preferenze cookie», invece, non blocca.
+ *
+ * Parte `hidden` e la accende lo script solo se l'API di consenso di Zaraz c'è e
+ * non c'è ancora una scelta. Finché il consenso di Zaraz è spento sulla zona la
+ * barra non compare e non blocca niente.
+ */
+---
+
+<div class="cb-scrim" id="consent-scrim" hidden></div>
+<section class="cb" id="consent-bar" aria-label={t.aria} tabindex="-1" hidden>
+  <p class="cb-text">
+    {t.text}
+    <a href={href('cookie', lang)}>{t.policy}</a>
+  </p>
+  <div class="cb-actions">
+    <button type="button" class="btn btn--ghost cb-btn" data-consent="reject">{t.reject}</button>
+    <button type="button" class="btn btn--primary cb-btn" data-consent="accept">{t.accept}</button>
+  </div>
+</section>
+
+<script is:inline>
+  (function () {
+    var bar = document.getElementById('consent-bar');
+    if (!bar) return;
+    /* Due cookie. Quello di Zaraz (nome in zaraz-consent,
+       config/consent.shared.json) vale per tutta la zona adventurelab.cc,
+       sottodomini compresi: da solo non dice se su
+       questo host la domanda è mai stata fatta. È la trappola del Tuscany Trail,
+       dove chi sceglieva su 365 (solo statistiche) perdeva la domanda sul
+       marketing. Il secondo lo scrive questa barra, solo per questo host: si
+       considera scelto quando ci sono tutti e due. */
+    var COOKIE = 'zaraz-consent-v1';
+    var CHIESTO = 'al-consent-asked';
+    var ha = function (nome) {
+      return document.cookie.split(';').some(function (c) {
+        return c.trim().indexOf(nome + '=') === 0;
+      });
+    };
+    var scelto = function () {
+      return ha(COOKIE) && ha(CHIESTO);
+    };
+    var api = function () {
+      return window.zaraz && window.zaraz.consent && typeof window.zaraz.consent.setAll === 'function'
+        ? window.zaraz.consent
+        : null;
+    };
+    var scrim = document.getElementById('consent-scrim');
+    var bloccati = [];
+    /* Tutto il resto della pagina diventa inerte: né clic, né tab, né lettore
+       di schermo ci arrivano, finché non si sceglie. */
+    var blocca = function () {
+      bloccati = Array.prototype.filter.call(document.body.children, function (el) {
+        return el !== bar && el !== scrim && !el.inert && el.tagName !== 'SCRIPT';
+      });
+      bloccati.forEach(function (el) { el.inert = true; });
+      document.documentElement.setAttribute('data-consent-pending', '');
+      bar.setAttribute('role', 'dialog');
+      bar.setAttribute('aria-modal', 'true');
+      scrim.hidden = false;
+    };
+    var sblocca = function () {
+      bloccati.forEach(function (el) { el.inert = false; });
+      bloccati = [];
+      document.documentElement.removeAttribute('data-consent-pending');
+      bar.removeAttribute('role');
+      bar.removeAttribute('aria-modal');
+      scrim.hidden = true;
+    };
+    var mostra = function (bloccante) {
+      if (!api()) return;
+      bar.hidden = false;
+      if (bloccante === true) blocca();
+      bar.focus({ preventScroll: true });
+    };
+    var pronto = function () {
+      if (!scelto()) mostra(true);
+    };
+
+    bar.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-consent]');
+      var c = api();
+      if (!b || !c) return;
+      c.setAll(b.getAttribute('data-consent') === 'accept');
+      /* Gli eventi della pagina rimasti in attesa del consenso (la pageview di
+         questa visita) partono adesso, se accettati. */
+      if (typeof c.sendQueuedEvents === 'function') c.sendQueuedEvents();
+      // Tecnico, senza dominio: vale solo per questo host. Un anno.
+      document.cookie = CHIESTO + '=1; Max-Age=31536000; Path=/; SameSite=Lax; Secure';
+      bar.hidden = true;
+      sblocca();
+    });
+
+    /* «Preferenze cookie» nel piè di pagina riapre la barra. */
+    document.addEventListener('al:cookie-prefs', function () {
+      mostra(false);
+    });
+
+    /* Zaraz arriva dopo la pagina: se l'API c'è già si decide subito,
+       altrimenti al suo evento. */
+    if (api()) pronto();
+    else document.addEventListener('zarazConsentAPIReady', pronto);
+  })();
+</script>
+
+<style>
+  /* La pagina sotto, finché non si sceglie: scurita e ferma. */
+  .cb-scrim { position: fixed; inset: 0; z-index: 990; background: rgba(20, 22, 20, .55); }
+  :global(html[data-consent-pending]) { overflow: hidden; }
+  .cb:focus { outline: none; }
+  /* `display: flex` vincerebbe sul `display: none` dell'attributo `hidden`. */
+  .cb[hidden], .cb-scrim[hidden] { display: none; }
+  .cb {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 1000;
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
+    gap: var(--space-3) var(--space-5);
+    padding: var(--space-4);
+    padding-bottom: calc(var(--space-4) + env(safe-area-inset-bottom));
+    background: var(--ink); color: var(--paper-on-ink);
+    border-top: var(--rule-hair) solid var(--muted-on-ink);
+  }
+  .cb-text { flex: 1 1 420px; margin: 0; font-family: var(--font-serif); font-size: 16px; line-height: 1.45; }
+  .cb-text a { margin-left: .3em; color: inherit; text-decoration: underline; }
+  .cb-actions { display: flex; flex: 0 0 auto; gap: var(--space-3); }
+  /* Stessa forma e stessa misura: un rifiuto nascosto o rimpicciolito è ciò che
+     il Garante sanziona. «Accetta» è pieno nel colore dei pulsanti principali. */
+  .cb-btn { min-height: 44px; justify-content: center; }
+  .cb .btn--ghost { color: var(--paper-on-ink); border-color: var(--paper-on-ink); }
+  .cb .btn--ghost:hover { background: var(--paper-on-ink); color: var(--ink); border-color: var(--paper-on-ink); }
+  .cb-btn:focus-visible { outline: 2px solid var(--paper-on-ink); outline-offset: 2px; }
+  @media (max-width: 520px) { .cb-actions { flex: 1 1 100%; } .cb-btn { flex: 1 1 0; } }
+</style>

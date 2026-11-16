@@ -462,7 +462,7 @@ export const it: SiteContent = {
     privacyTitle: 'Informativa privacy',
     // Una riga che comincia con «## » diventa un titolo di sezione (LegalPage.astro).
     privacyBody: [
-      'Ultimo aggiornamento 19 ottobre 2026.',
+      'Ultimo aggiornamento 16 novembre 2026.',
       '## Chi è il titolare',
       'Il titolare del trattamento è AdventureLab S.r.l., via Giulio Braga 98, 59100 Prato (PO), Italia, P.IVA 02410590976, PEC adventurelab@pec.it. Per qualsiasi domanda sui tuoi dati scrivi a collab@bikeadventureseries.com, la casella che leggiamo ogni giorno per tutto il lavoro con territori e aziende.',
       '## Cosa ci dai con la candidatura, e perché',
@@ -481,7 +481,7 @@ export const it: SiteContent = {
       'Google (Google Ireland Limited) fornisce la casella di posta e il calendario delle call.',
       'Sono tutti nominati responsabili del trattamento (art. 28 GDPR). Non vendiamo e non cediamo i tuoi dati a nessuno, e non li usiamo per decisioni automatizzate o per profilarti.',
       '## Cosa viene registrato in automatico',
-      'Come ogni server, l’infrastruttura di Cloudflare registra l’indirizzo IP, la pagina richiesta, l’ora e il tipo di browser, per consegnare le pagine e proteggere il sito dagli abusi (legittimo interesse, art. 6, par. 1, lett. f GDPR). Il servizio delle candidature non scrive la tua email nei propri registri, e i registri si cancellano da soli dopo pochi giorni. Il sito non usa strumenti di analisi, pixel pubblicitari o profilazione.',
+      'Come ogni server, l’infrastruttura di Cloudflare registra l’indirizzo IP, la pagina richiesta, l’ora e il tipo di browser, per consegnare le pagine e proteggere il sito dagli abusi (legittimo interesse, art. 6, par. 1, lett. f GDPR). Il servizio delle candidature non scrive la tua email nei propri registri, e i registri si cancellano da soli dopo pochi giorni. Per contare le visite usiamo Cloudflare Web Analytics, che non usa cookie, non salva niente sul tuo dispositivo e non ti riconosce da una visita all’altra: registra solo, in forma aggregata, le pagine viste, il sito da cui arrivi, il paese e il tipo di dispositivo (legittimo interesse, art. 6, par. 1, lett. f GDPR). Il sito non usa pixel pubblicitari né profilazione.',
       '## Trasferimenti fuori dall’Unione Europea',
       'Cloudflare e Google possono trattare dati fuori dall’Unione Europea, in particolare negli Stati Uniti. Il trasferimento avviene con le garanzie previste dagli artt. 44 e seguenti del GDPR, cioè il Data Privacy Framework UE-USA e le clausole contrattuali tipo della Commissione europea.',
       '## Per quanto tempo',
@@ -493,9 +493,9 @@ export const it: SiteContent = {
     ],
     cookieTitle: 'Cookie',
     cookieBody: [
-      'Ultimo aggiornamento 16 ottobre 2026.',
+      'Ultimo aggiornamento 16 novembre 2026.',
       '## Il sito non usa cookie propri',
-      'Queste pagine non salvano niente sul tuo dispositivo per funzionare. Non ci sono login, carrelli o preferenze da ricordare, non ci sono strumenti di analisi né pixel pubblicitari, e non usiamo nemmeno la memoria locale del browser. Per questo non ti chiediamo il consenso con un banner. Anche i caratteri e il video arrivano dai nostri server, senza passare da Google Fonts o da piattaforme video.',
+      'Queste pagine non salvano niente sul tuo dispositivo per funzionare. Non ci sono login, carrelli o preferenze da ricordare, non ci sono pixel pubblicitari, e non usiamo nemmeno la memoria locale del browser. Anche il conteggio delle visite, fatto con Cloudflare Web Analytics, funziona senza cookie e senza salvare niente sul tuo dispositivo. Per questo non ti chiediamo il consenso con un banner. Anche i caratteri e il video arrivano dai nostri server, senza passare da Google Fonts o da piattaforme video.',
       '## Cookie tecnici dell’infrastruttura',
       'Il sito è servito da Cloudflare. Per proteggerlo da attacchi e traffico automatico, Cloudflare può impostare cookie tecnici di sicurezza, strettamente necessari, che non servono a riconoscerti né a seguirti su altri siti. Il modulo di candidatura usa Cloudflare Turnstile, che verifica che l’invio venga da una persona senza usare cookie pubblicitari o di profilazione.',
       '## Il calendario delle call',

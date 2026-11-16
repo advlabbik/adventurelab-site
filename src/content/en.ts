@@ -455,7 +455,7 @@ export const en: SiteContent = {
     privacyTitle: 'Privacy notice',
     // Una riga che comincia con «## » diventa un titolo di sezione (LegalPage.astro).
     privacyBody: [
-      'Last updated 19 October 2026.',
+      'Last updated 16 November 2026.',
       '## Who is responsible',
       'The data controller is AdventureLab S.r.l., via Giulio Braga 98, 59100 Prato (PO), Italy, VAT no. 02410590976, certified email adventurelab@pec.it. For anything about your personal data write to collab@bikeadventureseries.com, the mailbox we read every day for all our work with destinations and brands.',
       '## What you give us with your application, and why',
@@ -474,7 +474,7 @@ export const en: SiteContent = {
       'Google (Google Ireland Limited) provides the mailbox and the calendar for calls.',
       'All of them act as our data processors (Art. 28 GDPR). We do not sell or hand over your data to anyone, and we do not use it for automated decisions or profiling.',
       '## What is recorded automatically',
-      'Like any web server, the Cloudflare infrastructure records your IP address, the requested page, the time and your browser type, to deliver the pages and protect the site from abuse (legitimate interest, Art. 6(1)(f) GDPR). The application service does not write your email into its own logs, and those logs delete themselves after a few days. The site uses no analytics, advertising pixels or profiling.',
+      'Like any web server, the Cloudflare infrastructure records your IP address, the requested page, the time and your browser type, to deliver the pages and protect the site from abuse (legitimate interest, Art. 6(1)(f) GDPR). The application service does not write your email into its own logs, and those logs delete themselves after a few days. To count visits we use Cloudflare Web Analytics, which sets no cookies, stores nothing on your device and does not recognise you from one visit to the next: it only records, in aggregate, the pages viewed, the site you came from, your country and your device type (legitimate interest, Art. 6(1)(f) GDPR). The site uses no advertising pixels or profiling.',
       '## Transfers outside the European Union',
       'Cloudflare and Google may process data outside the European Union, in particular in the United States. Transfers rely on the safeguards of Articles 44 and following of the GDPR, namely the EU-US Data Privacy Framework and the European Commission’s standard contractual clauses.',
       '## How long we keep it',
@@ -486,9 +486,9 @@ export const en: SiteContent = {
     ],
     cookieTitle: 'Cookies',
     cookieBody: [
-      'Last updated 16 October 2026.',
+      'Last updated 16 November 2026.',
       '## The site sets no cookies of its own',
-      'These pages store nothing on your device to work. There is no login, no cart and no preference to remember, there are no analytics or advertising pixels, and we do not use your browser’s local storage either. That is why we do not ask for consent with a banner. Fonts and video also come from our own servers, without going through Google Fonts or video platforms.',
+      'These pages store nothing on your device to work. There is no login, no cart and no preference to remember, there are no advertising pixels, and we do not use your browser’s local storage either. Visit counting, done with Cloudflare Web Analytics, also works without cookies and without storing anything on your device. That is why we do not ask for consent with a banner. Fonts and video also come from our own servers, without going through Google Fonts or video platforms.',
       '## Technical cookies from the infrastructure',
       'The site is served by Cloudflare. To protect it from attacks and automated traffic, Cloudflare may set strictly necessary security cookies, which are not used to recognise you or follow you across other sites. The application form uses Cloudflare Turnstile, which checks that a person is sending it without using advertising or profiling cookies.',
       '## The call calendar',

@@ -107,7 +107,8 @@ export interface SiteContent {
   home: Home;
   territori: Territori;
   aziende: Aziende;
-  footer: { tagline: string; privacy: string; cookie: string; rights: string; vat: string; capital: string };
+  footer: { tagline: string; privacy: string; cookie: string; cookiePrefs: string; rights: string; vat: string; capital: string };
+  consent: { aria: string; text: string; policy: string; reject: string; accept: string };
   legal: { privacyTitle: string; privacyBody: string[]; cookieTitle: string; cookieBody: string[] };
   langSwitch: { label: string };
   a11y: { skip: string; pause: string; play: string };

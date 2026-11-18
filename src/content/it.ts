@@ -7,7 +7,7 @@ import type { SiteContent } from './types';
  *  - mai il numero dei partenti contati al via: accanto agli iscritti mostra chi non è venuto;
  *  - si parla da numero uno: mai «piccoli», «pochi», «le call le fa una persona sola»; il primato col numero accanto;
  *  - mai la durata della call, mai la scadenza del listino, mai le categorie occupate;
- *  - nessun filtro sul budget: ogni candidatura può prenotare la call (16/10);
+ *  - nessun filtro sul budget (16/10); dal 18/11 niente prenotazione della call dal sito, chi si candida ci scrive e la call la fissiamo noi dopo;
  *  - la frase su che cosa fa AdventureLab (home.about.body[0]) è quella approvata dalla
  *    direzione il 16/10/2026: non si cambia senza la direzione.
  * Le chiavi devono restare identiche in en.ts (controllo in build).
@@ -38,7 +38,6 @@ export const it: SiteContent = {
     },
     fallback: 'Preferisci scrivere? L’indirizzo è',
     thanks: 'Grazie. Ti rispondiamo entro due giorni lavorativi.',
-    calendlyTitle: 'Scegli il giorno della call',
   },
 
   home: {
@@ -339,7 +338,7 @@ export const it: SiteContent = {
       label: 'Candidatura',
       title: 'Candida il tuo territorio',
       intro:
-        'Sareste contrari a una call per capire se il vostro territorio ha i numeri per un evento? Per candidarvi bastano due minuti. Se c’è una strada percorribile scegliete subito il giorno, se non c’è ve lo diciamo.',
+        'Sareste contrari a una call per capire se il vostro territorio ha i numeri per un evento? Per candidarvi bastano due minuti. Leggiamo la candidatura e, se c’è una strada percorribile, fissiamo noi la call. Se non c’è ve lo diciamo.',
       org: 'Ente',
       territory: 'Territorio e comuni interessati',
       goal: 'Che cosa vi serve di più?',
@@ -433,7 +432,7 @@ export const it: SiteContent = {
       label: 'Candidatura',
       title: 'Candida la tua azienda',
       intro:
-        'Sareste contrari a una call per capire quale evento fa per voi? Per candidarvi bastano due minuti. Se c’è spazio scegliete subito il giorno.',
+        'Sareste contrari a una call per capire quale evento fa per voi? Per candidarvi bastano due minuti. Leggiamo la candidatura e, se c’è spazio, fissiamo noi la call.',
       org: 'Azienda',
       category: 'Settore o categoria di prodotto',
       categoryChoose: 'Scegli il settore',
@@ -470,7 +469,7 @@ export const it: SiteContent = {
     privacyTitle: 'Informativa privacy',
     // Una riga che comincia con «## » diventa un titolo di sezione (LegalPage.astro).
     privacyBody: [
-      'Ultimo aggiornamento 16 novembre 2026.',
+      'Ultimo aggiornamento 18 novembre 2026.',
       '## Chi è il titolare',
       'Il titolare del trattamento è AdventureLab S.r.l., via Giulio Braga 98, 59100 Prato (PO), Italia, P.IVA 02410590976, PEC adventurelab@pec.it. Per qualsiasi domanda sui tuoi dati scrivi a collab@bikeadventureseries.com, la casella che leggiamo ogni giorno per tutto il lavoro con territori e aziende.',
       '## Cosa ci dai con la candidatura, e perché',
@@ -481,8 +480,6 @@ export const it: SiteContent = {
       'Per leggere tutta la guida «Sette cose da sapere sul cicloturismo prima di spendere un euro» ti chiediamo email di lavoro, tipo di ente, ruolo e territorio. Il contatto viene salvato su Brevo, nella stessa lista riservata ad AdventureLab, con l’indicazione che arriva dalla guida, e non viene girato alla casella delle candidature. Lo usiamo per mandarti di tanto in tanto email di AdventureLab su cicloturismo, progetti ed eventi, perché lo chiedi spuntando la casella del consenso (art. 6, par. 1, lett. a GDPR). Ogni email ha il link per disiscriversi, e la revoca vale da quel momento.',
       '## Gli aggiornamenti, solo se li chiedi',
       'Se spunti la casella degli aggiornamenti ti scriviamo di tanto in tanto su progetti, eventi e risultati di AdventureLab. La base giuridica è il tuo consenso (art. 6, par. 1, lett. a GDPR). Ogni email ha il link per disiscriversi, e puoi anche scriverci. La revoca vale da quel momento e non tocca quello che è stato fatto prima. Se non spunti la casella non ricevi comunicazioni di questo tipo.',
-      '## La prenotazione della call',
-      'Dopo l’invio compare il calendario per scegliere il giorno della call. È una pagina di Google Calendar (Google Ireland Limited) mostrata dentro il nostro sito, e si carica solo dopo che hai inviato la candidatura. I dati che inserisci lì per prenotare ci arrivano come appuntamento e Google li tratta secondo la propria informativa (policies.google.com/privacy). Quando si carica, la pagina di Google può impostare cookie sui domini di Google, come spiegato nella pagina sui cookie.',
       '## Chi tratta i dati per nostro conto',
       'Brevo (Sendinblue SAS, Francia) conserva i contatti e invia le email, con i dati conservati nell’Unione Europea.',
       'Cloudflare, Inc. ospita il sito, fa girare il servizio che riceve le candidature e fornisce Turnstile, il controllo che protegge il modulo dagli invii automatici. Per farlo tratta l’indirizzo IP e alcune caratteristiche tecniche del browser, sulla base del nostro legittimo interesse a proteggere il sito (art. 6, par. 1, lett. f GDPR).',
@@ -503,15 +500,13 @@ export const it: SiteContent = {
     ],
     cookieTitle: 'Cookie',
     cookieBody: [
-      'Ultimo aggiornamento 16 novembre 2026.',
+      'Ultimo aggiornamento 18 novembre 2026.',
       '## Per funzionare il sito non usa cookie propri',
       'Queste pagine non salvano niente sul tuo dispositivo per funzionare. Non ci sono login, carrelli o preferenze da ricordare, e non ci sono pixel pubblicitari. Il conteggio delle visite fatto con Cloudflare Web Analytics funziona senza cookie e senza salvare niente sul tuo dispositivo. Anche i caratteri e il video arrivano dai nostri server, senza passare da Google Fonts o da piattaforme video.',
       '## Statistiche, solo se acconsenti',
       'Alla prima visita una barra in fondo alla pagina ti chiede se accetti le statistiche di Google Analytics 4. «Accetta tutto» e «Rifiuta tutto» hanno lo stesso peso, e finché non scegli Google Analytics non si carica. Se accetti, Google Analytics imposta i cookie `_ga` e `_ga_<ID>`, che durano fino a 2 anni e servono a contare le visite e a distinguere chi torna. La tua scelta resta in due cookie tecnici, `zaraz-consent-v1` e `al-consent-asked`, per un anno. Puoi cambiarla quando vuoi da «Preferenze cookie» in fondo alla pagina.',
       '## Cookie tecnici dell’infrastruttura',
       'Il sito è servito da Cloudflare. Per proteggerlo da attacchi e traffico automatico, Cloudflare può impostare cookie tecnici di sicurezza, strettamente necessari, che non servono a riconoscerti né a seguirti su altri siti. Il modulo di candidatura usa Cloudflare Turnstile, che verifica che l’invio venga da una persona senza usare cookie pubblicitari o di profilazione.',
-      '## Il calendario delle call',
-      'Dopo l’invio della candidatura compare il calendario di Google per prenotare la call. Si carica solo in quel momento, perché l’hai chiesto tu, e da lì Google può impostare cookie sui propri domini secondo la sua cookie policy (policies.google.com/technologies/cookies). Se blocchi i cookie di terze parti la prenotazione potrebbe non funzionare. In quel caso scrivici a collab@bikeadventureseries.com e fissiamo la call per email.',
       '## Siti a cui rimandiamo',
       'I link agli eventi della serie portano ad altri siti, con i loro cookie e le loro informative. Questa pagina riguarda solo adventurelab.cc. Per tutto il resto sul trattamento dei dati c’è l’informativa privacy.',
     ],

@@ -28,10 +28,10 @@ test('findTodos: ignora stringhe che contengono TODO non come prefisso', () => {
 
 import { missingSiteConfig } from '../scripts/lib/content-check.mjs';
 
-test('missingSiteConfig: segnala endpoint e Calendly vuoti', () => {
-  assert.deepEqual(missingSiteConfig({ leadEndpoint: '', calendlyUrl: ' ' }), ['leadEndpoint', 'calendlyUrl']);
+test('missingSiteConfig: segnala l’endpoint vuoto', () => {
+  assert.deepEqual(missingSiteConfig({ leadEndpoint: ' ' }), ['leadEndpoint']);
 });
 
-test('missingSiteConfig: niente da segnalare se ci sono entrambi', () => {
-  assert.deepEqual(missingSiteConfig({ leadEndpoint: 'https://w/lead', calendlyUrl: 'https://calendly.com/x/y' }), []);
+test('missingSiteConfig: niente da segnalare se c’è l’endpoint', () => {
+  assert.deepEqual(missingSiteConfig({ leadEndpoint: 'https://w/lead' }), []);
 });

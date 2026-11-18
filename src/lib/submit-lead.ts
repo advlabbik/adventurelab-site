@@ -1,8 +1,8 @@
 export type LeadResult = { ok: true } | { ok: false; error: string };
 
 /**
- * Manda il form al worker. Non lancia mai: chi chiama decide cosa mostrare, e in
- * ogni caso apre Calendly (spec §5 — una call non si perde per un nostro guasto).
+ * Manda il form al worker. Non lancia mai: chi chiama decide cosa mostrare. In caso
+ * di errore il modulo lascia il messaggio con l'indirizzo email sotto.
  */
 export async function submitLead(endpoint: string, payload: object, timeoutMs = 8000): Promise<LeadResult> {
   if (!endpoint) return { ok: false, error: 'not_configured' };
@@ -42,7 +42,7 @@ async function waitForToken(getToken: () => string, waitMs: number, pollMs: numb
  * Invio con il token Turnstile. Se il token non c'è ancora (widget lento, appena
  * resettato dopo un errore) lo aspetta; se il worker lo rifiuta (scaduto, già
  * consumato) rigenera il widget e ritenta una volta sola. Senza questo un
- * contatto valido si perderebbe in silenzio nel ramo "apri comunque Calendly".
+ * contatto valido si perderebbe dietro un messaggio di errore.
  */
 export async function sendLeadWithToken(o: {
   endpoint: string;

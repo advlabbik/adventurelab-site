@@ -34,7 +34,6 @@ export interface FormCommon {
   errors: { invalid_email: string; consent_required: string; generic: string };
   fallback: string;
   thanks: string;
-  calendlyTitle: string;
 }
 
 export interface Door { kind: 'territori' | 'aziende'; who: string; title: string; text: string; cta: string; alt: string }

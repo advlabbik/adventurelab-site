@@ -5,8 +5,9 @@ import { site } from '../../../site.config';
 import SectionHead from '../SectionHead.astro';
 /**
  * La candidatura: un modulo per strada (territorio o azienda) con le domande che
- * servono a preparare la call. Dopo l'invio tutti vedono Calendly (o il grazie, se
- * Calendly non c'è): nessun filtro sul budget, per scelta della direzione (16/10/2026).
+ * servono a preparare la call. Dopo l'invio tutti vedono il grazie: nessun filtro sul
+ * budget (16/10/2026) e, dal 18/11/2026, nessuna prenotazione della call dal sito.
+ * La call la proponiamo noi rispondendo, dopo aver letto la candidatura.
  * La candidatura arriva comunque a collab@ e su Brevo (workers/lead).
  */
 interface Props { n: number; lang: Lang; c: SiteContent; kind: 'territorio' | 'brand' }
@@ -21,7 +22,7 @@ const thanks = kind === 'territorio' ? t.thanks : a.thanks;
   <div class="container apply">
     <SectionHead n={n} label={head.label} title={head.title} intro={head.intro} />
 
-    <form class="apply__form" data-endpoint={site.leadEndpoint} data-calendly={site.calendlyUrl} data-lang={lang} data-kind={kind} novalidate>
+    <form class="apply__form" data-endpoint={site.leadEndpoint} data-lang={lang} data-kind={kind} novalidate>
       <div class="apply__row">
         <label>{f.name}<input name="name" autocomplete="name" required maxlength="120" /></label>
         <label>{f.email}<input name="email" type="email" autocomplete="email" spellcheck="false" required maxlength="254" /></label>
@@ -71,11 +72,6 @@ const thanks = kind === 'territorio' ? t.thanks : a.thanks;
 
     <p class="apply__thanks" role="status" hidden>{thanks}</p>
 
-    <div class="apply__calendly" hidden>
-      <h3>{f.calendlyTitle}</h3>
-      <iframe title={f.calendlyTitle} loading="lazy"></iframe>
-    </div>
-
     <p class="apply__mail">{f.fallback} <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></p>
     <noscript><p>{f.fallback} <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a></p></noscript>
 
@@ -99,15 +95,11 @@ const thanks = kind === 'territorio' ? t.thanks : a.thanks;
   .apply__form .btn { justify-self: start; }
   .apply__error { color: var(--segnavia); font-family: var(--font-mono); font-size: 12px; margin: 0; }
   .apply__thanks { font-family: var(--font-serif); font-style: italic; font-size: 22px; color: var(--idro); border-left: var(--rule-segnavia) solid var(--segnavia); padding-left: var(--space-4); }
-  .apply__calendly { border: var(--rule-hair) solid var(--ink); background: var(--paper-raised); padding: var(--space-4); }
-  .apply__calendly h3 { font-family: var(--font-display); font-weight: 800; font-stretch: 112%; text-transform: uppercase; font-size: 20px; margin: 0 0 var(--space-3); }
-  .apply__calendly iframe { width: 100%; height: 720px; border: 0; }
   .apply__mail { font-family: var(--font-mono); font-size: 12px; color: var(--ink-muted); margin-top: var(--space-4); }
   .apply__mail a { color: var(--idro); }
 </style>
 <script>
   import { sendLeadWithToken } from '../../lib/submit-lead';
-  import { calendlyUrl } from '../../lib/calendly';
 
   declare global { interface Window { turnstile?: { reset: (el?: Element) => void } } }
 
@@ -133,7 +125,6 @@ const thanks = kind === 'territorio' ? t.thanks : a.thanks;
     const errorsMap = JSON.parse(root.querySelector('.apply__errors')!.textContent!);
     const errorEl = form.querySelector<HTMLElement>('.apply__error')!;
     const btn = form.querySelector<HTMLButtonElement>('button[type=submit]')!;
-    const calendly = root.querySelector<HTMLElement>('.apply__calendly')!;
     const kind = form.dataset.kind as 'territorio' | 'brand';
 
     const showError = (msg: string) => { errorEl.textContent = msg; errorEl.hidden = false; };
@@ -189,14 +180,11 @@ const thanks = kind === 'territorio' ? t.thanks : a.thanks;
       if (!res.ok) { console.warn('[lead]', res.error); showError(errorsMap.generic); btn.hidden = true; }
       form.hidden = res.ok; // in caso di errore il messaggio resta visibile, con l'indirizzo email sotto
 
-      const url = calendlyUrl(form.dataset.calendly!, data, location.host);
-      if (url) {
-        calendly.querySelector('iframe')!.src = url;
-        calendly.hidden = false;
-        calendly.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-      } else if (res.ok) {
-        // Calendly non configurato: senza questo il form sparirebbe nel nulla.
-        root.querySelector<HTMLElement>('.apply__thanks')!.hidden = false;
+      if (res.ok) {
+        // Niente prenotazione dal sito (18/11/2026): il grazie al posto del modulo, ben in vista.
+        const thanksEl = root.querySelector<HTMLElement>('.apply__thanks')!;
+        thanksEl.hidden = false;
+        thanksEl.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'center' });
       }
     });
   }

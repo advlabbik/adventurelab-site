@@ -10,16 +10,6 @@ export const site = {
   turnstileSiteKey: '0x4AAAAAAEl8e7Ux8o0mh37i',
 
   /**
-   * Pagina per prenotare la call, mostrata in un iframe dopo la candidatura.
-   * Va bene un evento Calendly (precompilato con nome, email ed ente) o una
-   * prenotazione di Google Calendar, ma nella forma da incorporare
-   * calendar.google.com/calendar/appointments/schedules/…?gv=true: il link breve
-   * calendar.app.google non si apre dentro un iframe.
-   * Vuoto = niente prenotazione: dopo la candidatura compare il messaggio "ti rispondiamo entro due giorni".
-   */
-  calendlyUrl: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ0O9T8gP2DS6_60OkuJ7P61Wwa0cd5yQJkSMXVWLQhHqXvoYwOfNEO6kbd6HMYzPfoNPOys3VB3?gv=true',
-
-  /**
    * Token Cloudflare Web Analytics. Vuoto = nessuno snippet.
    * Se lo accendi, aggiorna privacy e cookie: oggi dicono che il sito non usa analisi.
    */

@@ -30,7 +30,6 @@ export const en: SiteContent = {
     },
     fallback: 'Rather write? The address is',
     thanks: 'Thank you. We will reply within two working days.',
-    calendlyTitle: 'Pick a day for the call',
   },
 
   home: {
@@ -332,7 +331,7 @@ export const en: SiteContent = {
       label: 'Application',
       title: 'Apply for your destination',
       intro:
-        'Would you be against a call to find out whether your destination has what it takes for an event? Applying takes two minutes. If there is a road forward, pick the day right away. If there is not, we will tell you.',
+        'Would you be against a call to find out whether your destination has what it takes for an event? Applying takes two minutes. We read your application and, if there is a road forward, we set up the call. If there is not, we will tell you.',
       org: 'Organisation',
       territory: 'Area and towns involved',
       goal: 'What do you need most?',
@@ -426,7 +425,7 @@ export const en: SiteContent = {
       label: 'Application',
       title: 'Apply for your company',
       intro:
-        'Would you be against a call to find out which event suits you? Applying takes two minutes. If there is room, pick the day right away.',
+        'Would you be against a call to find out which event suits you? Applying takes two minutes. We read your application and, if there is room, we set up the call.',
       org: 'Company',
       category: 'Sector or product category',
       categoryChoose: 'Choose the sector',
@@ -463,7 +462,7 @@ export const en: SiteContent = {
     privacyTitle: 'Privacy notice',
     // Una riga che comincia con «## » diventa un titolo di sezione (LegalPage.astro).
     privacyBody: [
-      'Last updated 16 November 2026.',
+      'Last updated 18 November 2026.',
       '## Who is responsible',
       'The data controller is AdventureLab S.r.l., via Giulio Braga 98, 59100 Prato (PO), Italy, VAT no. 02410590976, certified email adventurelab@pec.it. For anything about your personal data write to collab@bikeadventureseries.com, the mailbox we read every day for all our work with destinations and brands.',
       '## What you give us with your application, and why',
@@ -474,8 +473,6 @@ export const en: SiteContent = {
       'To read the whole guide «Seven things to know about cycle tourism before spending a euro» we ask for your work email, type of organisation, role and area. Your contact is saved in Brevo, in the same list kept for AdventureLab, marked as coming from the guide, and it is not sent to the applications mailbox. We use it to send you occasional AdventureLab emails about cycle tourism, projects and events, because you ask for them by ticking the consent box (Art. 6(1)(a) GDPR). Every email has an unsubscribe link, and withdrawal takes effect from that moment.',
       '## Updates, only if you ask',
       'If you tick the updates box we write to you now and then about AdventureLab projects, events and results. The legal basis is your consent (Art. 6(1)(a) GDPR). Every email carries an unsubscribe link, and you can also write to us. Withdrawing your consent takes effect from that moment and does not affect what was lawful before. If you leave the box unticked you receive no such emails.',
-      '## Booking the call',
-      'After you send the application a calendar appears so you can pick a day for the call. It is a Google Calendar page (Google Ireland Limited) shown inside our site, and it loads only after you have sent the application. What you enter there to book reaches us as an appointment, and Google processes it under its own privacy policy (policies.google.com/privacy). When it loads, the Google page may set cookies on Google domains, as explained on the cookies page.',
       '## Who processes data on our behalf',
       'Brevo (Sendinblue SAS, France) stores contacts and sends emails, with data kept inside the European Union.',
       'Cloudflare, Inc. hosts the site, runs the service that receives applications and provides Turnstile, the check that protects the form from automated submissions. To do so it processes your IP address and some technical features of your browser, based on our legitimate interest in protecting the site (Art. 6(1)(f) GDPR).',
@@ -496,15 +493,13 @@ export const en: SiteContent = {
     ],
     cookieTitle: 'Cookies',
     cookieBody: [
-      'Last updated 16 November 2026.',
+      'Last updated 18 November 2026.',
       '## The site sets no cookies of its own to work',
       'These pages store nothing on your device to work. There is no login, no cart and no preference to remember, and there are no advertising pixels. Visit counting with Cloudflare Web Analytics works without cookies and without storing anything on your device. Fonts and video also come from our own servers, without going through Google Fonts or video platforms.',
       '## Statistics, only if you agree',
       'On your first visit a bar at the bottom of the page asks whether you accept Google Analytics 4 statistics. “Accept all” and “Reject all” carry the same weight, and Google Analytics does not load until you choose. If you accept, Google Analytics sets the `_ga` and `_ga_<ID>` cookies, which last up to 2 years and are used to count visits and recognise returning visitors. Your choice is kept in two technical cookies, `zaraz-consent-v1` and `al-consent-asked`, for one year. You can change it at any time from “Cookie preferences” at the bottom of the page.',
       '## Technical cookies from the infrastructure',
       'The site is served by Cloudflare. To protect it from attacks and automated traffic, Cloudflare may set strictly necessary security cookies, which are not used to recognise you or follow you across other sites. The application form uses Cloudflare Turnstile, which checks that a person is sending it without using advertising or profiling cookies.',
-      '## The call calendar',
-      'After you send the application, the Google calendar for booking the call appears. It loads only at that moment, because you asked for it, and from there Google may set cookies on its own domains under its cookie policy (policies.google.com/technologies/cookies). If you block third-party cookies the booking may not work. In that case write to collab@bikeadventureseries.com and we will set the call by email.',
       '## Sites we link to',
       'Links to the events of the series take you to other sites, with their own cookies and their own policies. This page covers adventurelab.cc only. For everything else about how we handle data, see the privacy notice.',
     ],

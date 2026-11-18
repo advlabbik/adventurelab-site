@@ -1,0 +1,39 @@
+# Pubblica il sito su Cloudflare (adventurelab.cc) a ogni push su main.
+# Se i test o la build di produzione falliscono non pubblica: online resta la versione precedente.
+# Il worker del modulo (workers/lead/) è separato e si pubblica a mano, vedi README.
+name: Pubblica su Cloudflare
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - 'workers/lead/**'
+      - 'README.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Un deploy alla volta: quello in corso finisce, poi parte il più recente.
+concurrency:
+  group: cloudflare-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          # ≥ 23.6: scripts/check-content.mjs importa i .ts togliendo i tipi
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: pnpm build:prod
+      - run: pnpm exec wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

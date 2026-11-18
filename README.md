@@ -26,6 +26,7 @@ Su un PC con Node 22 (non 24) gli script che importano i `.ts` vogliono `NODE_OP
 - Endpoint, Turnstile, casella del B2B, dati societari: `site.config.ts`
 - Candidatura → collab@ e Brevo: worker separato in `workers/lead/` (deploy: `cd workers/lead && npx wrangler deploy --config wrangler.toml`)
 - Dopo l'invio compare solo il grazie. Dal 18/11/2026 la call non si prenota dal sito, la proponiamo noi rispondendo alla candidatura.
+- Pubblicazione: ogni push su `main` va online da solo su adventurelab.cc (`.github/workflows/deploy.yml`), l'esito è nella scheda Actions. Se test o build falliscono, online resta la versione precedente. Il worker `workers/lead/` resta a mano.
 - Passaggio del dominio: `docs/dns-cutover.md`
 
 ## Stato
